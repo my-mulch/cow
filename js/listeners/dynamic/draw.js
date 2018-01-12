@@ -1,4 +1,5 @@
 let mouseIsDown = false
+let shape = 'rectangle'
 
 window.addEventListener("mousedown", function (event) {
     mouseIsDown = true
@@ -6,7 +7,7 @@ window.addEventListener("mousedown", function (event) {
 
 window.addEventListener("mousemove", function (event) {
     if (mouseIsDown) {
-
+        
     }
 })
 
