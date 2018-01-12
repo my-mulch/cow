@@ -48,16 +48,23 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        const phi = (180 - angle) / 2
-        const H = 2 * this.radius * Math.sin(angle / 2)
+        const angleInRads = angle * 2 * Math.PI / 360
+
+        const phi = (180 - angleInRads) / 2
+        const H = 2 * this.radius * Math.sin(angleInRads / 2)
 
         const theta = 90 - phi
         const X = H * Math.sin(theta)
         const Y = H * Math.cos(theta)
 
-        moveVertices(AXIS.X, X)
-        moveVertices(AXIS.Y, Y)
+        
+        this.moveVertices(AXIS.X, X)
+        this.moveVertices(AXIS.Y, -Y)
 
+        
+
+        this.render()
+        
         return this
     }
 

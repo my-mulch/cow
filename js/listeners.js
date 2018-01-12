@@ -15,6 +15,9 @@ window.addEventListener("keydown", function (event) {
         case "ArrowRight":
             rect.shift(DIRECTION.EAST, 10)
             break;
+        case "s":
+            rect.rotate(10)
+            break;
         default:
             return; // Quit when this doesn't handle the key event.
     }

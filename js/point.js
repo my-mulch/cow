@@ -1,7 +1,7 @@
 class Point {
 
     constructor(...dims) {
-        this.coordindates = dims
+        this.coordinates = dims
     }
 
     /**
@@ -14,10 +14,17 @@ class Point {
 
     distance(b) {
         return Math.sqrt(
-            this.coordindates.reduce(function (dist, val, dim) {
-                return dist + Math.pow(val - b.coordindates[dim], 2)
+            this.coordinates.reduce(function (dist, val, dim) {
+                return dist + Math.pow(val - b.coordinates[dim], 2)
             }, 0)
         )
     }
-    
+
+    shift(...coordinates) {
+        if (coordinates.length !== this.coordinates.length)
+            throw new Error('Dims must be equal!')
+
+        this.coordinates = coordinates
+    }
+
 }
