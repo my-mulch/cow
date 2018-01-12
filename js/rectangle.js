@@ -50,10 +50,10 @@ class Rectangle {
 
         const angleInRads = angle * 2 * Math.PI / 360
 
-        const phi = (180 - angleInRads) / 2
+        const phi = (Math.PI - angleInRads) / 2
         const H = 2 * this.radius * Math.sin(angleInRads / 2)
 
-        const theta = 90 - phi
+        const theta = Math.PI / 2 - phi
         const X = H * Math.cos(theta)
         const Y = H * Math.sin(theta)
 
