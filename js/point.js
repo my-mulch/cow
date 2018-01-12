@@ -33,7 +33,7 @@ class Point {
         if (offsets.length !== this.coordinates.length)
             throw new Error('Dims must be equal!')
 
-        this.coordinates.map(function (val, dim) {
+        this.coordinates = this.coordinates.map(function (val, dim) {
             return val + offsets[dim]
         })
 

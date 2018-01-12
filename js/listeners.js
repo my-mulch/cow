@@ -18,6 +18,9 @@ window.addEventListener("keydown", function (event) {
         case "s":
             rect.rotate(10)
             break;
+        case "a":
+            rect.rotate(-10)
+            break;
         default:
             return; // Quit when this doesn't handle the key event.
     }

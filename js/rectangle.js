@@ -59,10 +59,12 @@ class Rectangle {
 
         const [A, B, C, D] = this.vertices
 
+
         A.shift(X, -Y)
         B.shift(X, Y)
         C.shift(-X, Y)
         D.shift(-X, -Y)
+
 
         this.render()
 
