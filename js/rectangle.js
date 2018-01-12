@@ -12,12 +12,9 @@ class Rectangle {
 
     constructor(A, B, C, D) {
         this.radius = A.distance(C) / 2
-        this.context = null
+        this.vertices = [A, B, C, D]
 
-        this.A = A
-        this.B = B
-        this.C = C
-        this.D = D
+        this.context = null
     }
 
     /**
@@ -65,9 +62,9 @@ class Rectangle {
     }
 
     moveVertices(dimension, amount) {
-        Object.keys(this).forEach(function (vertex) {
-            this[vertex][dimension] += amount
-        }, this)
+        this.vertices.forEach(function (vertex) {
+            vertex.coordindates[dimension] += amount
+        })
     }
 
     shift(dir, amount) {
@@ -92,17 +89,19 @@ class Rectangle {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath()
 
-        this.context.moveTo(...this.A.coordindates);
-        this.context.lineTo(...this.B.coordindates);
+        const [A, B, C, D] = this.vertices
 
-        this.context.moveTo(...this.B.coordindates);
-        this.context.lineTo(...this.C.coordindates);
+        this.context.moveTo(...A.coordindates)
+        this.context.lineTo(...B.coordindates)
 
-        this.context.moveTo(...this.C.coordindates);
-        this.context.lineTo(...this.D.coordindates);
+        this.context.moveTo(...B.coordindates)
+        this.context.lineTo(...C.coordindates)
 
-        this.context.moveTo(...this.D.coordindates);
-        this.context.lineTo(...this.A.coordindates);
+        this.context.moveTo(...C.coordindates)
+        this.context.lineTo(...D.coordindates)
+
+        this.context.moveTo(...D.coordindates)
+        this.context.lineTo(...A.coordindates)
 
         this.context.stroke();
 
