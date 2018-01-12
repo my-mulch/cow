@@ -1,5 +1,6 @@
 
 class Rectangle {
+
     /**
      * Creates an instance of Rectangle.
      * @param {Point} A 
@@ -8,23 +9,26 @@ class Rectangle {
      * @param {Point} D 
      * @memberof Rectangle
      */
+
     constructor(A, B, C, D) {
+        this.radius = A.distance(C) / 2
+        this.context = null
+
         this.A = A
         this.B = B
         this.C = C
         this.D = D
-
-        
-        this.context = null
-
     }
+
+    /**
+     * Sets the internal context to render the rectangle
+     * 
+     * @param {CanvasContext} context 
+     * @memberof Rectangle
+     */
 
     setContext(context) {
         this.context = context
-    }
-
-    locate(vertex) {
-        return Object.values(this[vertex])
     }
 
     rotate(degree) {
@@ -39,37 +43,35 @@ class Rectangle {
 
     shift(dir, amount) {
         switch (dir) {
-            case DIRECTION.WEST: this.moveVertices('x', -amount)
+            case DIRECTION.WEST: this.moveVertices(AXIS.X, -amount)
                 break
-            case DIRECTION.EAST: this.moveVertices('x', amount)
+            case DIRECTION.EAST: this.moveVertices(AXIS.X, amount)
                 break
-            case DIRECTION.NORTH: this.moveVertices('y', -amount)
+            case DIRECTION.NORTH: this.moveVertices(AXIS.Y, -amount)
                 break
-            case DIRECTION.SOUTH: this.moveVertices('y', amount)
+            case DIRECTION.SOUTH: this.moveVertices(AXIS.Y, amount)
                 break
         }
 
         this.render()
     }
-
-    extend(point) { }
-
+    
     render() {
 
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath()
 
-        this.context.moveTo(...this.locate('A'));
-        this.context.lineTo(...this.locate('B'));
+        this.context.moveTo(...this.A.coordindates);
+        this.context.lineTo(...this.B.coordindates);
 
-        this.context.moveTo(...this.locate('B'));
-        this.context.lineTo(...this.locate('C'));
+        this.context.moveTo(...this.B.coordindates);
+        this.context.lineTo(...this.C.coordindates);
 
-        this.context.moveTo(...this.locate('C'));
-        this.context.lineTo(...this.locate('D'));
+        this.context.moveTo(...this.C.coordindates);
+        this.context.lineTo(...this.D.coordindates);
 
-        this.context.moveTo(...this.locate('D'));
-        this.context.lineTo(...this.locate('A'));
+        this.context.moveTo(...this.D.coordindates);
+        this.context.lineTo(...this.A.coordindates);
 
         this.context.stroke();
     }
