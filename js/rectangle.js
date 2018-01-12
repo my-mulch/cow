@@ -29,10 +29,39 @@ class Rectangle {
 
     setContext(context) {
         this.context = context
+
+        return this
     }
+    /**
+     * 
+     * 
+     * @param {any} angle 
+     * @memberof Rectangle
+     */
+    rotate(angle) {
+        /** 
+            2 * phi + angle === 180 degrees  
+            In other words, we can construct an
+            isosceles triangle.
 
-    rotate(degree) {
+            H is the base of this triangle
 
+            From here, we can see the right triangle
+            corresponding to our rotation and glean from 
+            it our X and Y coordinate shifts
+        **/
+
+        const phi = (180 - angle) / 2
+        const H = 2 * this.radius * Math.sin(angle / 2)
+
+        const theta = 90 - phi
+        const X = H * Math.sin(theta)
+        const Y = H * Math.cos(theta)
+
+        moveVertices(AXIS.X, X)
+        moveVertices(AXIS.Y, Y)
+
+        return this
     }
 
     moveVertices(dimension, amount) {
@@ -54,8 +83,10 @@ class Rectangle {
         }
 
         this.render()
+
+        return this
     }
-    
+
     render() {
 
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
@@ -74,6 +105,8 @@ class Rectangle {
         this.context.lineTo(...this.A.coordindates);
 
         this.context.stroke();
+
+        return this
     }
 }
 
