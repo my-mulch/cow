@@ -54,12 +54,15 @@ class Rectangle {
         const H = 2 * this.radius * Math.sin(angleInRads / 2)
 
         const theta = 90 - phi
-        const X = H * Math.sin(theta)
-        const Y = H * Math.cos(theta)
+        const X = H * Math.cos(theta)
+        const Y = H * Math.sin(theta)
 
         const [A, B, C, D] = this.vertices
 
-        
+        A.shift(X, -Y)
+        B.shift(X, Y)
+        C.shift(-X, Y)
+        D.shift(-X, -Y)
 
         this.render()
 
@@ -96,17 +99,17 @@ class Rectangle {
 
         const [A, B, C, D] = this.vertices
 
-        this.context.moveTo(...A.coordindates)
-        this.context.lineTo(...B.coordindates)
+        this.context.moveTo(...A.coordinates)
+        this.context.lineTo(...B.coordinates)
 
-        this.context.moveTo(...B.coordindates)
-        this.context.lineTo(...C.coordindates)
+        this.context.moveTo(...B.coordinates)
+        this.context.lineTo(...C.coordinates)
 
-        this.context.moveTo(...C.coordindates)
-        this.context.lineTo(...D.coordindates)
+        this.context.moveTo(...C.coordinates)
+        this.context.lineTo(...D.coordinates)
 
-        this.context.moveTo(...D.coordindates)
-        this.context.lineTo(...A.coordindates)
+        this.context.moveTo(...D.coordinates)
+        this.context.lineTo(...A.coordinates)
 
         this.context.stroke();
 
