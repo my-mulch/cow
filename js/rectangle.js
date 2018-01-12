@@ -57,14 +57,12 @@ class Rectangle {
         const X = H * Math.sin(theta)
         const Y = H * Math.cos(theta)
 
-        
-        this.moveVertices(AXIS.X, X)
-        this.moveVertices(AXIS.Y, -Y)
+        const [A, B, C, D] = this.vertices
 
         
 
         this.render()
-        
+
         return this
     }
 

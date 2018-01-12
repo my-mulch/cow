@@ -20,11 +20,24 @@ class Point {
         )
     }
 
-    shift(...coordinates) {
+    move(...coordinates) {
         if (coordinates.length !== this.coordinates.length)
             throw new Error('Dims must be equal!')
 
         this.coordinates = coordinates
+
+        return this
+    }
+
+    shift(...offsets) {
+        if (coordinates.length !== this.coordinates.length)
+            throw new Error('Dims must be equal!')
+
+        this.coordinates.map(function (val, dim) {
+            return val + offsets[dim]
+        })
+
+        return this
     }
 
 }
