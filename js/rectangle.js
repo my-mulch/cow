@@ -1,19 +1,22 @@
-const DIRECTION = {
-    WEST: 0,
-    NORTH: 1,
-    EAST: 2,
-    SOUTH: 3
-}
 
 class Rectangle {
-
+    /**
+     * Creates an instance of Rectangle.
+     * @param {Point} A 
+     * @param {Point} B 
+     * @param {Point} C 
+     * @param {Point} D 
+     * @memberof Rectangle
+     */
     constructor(A, B, C, D) {
         this.A = A
         this.B = B
         this.C = C
         this.D = D
 
+        
         this.context = null
+
     }
 
     setContext(context) {
@@ -24,7 +27,9 @@ class Rectangle {
         return Object.values(this[vertex])
     }
 
-    rotate(degree) { }
+    rotate(degree) {
+
+    }
 
     moveVertices(dimension, amount) {
         Object.keys(this).forEach(function (vertex) {
