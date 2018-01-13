@@ -3,17 +3,14 @@ class Rectangle {
 
     /**
      * Creates an instance of Rectangle.
-     * @param {Point} A 
-     * @param {Point} B 
-     * @param {Point} C 
-     * @param {Point} D 
+     * @param {...Points} The vertices of the rectangle  
      * @memberof Rectangle
      */
 
-    constructor(A, B, C, D) {
-        this.radius = A.distance(C) / 2
-        this.vertices = [A, B, C, D]
+    constructor(...vertices) {
+        this.vertices = vertices
 
+        this.orientation = null
         this.context = null
     }
 
@@ -29,6 +26,7 @@ class Rectangle {
 
         return this
     }
+
     /**
      * 
      * 
@@ -71,9 +69,13 @@ class Rectangle {
         return this
     }
 
+    isFullySpecified() {
+        return this.vertices.length === 4
+    }
+
     moveVertices(dimension, amount) {
         this.vertices.forEach(function (vertex) {
-            vertex.coordindates[dimension] += amount
+            vertex.coordinates[dimension] += amount
         })
     }
 
@@ -99,22 +101,47 @@ class Rectangle {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath()
 
-        const [A, B, C, D] = this.vertices
+        if (this.isFullySpecified()) {
+            const [A, B, C, D] = this.vertices
 
-        this.context.moveTo(...A.coordinates)
-        this.context.lineTo(...B.coordinates)
+            this.context.moveTo(...A.coordinates)
+            this.context.lineTo(...B.coordinates)
 
-        this.context.moveTo(...B.coordinates)
-        this.context.lineTo(...C.coordinates)
+            this.context.moveTo(...B.coordinates)
+            this.context.lineTo(...C.coordinates)
 
-        this.context.moveTo(...C.coordinates)
-        this.context.lineTo(...D.coordinates)
+            this.context.moveTo(...C.coordinates)
+            this.context.lineTo(...D.coordinates)
 
-        this.context.moveTo(...D.coordinates)
-        this.context.lineTo(...A.coordinates)
+            this.context.moveTo(...D.coordinates)
+            this.context.lineTo(...A.coordinates)
+        } else {
+            const [close, far] = this.vertices
+
+            const I1 = new Point(
+                close[AXIS.X] + far[AXIS.X] - close[AXIS.X],
+                close[AXIS.Y]
+            )
+
+            const I2 = new Point(
+                close[AXIS.X],
+                close[AXIS.Y] + far[AXIS.Y] - close[AXIS.Y]
+            )
+
+            this.context.moveTo(...close.coordinates)
+            this.context.lineTo(...I1.coordinates)
+
+            this.moveTo(...I1.coordinates)
+            this.lineTo(...far.coordinates)
+
+            this.moveTo(...far.coordinates)
+            this.lineTo(...I2.coordinates)
+
+            this.moveTo(...I2.coordinates)
+            this.moveTo(...close.coordinates)
+        }
 
         this.context.stroke();
-
         return this
     }
 }

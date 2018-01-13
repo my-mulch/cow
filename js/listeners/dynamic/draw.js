@@ -1,16 +1,22 @@
-let mouseIsDown = false
-let shape = 'rectangle'
+const canvas = document.getElementById('myCanvas')
 
-window.addEventListener("mousedown", function (event) {
+let mouseIsDown = false
+let shape = new Rectangle()
+
+
+canvas.addEventListener("mousedown", function (event) {
     mouseIsDown = true
+    shape.vertices.push(new Point(event.clientX, event.clientY))
 })
 
-window.addEventListener("mousemove", function (event) {
+canvas.addEventListener("mousemove", function (event) {
     if (mouseIsDown) {
-        
+        // always overwrite second point
+        shape.vertices[1] = new Point(event.clientX, event.clientY)
+        shape.render()
     }
 })
 
-window.addEventListener("mouseup", function (event) {
+canvas.addEventListener("mouseup", function (event) {
     mouseIsDown = false
 })
