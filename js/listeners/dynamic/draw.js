@@ -1,7 +1,6 @@
-const canvas = document.getElementById('myCanvas')
 
 let mouseIsDown = false
-let shape = new Rectangle()
+let shape = new Rectangle().setContext(context)
 
 
 canvas.addEventListener("mousedown", function (event) {

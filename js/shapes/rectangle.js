@@ -10,7 +10,7 @@ class Rectangle {
     constructor(...vertices) {
         this.vertices = vertices
 
-        this.orientation = null
+        this.center = this.findCenter()
         this.context = null
     }
 
@@ -26,6 +26,17 @@ class Rectangle {
 
         return this
     }
+    /**
+     * Computes the center of the rectangle
+     * 
+     * @memberof Rectangle
+     */
+    findCenter() {
+        const [A, B, C, D] = this.vertices
+
+        X = A.get(AXIS.X) + B.get(AXIS.X) - A.get(AXIS.X)
+        return new Point()
+    }
 
     /**
      * 
@@ -33,11 +44,11 @@ class Rectangle {
      * @param {any} angle 
      * @memberof Rectangle
      */
-    rotate(angle) {
+    rotate(theta) {
         /** 
-            2 * phi + angle === 180 degrees  
+            2 * phi + theta === pi / 2 === 180 degrees
             In other words, we can construct an
-            isosceles triangle.
+            isosceles triangle with base angles phi
 
             H is the base of this triangle
 
@@ -46,23 +57,18 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        const angleInRads = angle * 2 * Math.PI / 360
+        const phi = (Math.PI - theta) / 2
+        const H = 2 * this.radius * Math.sin(theta / 2)
 
-        const phi = (Math.PI - angleInRads) / 2
-        const H = 2 * this.radius * Math.sin(angleInRads / 2)
-
-        const theta = Math.PI / 2 - phi
-        const X = H * Math.cos(theta)
-        const Y = H * Math.sin(theta)
+        const X = H * Math.cos(Math.PI / 2 - phi)
+        const Y = H * Math.sin(Math.PI / 2 - phi)
 
         const [A, B, C, D] = this.vertices
 
-
-        A.shift(X, -Y)
-        B.shift(X, Y)
-        C.shift(-X, Y)
-        D.shift(-X, -Y)
-
+        A.shift(Y, -X)
+        B.shift(Y, X)
+        C.shift(-Y, X)
+        D.shift(-Y, -X)
 
         this.render()
 
@@ -119,26 +125,26 @@ class Rectangle {
             const [close, far] = this.vertices
 
             const I1 = new Point(
-                close[AXIS.X] + far[AXIS.X] - close[AXIS.X],
-                close[AXIS.Y]
+                close.coordinates[AXIS.X] + far.coordinates[AXIS.X] - close.coordinates[AXIS.X],
+                close.coordinates[AXIS.Y]
             )
 
             const I2 = new Point(
-                close[AXIS.X],
-                close[AXIS.Y] + far[AXIS.Y] - close[AXIS.Y]
+                close.coordinates[AXIS.X],
+                close.coordinates[AXIS.Y] + far.coordinates[AXIS.Y] - close.coordinates[AXIS.Y]
             )
 
             this.context.moveTo(...close.coordinates)
             this.context.lineTo(...I1.coordinates)
 
-            this.moveTo(...I1.coordinates)
-            this.lineTo(...far.coordinates)
+            this.context.moveTo(...I1.coordinates)
+            this.context.lineTo(...far.coordinates)
 
-            this.moveTo(...far.coordinates)
-            this.lineTo(...I2.coordinates)
+            this.context.moveTo(...far.coordinates)
+            this.context.lineTo(...I2.coordinates)
 
-            this.moveTo(...I2.coordinates)
-            this.moveTo(...close.coordinates)
+            this.context.moveTo(...I2.coordinates)
+            this.context.lineTo(...close.coordinates)
         }
 
         this.context.stroke();
