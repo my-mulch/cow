@@ -16,7 +16,7 @@ class Point {
      * @memberof Point
      */
 
-    distance(b) {
+    distanceTo(b) {
         return Math.sqrt(
             this.coordinates.reduce(function (dist, val, dim) {
                 return dist + Math.pow(val - b.coordinates[dim], 2)
@@ -29,9 +29,9 @@ class Point {
      * @param {Point} b 
      * @memberof Point
      */
-    midpoint(b) {
+    static midpoint(a, b) {
         return new Point(
-            ...this.coordinates.map(function (val, dim) {
+            ...a.coordinates.map(function (val, dim) {
                 return (val + b.get(dim)) / 2
             })
         )

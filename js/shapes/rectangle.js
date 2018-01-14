@@ -9,8 +9,6 @@ class Rectangle {
 
     constructor(...vertices) {
         this.vertices = vertices
-
-        this.center = this.findCenter()
         this.context = null
     }
 
@@ -31,11 +29,10 @@ class Rectangle {
      * 
      * @memberof Rectangle
      */
-    findCenter() {
+    getCenter() {
         const [A, B, C, D] = this.vertices
 
-        X = A.get(AXIS.X) + B.get(AXIS.X) - A.get(AXIS.X)
-        return new Point()
+        return Point.midpoint(A, C)
     }
 
     /**
@@ -57,18 +54,29 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        const phi = (Math.PI - theta) / 2
-        const H = 2 * this.radius * Math.sin(theta / 2)
-
-        const X = H * Math.cos(Math.PI / 2 - phi)
-        const Y = H * Math.sin(Math.PI / 2 - phi)
-
         const [A, B, C, D] = this.vertices
+        const radius = this.getCenter().distanceTo(A)
+        const centerToEdge = Point.midpoint(A, D).distanceTo(this.getCenter())
+        const edgeToBottom = A.distanceTo(D) / 2
 
-        A.shift(Y, -X)
-        B.shift(Y, X)
-        C.shift(-Y, X)
-        D.shift(-Y, -X)
+        const angleCenterToCorner = Math.atan(edgeToBottom / centerToEdge)
+        const phi = (Math.PI - theta) / 2
+
+        const R1 = Math.PI - phi - angleCenterToCorner
+        const R2 = Math.PI - phi - (Math.PI / 2 - angleCenterToCorner)
+        const H = 2 * radius * Math.sin(theta / 2)
+
+        const X1 = H * Math.cos(R1)
+        const Y1 = H * Math.sin(R1)
+
+        const Y2 = H * Math.cos(R2)
+        const X2 = H * Math.sin(R2)
+
+
+        A.shift(X2, -Y2)
+        B.shift(X1, Y1)
+        C.shift(-X2, Y2)
+        D.shift(-X1, -Y1)
 
         this.render()
 
