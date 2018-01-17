@@ -1,0 +1,7 @@
+class Triangle {
+
+    constructor(vertices) {
+        
+    }
+
+}

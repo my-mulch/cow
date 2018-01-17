@@ -58,32 +58,22 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        const phi = (Math.PI - theta) / 2
+        function calculateCoordinates(startX, startY, center, radius, phi) {
+            
+        }
+
         const center = this.getCenter()
 
-        this.vertices.forEach(function (vertex, index) {
-            const radius = center.distanceTo(vertex)
-            const H = 2 * radius * Math.sin(theta / 2)
-
-            const [centerX, centerY] = center.coordinates
-            const [vertexX, vertexY] = vertex.coordinates
-
-            let oppX, oppY, X, Y
-
+        this.vertices.forEach(function (vertex) {
+            
             switch (this.getQuadrant(vertex)) {
                 // Upper Right
                 case CARTESIAN.I:
-                    oppX = vertexX
-                    oppY = centerY
 
-                    const oppSide = new Point(oppX, oppY).distanceTo(center)
-                    const gamma = Math.asin(oppSide / radius)
-                    const alpha = Math.PI - gamma - phi
-
-                    X = H * Math.sin(alpha)
-                    Y = H * Math.cos(alpha)
-                    
+                    const [X, Y] = CARTESIAN.coordinatesForRotation(vertex, theta, center)
                     vertex.shift(Y, X)
+
+                    break
 
                 case CARTESIAN.II:
                 case CARTESIAN.III:
