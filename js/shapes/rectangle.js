@@ -68,31 +68,12 @@ class Rectangle {
             const [centerX, centerY] = center.coordinates
             const [vertexX, vertexY] = vertex.coordinates
 
-            let oppX, oppY, X, Y
-
-            switch (this.getQuadrant(vertex)) {
-                // Upper Right
-                case CARTESIAN.I:
-                    oppX = vertexX
-                    oppY = centerY
-
-                    const oppSide = new Point(oppX, oppY).distanceTo(center)
-                    const gamma = Math.asin(oppSide / radius)
-                    const alpha = Math.PI - gamma - phi
-
-                    X = H * Math.sin(alpha)
-                    Y = H * Math.cos(alpha)
-                    
-                    vertex.shift(Y, X)
-
-                case CARTESIAN.II:
-                case CARTESIAN.III:
-                case CARTESIAN.IV:
-            }
+            let oX, oY, X, Y
 
             if (centerX > vertexX) {
                 if (centerY > vertexY) {
-
+                    oX = vertexX
+                    oY = centerY
                 } else {
                     oX = centerX
                     oY = vertexY
@@ -107,6 +88,13 @@ class Rectangle {
                 }
             }
 
+            const oppSide = new Point(oX, oY).distanceTo(center)
+            console.log(oppSide)
+            const gamma = Math.asin(oppSide / radius)
+            const alpha = Math.PI - gamma - phi
+
+            X = H * Math.sin(alpha)
+            Y = H * Math.cos(alpha)
 
 
             if (centerX > vertexX) {
