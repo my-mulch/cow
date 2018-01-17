@@ -16,10 +16,10 @@ window.addEventListener("keydown", function (event) {
             rect.shift(DIRECTION.EAST, 10)
             break;
         case "s":
-            rect.rotate(Math.PI / 32)
+            rect.rotate(Math.PI / 4)
             break;
         case "a":
-            rect.rotate(-Math.PI / 32)
+            rect.rotate(-Math.PI / 4)
             break;
         default:
             return; // Quit when this doesn't handle the key event.

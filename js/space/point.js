@@ -82,4 +82,12 @@ class Point {
         return this.coordinates[axis]
     }
 
+    toString() {
+        return this.coordinates.join(',')
+    }
+
+    clone(){
+        return new Point(...this.coordinates)
+    }
+
 }

@@ -35,6 +35,10 @@ class Rectangle {
         return Point.midpoint(A, C)
     }
 
+    getQuadrant(point) {
+        return this.getCenter()
+    }
+
     /**
      * 
      * 
@@ -54,29 +58,76 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        const [A, B, C, D] = this.vertices
-        const radius = this.getCenter().distanceTo(A)
-        const centerToEdge = Point.midpoint(A, D).distanceTo(this.getCenter())
-        const edgeToBottom = A.distanceTo(D) / 2
-
-        const angleCenterToCorner = Math.atan(edgeToBottom / centerToEdge)
         const phi = (Math.PI - theta) / 2
+        const center = this.getCenter()
 
-        const R1 = Math.PI - phi - angleCenterToCorner
-        const R2 = Math.PI - phi - (Math.PI / 2 - angleCenterToCorner)
-        const H = 2 * radius * Math.sin(theta / 2)
+        this.vertices.forEach(function (vertex, index) {
+            const radius = center.distanceTo(vertex)
+            const H = 2 * radius * Math.sin(theta / 2)
 
-        const X1 = H * Math.cos(R1)
-        const Y1 = H * Math.sin(R1)
+            const [centerX, centerY] = center.coordinates
+            const [vertexX, vertexY] = vertex.coordinates
 
-        const Y2 = H * Math.cos(R2)
-        const X2 = H * Math.sin(R2)
+            let oppX, oppY, X, Y
+
+            switch (this.getQuadrant(vertex)) {
+                // Upper Right
+                case CARTESIAN.I:
+                    oppX = vertexX
+                    oppY = centerY
+
+                    const oppSide = new Point(oppX, oppY).distanceTo(center)
+                    const gamma = Math.asin(oppSide / radius)
+                    const alpha = Math.PI - gamma - phi
+
+                    X = H * Math.sin(alpha)
+                    Y = H * Math.cos(alpha)
+                    
+                    vertex.shift(Y, X)
+
+                case CARTESIAN.II:
+                case CARTESIAN.III:
+                case CARTESIAN.IV:
+            }
+
+            if (centerX > vertexX) {
+                if (centerY > vertexY) {
+
+                } else {
+                    oX = centerX
+                    oY = vertexY
+                }
+            } else {
+                if (centerY > vertexY) {
+                    oX = centerX
+                    oY = vertexY
+                } else {
+                    oX = vertexX
+                    oY = centerY
+                }
+            }
 
 
-        A.shift(X2, -Y2)
-        B.shift(X1, Y1)
-        C.shift(-X2, Y2)
-        D.shift(-X1, -Y1)
+
+            if (centerX > vertexX) {
+                if (centerY > vertexY) {
+                    // upper left
+                    vertex.shift(X, -Y)
+                } else {
+                    // lower left
+                    vertex.shift(-Y, -X)
+                }
+            } else {
+                if (centerY > vertexY) {
+                    // upper right
+                    vertex.shift(Y, X)
+                } else {
+                    // lower right
+                    vertex.shift(-X, Y)
+                }
+            }
+
+        })
 
         this.render()
 
@@ -157,6 +208,10 @@ class Rectangle {
 
         this.context.stroke();
         return this
+    }
+
+    toString() {
+        return this.vertices.join('\n')
     }
 }
 
