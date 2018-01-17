@@ -35,8 +35,8 @@ class Rectangle {
         return Point.midpoint(A, C)
     }
 
-    getQuadrant(vertex) {
-        const [centerX, centerY] = this.getCenter().coordinates
+    getQuadrant(vertex, center) {
+        const [centerX, centerY] = center.coordinates
         const [vertexX, vertexY] = vertex.coordinates
 
         if (centerX > vertexX && centerY > vertexY)
@@ -78,9 +78,8 @@ class Rectangle {
             const [centerX, centerY] = center.coordinates
             const [vertexX, vertexY] = vertex.coordinates
 
-            
             let X, Y
-            switch (this.getQuadrant(vertex)) {
+            switch (this.getQuadrant(vertex, center)) {
                 // Upper Right
                 case CARTESIAN.I:
                     [X, Y] = CARTESIAN.rotationCoords(
@@ -132,7 +131,6 @@ class Rectangle {
 
         }, this)
 
-        console.log('-------------------------------')
         this.render()
 
         return this
