@@ -19,12 +19,13 @@ function rotationCoords(vertex, center, angle, support) {
     const radius = center.distanceTo(vertex)
     const H = 2 * radius * Math.sin(angle / 2)
     const phi = (Math.PI - angle) / 2
-
+    console.log(vertex.toString())
+    console.log(support.X, support.Y)
     const oppSide = new Point(support.X, support.Y).distanceTo(center)
     const oppAngle = Math.asin(oppSide / radius)
-    
+
     const alpha = Math.PI - oppAngle - phi
-    
+
     X = H * Math.sin(alpha)
     Y = H * Math.cos(alpha)
 

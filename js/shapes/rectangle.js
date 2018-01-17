@@ -78,6 +78,7 @@ class Rectangle {
             const [centerX, centerY] = center.coordinates
             const [vertexX, vertexY] = vertex.coordinates
 
+            
             let X, Y
             switch (this.getQuadrant(vertex)) {
                 // Upper Right
@@ -131,6 +132,7 @@ class Rectangle {
 
         }, this)
 
+        console.log('-------------------------------')
         this.render()
 
         return this
