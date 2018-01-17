@@ -1,26 +1,26 @@
 const CARTESIAN = {
     I: 0,
     II: 1,
-    III: 3,
-    IV: 4,
+    III: 2,
+    IV: 3,
     rotationCoords
 }
+
 /**
+ * Provide the cartesian X,Y coordinates for a rotation
  * 
- * 
- * @param {any} vertex 
- * @param {any} center 
- * @param {any} angle 
+ * @param {Point} vertex 
+ * @param {Point} center 
+ * @param {Double} angle 
+ * @param {Point} support 
+ * @returns X,Y coordinates in cartesian space
  */
-function rotationCoords(vertex, center, angle) {
+function rotationCoords(vertex, center, angle, support) {
     const radius = center.distanceTo(vertex)
     const H = 2 * radius * Math.sin(angle / 2)
     const phi = (Math.PI - angle) / 2
 
-    const [centerX, centerY] = center.coordinates
-    const [vertexX, vertexY] = vertex.coordinates
-
-    const oppSide = new Point(startX, startY).distanceTo(center)
+    const oppSide = new Point(support.X, support.Y).distanceTo(center)
     const oppAngle = Math.asin(oppSide / radius)
 
     const alpha = Math.PI - oppAngle - phi

@@ -35,8 +35,21 @@ class Rectangle {
         return Point.midpoint(A, C)
     }
 
-    getQuadrant(point) {
-        return this.getCenter()
+    getQuadrant(vertex) {
+        const [centerX, centerY] = this.getCenter().coordinates
+        const [vertexX, vertexY] = vertex.coordinates
+
+        if (centerX > vertexX && centerY > vertexY)
+            return CARTESIAN.II
+
+        if (centerX < vertexX && centerY > vertexY)
+            return CARTESIAN.I
+
+        if (centerX > vertexX && centerY < vertexY)
+            return CARTESIAN.III
+
+        if (centerX < vertexX && centerY < vertexY)
+            return CARTESIAN.IV
     }
 
     /**
@@ -58,66 +71,69 @@ class Rectangle {
             it our X and Y coordinate shifts
         **/
 
-        function calculateCoordinates(startX, startY, center, radius, phi) {
-            
-        }
-
         const center = this.getCenter()
 
         this.vertices.forEach(function (vertex) {
-            
+
+            const [centerX, centerY] = center.coordinates
+            const [vertexX, vertexY] = vertex.coordinates
+
+            let X, Y
             switch (this.getQuadrant(vertex)) {
                 // Upper Right
                 case CARTESIAN.I:
+                    console.log('I');
+                    [X, Y] = CARTESIAN.rotationCoords(
+                        vertex,
+                        center,
+                        theta,
+                        { X: centerX, Y: vertexY }
+                    )
 
-                    const [X, Y] = CARTESIAN.coordinatesForRotation(vertex, theta, center)
                     vertex.shift(Y, X)
-
                     break
 
+                // Upper left
                 case CARTESIAN.II:
-                case CARTESIAN.III:
-                case CARTESIAN.IV:
-            }
+                    console.log('II');
+                    [X, Y] = CARTESIAN.rotationCoords(
+                        vertex,
+                        center,
+                        theta,
+                        { X: vertexX, Y: centerY }
+                    )
 
-            if (centerX > vertexX) {
-                if (centerY > vertexY) {
-
-                } else {
-                    oX = centerX
-                    oY = vertexY
-                }
-            } else {
-                if (centerY > vertexY) {
-                    oX = centerX
-                    oY = vertexY
-                } else {
-                    oX = vertexX
-                    oY = centerY
-                }
-            }
-
-
-
-            if (centerX > vertexX) {
-                if (centerY > vertexY) {
-                    // upper left
                     vertex.shift(X, -Y)
-                } else {
-                    // lower left
+                    break
+
+                // Lower left
+                case CARTESIAN.III:
+                    console.log('III');
+                    [X, Y] = CARTESIAN.rotationCoords(
+                        vertex,
+                        center,
+                        theta,
+                        { X: centerX, Y: vertexY }
+                    )
+
                     vertex.shift(-Y, -X)
-                }
-            } else {
-                if (centerY > vertexY) {
-                    // upper right
-                    vertex.shift(Y, X)
-                } else {
-                    // lower right
+                    break
+
+                // Lower right
+                case CARTESIAN.IV:
+                    console.log('IV');
+                    [X, Y] = CARTESIAN.rotationCoords(
+                        vertex,
+                        center,
+                        theta,
+                        { X: vertexX, Y: centerY }
+                    )
+
                     vertex.shift(-X, Y)
-                }
+                    break
             }
 
-        })
+        }, this)
 
         this.render()
 
