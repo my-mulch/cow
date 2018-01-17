@@ -65,6 +65,7 @@ class Rectangle {
             const radius = center.distanceTo(vertex)
             const H = 2 * radius * Math.sin(theta / 2)
 
+
             const [centerX, centerY] = center.coordinates
             const [vertexX, vertexY] = vertex.coordinates
 
@@ -88,8 +89,12 @@ class Rectangle {
                 }
             }
 
+            console.log(vertex.toString())
+            console.log(oX, oY)
+            
+
             const oppSide = new Point(oX, oY).distanceTo(center)
-            console.log(oppSide)
+            // console.log(oppSide)
             const gamma = Math.asin(oppSide / radius)
             const alpha = Math.PI - gamma - phi
 
@@ -117,6 +122,7 @@ class Rectangle {
 
         })
 
+        console.log('--------------------------------')
         this.render()
 
         return this
