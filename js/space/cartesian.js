@@ -22,9 +22,9 @@ function rotationCoords(vertex, center, angle, support) {
 
     const oppSide = new Point(support.X, support.Y).distanceTo(center)
     const oppAngle = Math.asin(oppSide / radius)
-
+    
     const alpha = Math.PI - oppAngle - phi
-
+    
     X = H * Math.sin(alpha)
     Y = H * Math.cos(alpha)
 

@@ -82,7 +82,6 @@ class Rectangle {
             switch (this.getQuadrant(vertex)) {
                 // Upper Right
                 case CARTESIAN.I:
-                    console.log('I');
                     [X, Y] = CARTESIAN.rotationCoords(
                         vertex,
                         center,
@@ -95,7 +94,6 @@ class Rectangle {
 
                 // Upper left
                 case CARTESIAN.II:
-                    console.log('II');
                     [X, Y] = CARTESIAN.rotationCoords(
                         vertex,
                         center,
@@ -108,7 +106,6 @@ class Rectangle {
 
                 // Lower left
                 case CARTESIAN.III:
-                    console.log('III');
                     [X, Y] = CARTESIAN.rotationCoords(
                         vertex,
                         center,
@@ -121,7 +118,6 @@ class Rectangle {
 
                 // Lower right
                 case CARTESIAN.IV:
-                    console.log('IV');
                     [X, Y] = CARTESIAN.rotationCoords(
                         vertex,
                         center,
