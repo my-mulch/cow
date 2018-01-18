@@ -1,29 +1,6 @@
 
-class Rectangle {
-
-    /**
-     * Creates an instance of Rectangle.
-     * @param {...Points} The vertices of the rectangle  
-     * @memberof Rectangle
-     */
-
-    constructor(...vertices) {
-        this.vertices = vertices
-        this.context = null
-    }
-
-    /**
-     * Sets the internal context to render the rectangle
-     * 
-     * @param {CanvasContext} context 
-     * @memberof Rectangle
-     */
-
-    setContext(context) {
-        this.context = context
-
-        return this
-    }
+class Rectangle extends Shape {
+    
     /**
      * Computes the center of the rectangle
      * 
@@ -53,9 +30,9 @@ class Rectangle {
     }
 
     /**
+     * Rotate the rectangle by a given angle
      * 
-     * 
-     * @param {any} angle 
+     * @param {Integer} angle 
      * @memberof Rectangle
      */
     rotate(theta) {
