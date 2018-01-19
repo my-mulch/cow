@@ -1,8 +1,8 @@
-const DIRECTION = {
-    WEST: 0,
-    NORTH: 1,
-    EAST: 2,
-    SOUTH: 3
+const KEYMAP = {
+    ArrowDown: false,
+    ArrowUp: false,
+    ArrowLeft: false,
+    ArrowRight: false,
 }
 
 const AXIS = {
@@ -18,8 +18,8 @@ const CARTESIAN = {
     IV: 3
 }
 
-const ORIGIN = new Point(0, 0)
-const CANVAS = document.getElementById('myCanvas')
+// const ORIGIN = new Point(0, 0)
+// const CANVAS = document.getElementById('myCanvas')
 
 /**
  * Provide the cartesian X,Y coordinates for a rotation
