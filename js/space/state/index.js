@@ -16,6 +16,14 @@ const CARTESIAN = {
 const ORIGIN = new Point(0, 0)
 const CANVAS = document.getElementById('myCanvas')
 
+const rect = new Polygon(
+    new Point(225, 225),
+    new Point(350, 225),
+    new Point(350, 300),
+    new Point(225, 300))
+    .setContext(CANVAS.getContext("2d"))
+    .render()
+
 /**
  * Provide the cartesian X,Y coordinates for a rotation
  * 
@@ -40,3 +48,23 @@ function rotationCoords(vertex, center, angle, support) {
 
     return [X, Y]
 }
+
+const PRESSEDKEYS = new Set()
+
+const godsclock = (function* god() {
+    let index = 0.1;
+    while (true)
+        yield index *= 1.90;
+})()
+
+
+window.addEventListener("keydown", function (keyPress) {
+    PRESSEDKEYS.add(keyPress.key)
+    console.log(PRESSEDKEYS)
+}, true);
+
+window.addEventListener("keyup", function (keyPress) {
+    PRESSEDKEYS.delete(keyPress.key)
+
+
+}, true);
