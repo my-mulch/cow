@@ -116,7 +116,7 @@ class Shape {
     computeCenter() {
         return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
-        }, new Point())
+        }, ORIGIN.clone())
             .scale(1 / this.vertices.length)
     }
 

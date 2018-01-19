@@ -99,4 +99,8 @@ class Point {
         return this.coordinates.join(', ')
     }
 
+    clone() {
+        this.coordinates = [...this.coordinates]
+    }
+
 }

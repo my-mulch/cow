@@ -7,7 +7,8 @@ const DIRECTION = {
 
 const AXIS = {
     X: 0,
-    Y: 1
+    Y: 1,
+    Z: 2
 }
 
 const CARTESIAN = {
@@ -17,6 +18,7 @@ const CARTESIAN = {
     IV: 3
 }
 
+const ORIGIN = new Point(0, 0)
 const CANVAS = document.getElementById('myCanvas')
 
 /**
