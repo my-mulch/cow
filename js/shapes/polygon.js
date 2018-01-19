@@ -152,3 +152,29 @@ class Polygon {
     }
 
 }
+
+
+/**
+ * Provide the cartesian X,Y coordinates for a rotation
+ * 
+ * @param {Point} vertex The point we wish to rotate
+ * @param {Point} center The point around which to rotate
+ * @param {Double} angle The angle we wish to rotate
+ * @param {Point} support The point creating a right triangle with vertex
+ * @returns X,Y coordinates in cartesian space
+ */
+function rotationCoords(vertex, center, angle, support) {
+    const radius = center.distanceTo(vertex)
+    const H = 2 * radius * Math.sin(angle / 2)
+    const phi = (Math.PI - angle) / 2
+
+    const oppSide = support.distanceTo(center)
+    const oppAngle = Math.asin(oppSide / radius)
+
+    const alpha = Math.PI - oppAngle - phi
+
+    X = H * Math.sin(alpha)
+    Y = H * Math.cos(alpha)
+
+    return [X, Y]
+}
