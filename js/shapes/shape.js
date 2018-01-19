@@ -1,3 +1,4 @@
+
 class Shape {
 
     /**
@@ -9,7 +10,7 @@ class Shape {
         this.vertices = vertices
         this.context = null
     }
-    
+
     /**
      * Render the shape with saved context
      * 
@@ -36,7 +37,10 @@ class Shape {
     }
 
     getCenter() {
-
+        return this.vertices.reduce(function (center, vertex) {
+            return center.shift(...vertex.coordinates)
+        }, new Point())
+            .scale(1 / this.vertices.length)
     }
 
 }

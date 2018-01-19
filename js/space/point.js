@@ -1,7 +1,7 @@
 class Point {
     /**
      * Creates an instance of Point.
-     * @param {Array} dims 
+     * @param {...Double} dims 
      * @memberof Point
      */
     constructor(...dims) {
@@ -72,6 +72,18 @@ class Point {
     }
 
     /**
+     * Multiply each dimension by specified factor
+     * 
+     * @param {Double} factor 
+     * @memberof Point
+     */
+    scale(factor) {
+        this.coordinates = this.coordinates.map(function (val) {
+            return val * factor
+        })
+    }
+
+    /**
      * Returns the value of the point along a particular axis
      * 
      * @param {int} axis 
@@ -83,10 +95,10 @@ class Point {
     }
 
     toString() {
-        return this.coordinates.join(',')
+        return this.coordinates.join(', ')
     }
 
-    clone(){
+    clone() {
         return new Point(...this.coordinates)
     }
 
