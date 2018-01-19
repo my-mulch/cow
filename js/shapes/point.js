@@ -82,6 +82,8 @@ class Point {
         this.coordinates = this.coordinates.map(function (val) {
             return val * factor
         })
+
+        return this
     }
 
     /**
@@ -99,8 +101,16 @@ class Point {
         return this.coordinates.join(', ')
     }
 
+    /**
+     * Clone the Point instance
+     * 
+     * @returns the cloned Point
+     * @memberof Point
+     */
     clone() {
         this.coordinates = [...this.coordinates]
+
+        return this
     }
 
 }

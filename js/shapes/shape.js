@@ -111,12 +111,22 @@ class Shape {
      */
     setContext(context) {
         this.context = context
+
+        return this
     }
 
+    /**
+     * Compute the center of the shape
+     * 
+     * @returns the center point
+     * @memberof Shape
+     */
     computeCenter() {
         return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
         }, ORIGIN.clone())
+            // Reduce the vertices by adding combining all coordinate values
+            // then average the lot with a scale
             .scale(1 / this.vertices.length)
     }
 

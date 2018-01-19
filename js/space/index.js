@@ -24,10 +24,10 @@ const CANVAS = document.getElementById('myCanvas')
 /**
  * Provide the cartesian X,Y coordinates for a rotation
  * 
- * @param {Point} vertex 
- * @param {Point} center 
- * @param {Double} angle 
- * @param {Point} support 
+ * @param {Point} vertex The point we wish to rotate
+ * @param {Point} center The point around which to rotate
+ * @param {Double} angle The angle we wish to rotate
+ * @param {Point} support The point creating a right triangle with vertex
  * @returns X,Y coordinates in cartesian space
  */
 function rotationCoords(vertex, center, angle, support) {
@@ -35,7 +35,7 @@ function rotationCoords(vertex, center, angle, support) {
     const H = 2 * radius * Math.sin(angle / 2)
     const phi = (Math.PI - angle) / 2
 
-    const oppSide = new Point(support.X, support.Y).distanceTo(center)
+    const oppSide = support.distanceTo(center)
     const oppAngle = Math.asin(oppSide / radius)
 
     const alpha = Math.PI - oppAngle - phi
