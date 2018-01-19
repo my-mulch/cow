@@ -9,6 +9,7 @@ class Shape {
     constructor(...vertices) {
         this.vertices = vertices
         this.context = null
+        this.center = null
     }
 
     /**
@@ -34,6 +35,31 @@ class Shape {
         this.context.stroke();
 
         return this
+    }
+
+    /**
+     * Get the quadrant for a specified vertex
+     * 
+     * @param {any} vertex 
+     * @param {any} center 
+     * @returns 
+     * @memberof Shape
+     */
+    getQuadrant(vertex) {
+        const [centerX, centerY] = this.center.coordinates
+        const [vertexX, vertexY] = vertex.coordinates
+
+        if (centerX > vertexX && centerY > vertexY)
+            return CARTESIAN.II
+
+        if (centerX < vertexX && centerY > vertexY)
+            return CARTESIAN.I
+
+        if (centerX > vertexX && centerY < vertexY)
+            return CARTESIAN.III
+
+        if (centerX < vertexX && centerY < vertexY)
+            return CARTESIAN.IV
     }
 
     /**

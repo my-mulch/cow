@@ -1,33 +1,5 @@
 
 class Rectangle extends Shape {
-    
-    /**
-     * Computes the center of the rectangle
-     * 
-     * @memberof Rectangle
-     */
-    getCenter() {
-        const [A, B, C, D] = this.vertices
-
-        return Point.midpoint(A, C)
-    }
-
-    getQuadrant(vertex, center) {
-        const [centerX, centerY] = center.coordinates
-        const [vertexX, vertexY] = vertex.coordinates
-
-        if (centerX > vertexX && centerY > vertexY)
-            return CARTESIAN.II
-
-        if (centerX < vertexX && centerY > vertexY)
-            return CARTESIAN.I
-
-        if (centerX > vertexX && centerY < vertexY)
-            return CARTESIAN.III
-
-        if (centerX < vertexX && centerY < vertexY)
-            return CARTESIAN.IV
-    }
 
     /**
      * Rotate the rectangle by a given angle
