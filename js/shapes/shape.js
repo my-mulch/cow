@@ -16,7 +16,25 @@ class Shape {
      * 
      * @memberof Shape
      */
-    render() { /* Abstract Method */ }
+    render() {
+        this.context.clearRect(0, 0, CANVAS.WIDTH, CANVAS.HEIGHT)
+        this.context.beginPath()
+
+        this.vertices.forEach(function (currentVertex, index) {
+            const nextVertex =
+                index < this.vertices.length - 1
+                    ? this.vertices[index + 1]
+                    : this.vertices[0]
+
+            this.context.moveTo(...currentVertex.coordinates)
+            this.context.lineTo(...nextVertex.coordinates)
+
+        }, this)
+
+        this.context.stroke();
+
+        return this
+    }
 
     /**
      * Rotate the shape by an angle theta

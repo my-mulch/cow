@@ -1,4 +1,5 @@
 class Point {
+
     /**
      * Creates an instance of Point.
      * @param {...Double} dims 
@@ -96,10 +97,6 @@ class Point {
 
     toString() {
         return this.coordinates.join(', ')
-    }
-
-    clone() {
-        return new Point(...this.coordinates)
     }
 
 }
