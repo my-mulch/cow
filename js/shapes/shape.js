@@ -9,7 +9,7 @@ class Shape {
     constructor(...vertices) {
         this.vertices = vertices
         this.context = null
-        this.center = null
+        this.center = this.computeCenter()
     }
 
     /**
@@ -68,7 +68,40 @@ class Shape {
      * @param {Double} theta 
      * @memberof Shape
      */
-    rotate(theta) { /* Abstract Method */ }
+    rotate(theta) {
+        this.vertices.forEach(function (vertex) {
+            const [centerX, centerY] = this.center.coordinates
+            const [vertexX, vertexY] = vertex.coordinates
+
+            let X, Y
+            switch (this.getQuadrant(vertex)) {
+                case CARTESIAN.I:
+                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(centerX, vertexY))
+                    vertex.shift(Y, X)
+                    break
+
+                case CARTESIAN.II:
+                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(vertexX, centerY))
+                    vertex.shift(X, -Y)
+                    break
+
+                case CARTESIAN.III:
+                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(centerX, vertexY))
+                    vertex.shift(-Y, -X)
+                    break
+
+                case CARTESIAN.IV:
+                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(vertexX, centerY))
+                    vertex.shift(-X, Y)
+                    break
+            }
+        }, this)
+
+        this.render()
+        this.center = this.computeCenter()
+
+        return this
+    }
 
     /**
      * Set the graphics context
@@ -80,7 +113,7 @@ class Shape {
         this.context = context
     }
 
-    getCenter() {
+    computeCenter() {
         return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
         }, new Point())

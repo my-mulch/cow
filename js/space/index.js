@@ -1,10 +1,23 @@
+const DIRECTION = {
+    WEST: 0,
+    NORTH: 1,
+    EAST: 2,
+    SOUTH: 3
+}
+
+const AXIS = {
+    X: 0,
+    Y: 1
+}
+
 const CARTESIAN = {
     I: 0,
     II: 1,
     III: 2,
-    IV: 3,
-    rotationCoords
+    IV: 3
 }
+
+const CANVAS = document.getElementById('myCanvas')
 
 /**
  * Provide the cartesian X,Y coordinates for a rotation

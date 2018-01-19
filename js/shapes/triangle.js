@@ -1,7 +1,0 @@
-class Triangle {
-
-    constructor(vertices) {
-        
-    }
-
-}
