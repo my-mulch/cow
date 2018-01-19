@@ -1,24 +1,28 @@
 
-class Shape {
+class Polygon {
 
     /**
-     * Creates an instance of Shape.
+     * Creates an instance of Polygon.
      * @param {...Point} vertices 
-     * @memberof Shape
+     * @memberof Polygon
      */
     constructor(...vertices) {
         this.vertices = vertices
         this.context = null
         this.center = this.computeCenter()
+
+        this.eraseEachRender = true
     }
 
     /**
-     * Render the shape with saved context
+     * Render the Polygon with saved context
      * 
-     * @memberof Shape
+     * @memberof Polygon
      */
     render() {
-        this.context.clearRect(0, 0, CANVAS.WIDTH, CANVAS.HEIGHT)
+        if (this.eraseEachRender)
+            this.context.clearRect(0, 0, CANVAS.width, CANVAS.height)
+
         this.context.beginPath()
 
         this.vertices.forEach(function (currentVertex, index) {
@@ -42,8 +46,8 @@ class Shape {
      * 
      * @param {any} vertex 
      * @param {any} center 
-     * @returns 
-     * @memberof Shape
+     * @returns The cartesian quadrant in which the vertex resides
+     * @memberof Polygon
      */
     getQuadrant(vertex) {
         const [centerX, centerY] = this.center.coordinates
@@ -63,10 +67,11 @@ class Shape {
     }
 
     /**
-     * Rotate the shape by an angle theta
+     * Rotate the Polygon by an angle theta
      * 
      * @param {Double} theta 
-     * @memberof Shape
+     * @returns The Polygon instance
+     * @memberof Polygon
      */
     rotate(theta) {
         this.vertices.forEach(function (vertex) {
@@ -104,10 +109,26 @@ class Shape {
     }
 
     /**
+     * Shift the polygon by point coordinates
+     * 
+     * @param {Point} point 
+     * @returns The Polygon instance
+     * @memberof Polygon
+     */
+    shift(point) {
+        this.vertices.forEach(function (vertex) {
+            vertex.shift(...point.coordinates)
+        })
+
+        return this.render()
+    }
+
+    /**
      * Set the graphics context
      * 
      * @param {CanvasContext} context 
-     * @memberof Shape
+     * @returns The Polygon instance
+     * @memberof Polygon
      */
     setContext(context) {
         this.context = context
@@ -116,13 +137,13 @@ class Shape {
     }
 
     /**
-     * Compute the center of the shape
+     * Compute the center of the Polygon
      * 
-     * @returns the center point
-     * @memberof Shape
+     * @returns The center point
+     * @memberof Polygon
      */
     computeCenter() {
-        return this.vertices.reduce(function (center, vertex) {
+        return this.vertices.reduce(function (center, vertex, index) {
             return center.shift(...vertex.coordinates)
         }, ORIGIN.clone())
             // Reduce the vertices by adding combining all coordinate values
@@ -130,4 +151,30 @@ class Shape {
             .scale(1 / this.vertices.length)
     }
 
+}
+
+
+/**
+ * Provide the cartesian X,Y coordinates for a rotation
+ * 
+ * @param {Point} vertex The point we wish to rotate
+ * @param {Point} center The point around which to rotate
+ * @param {Double} angle The angle we wish to rotate
+ * @param {Point} support The point creating a right triangle with vertex
+ * @returns X,Y coordinates in cartesian space
+ */
+function rotationCoords(vertex, center, angle, support) {
+    const radius = center.distanceTo(vertex)
+    const H = 2 * radius * Math.sin(angle / 2)
+    const phi = (Math.PI - angle) / 2
+
+    const oppSide = support.distanceTo(center)
+    const oppAngle = Math.asin(oppSide / radius)
+
+    const alpha = Math.PI - oppAngle - phi
+
+    X = H * Math.sin(alpha)
+    Y = H * Math.cos(alpha)
+
+    return [X, Y]
 }

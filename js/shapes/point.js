@@ -108,9 +108,7 @@ class Point {
      * @memberof Point
      */
     clone() {
-        this.coordinates = [...this.coordinates]
-
-        return this
+        return new Point(...this.coordinates)
     }
 
 }
