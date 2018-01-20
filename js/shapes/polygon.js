@@ -11,7 +11,7 @@ class Polygon {
         this.context = null
         this.center = this.computeCenter()
 
-        this.eraseEachRender = true
+        this.eraseEachRender = false
     }
 
     /**

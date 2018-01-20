@@ -3,14 +3,14 @@ class Clock {
     constructor() {
         this.time = 0.01
         // The big bang!
-        this.genesis = this.tick()
+        this.genesis = this.start()
     }
 
-    *tick() {
-        while (true) yield this.time *= 1.90;
+    *start() {
+        while (true) yield this.time *= 1.10
     }
 
-    tock(handlers) {
+    tick(handlers) {
         handlers.forEach(function (handler) {
             handler(this.genesis.next().value)
         }, this)
