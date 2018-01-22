@@ -9,6 +9,10 @@ class Point {
         this.coordinates = dims
     }
 
+    static createFrom(event) {
+        return new Point(event.clientX, event.clientY)
+    }
+
     /**
      * Calculates the distance between self and point
      * 
@@ -96,19 +100,4 @@ class Point {
     get(axis) {
         return this.coordinates[axis]
     }
-
-    toString() {
-        return this.coordinates.join(', ')
-    }
-
-    /**
-     * Clone the Point instance
-     * 
-     * @returns the cloned Point
-     * @memberof Point
-     */
-    clone() {
-        return new Point(...this.coordinates)
-    }
-
 }

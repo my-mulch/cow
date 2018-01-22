@@ -1,7 +1,9 @@
 class Mouse {
     constructor(context) {
         this.context = context
-        this.mouseIsDown = false
+        
+        this.downLocation = null
+        this.dragBox = null
     }
 }
 

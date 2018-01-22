@@ -1,8 +1,10 @@
-const CANVAS = document.getElementById('myCanvas')
+const CANVAS = new Canvas()
+const MOUSE = new Mouse(CANVAS.canvas)
+const KEYBOARD = new KeyBoard(window)
+
+window.setInterval(CANVAS.render.bind(CANVAS))
 
 ///////////////////////////////////////////////////////////////////
-
-const KEYBOARD = new KeyBoard(window)
 
 KEYBOARD.context.addEventListener("keydown", function (event) {
     KEYBOARD.pressedKeys.add(event.key)
@@ -14,19 +16,22 @@ KEYBOARD.context.addEventListener("keyup", function (event) {
 
 ///////////////////////////////////////////////////////////////////
 
-const MOUSE = new Mouse(CANVAS)
-
-MOUSE.context.addEventListener('mousedown', function () {
-    MOUSE.mouseIsDown = true
+MOUSE.context.addEventListener('mousedown', function (mouseEvent) {
+    MOUSE.downLocation = Point.createFrom(mouseEvent)
 })
 
-MOUSE.context.addEventListener('mouseup', function () {
-    MOUSE.mouseIsDown = false
+MOUSE.context.addEventListener('mouseup', function (mouseEvent) {
+    if (!MOUSE.dragBox) {
+        CANVAS.points.push(Point.createFrom(mouseEvent))
+    }
+
+    MOUSE.downLocation = null
+    MOUSE.dragBox = null
 })
 
-MOUSE.context.addEventListener('mousemove', function () {
-    if (MOUSE.mouseIsDown) { // dragging the mouse
-        console.log('drag')
+MOUSE.context.addEventListener('mousemove', function (event) {
+    if (MOUSE.downLocation) { // dragging the mouse
+        MOUSE.dragBox = new Rectangle(MOUSE.downLocation, Point.createFrom(event))
     }
 })
 
