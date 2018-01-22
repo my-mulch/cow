@@ -24,20 +24,13 @@ class Polygon {
             this.context.clearRect(0, 0, CANVAS.width, CANVAS.height)
 
         this.context.beginPath()
-
-        this.vertices.forEach(function (currentVertex, index) {
-            const nextVertex =
-                index < this.vertices.length - 1
-                    ? this.vertices[index + 1]
-                    : this.vertices[0]
-
-            this.context.moveTo(...currentVertex.coordinates)
+        this.vertices.forEach(function (vertex, index) {
+            const nextVertex = this.vertices[(index + 1) % this.vertices.length]
+            
+            this.context.moveTo(...vertex.coordinates)
             this.context.lineTo(...nextVertex.coordinates)
-
         }, this)
-
         this.context.stroke();
-
         return this
     }
 
@@ -143,9 +136,9 @@ class Polygon {
      * @memberof Polygon
      */
     computeCenter() {
-        return this.vertices.reduce(function (center, vertex, index) {
+        return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
-        }, ORIGIN.clone())
+        }, new Point(0, 0))
             // Reduce the vertices by adding combining all coordinate values
             // then average the lot with a scale
             .scale(1 / this.vertices.length)
