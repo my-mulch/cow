@@ -8,7 +8,7 @@ class Polygon {
     constructor(...vertices) {
         this.vertices = vertices
         this.center = this.computeCenter()
-        this.context = CANVAS.context
+        this.context = SCENE.context
     }
 
     /**

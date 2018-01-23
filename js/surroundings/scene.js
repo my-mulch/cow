@@ -1,23 +1,30 @@
-class Canvas {
+class Scene {
 
-    constructor() {
+    constructor(handlers) {
         this.canvas = document.getElementById('myCanvas')
         this.context = this.canvas.getContext('2d')
+
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
+        this.dragBox = null
+        this.selectedShape = null
 
         this.shapes = []
-        this.dragBox = null
+        this.eventHandler = new EventHandler()
+
+        this.keyBoard = new KeyBoard(window)
+        this.mouse = new Mouse(window)
+
+        this.render = this.render.bind(this)
     }
 
     render() {
         this.context.clearRect(0, 0, this.width, this.height)
         this.context.beginPath()
 
-        this.shapes.forEach(function (shape) {
-            shape.render()
-        })
+        this.shapes.forEach(function (shape) { shape.render() })
 
+        this.eventHandler.runActions(this.keyBoard.pressedKeys)
         this.dragBox && this.dragBox.render()
 
         return this
@@ -30,5 +37,4 @@ class Canvas {
 
         this.shapes.push(new Polygon(...selectedPoints))
     }
-
 }
