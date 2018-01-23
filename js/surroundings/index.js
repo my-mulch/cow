@@ -22,7 +22,7 @@ MOUSE.context.addEventListener('mousedown', function (mouseEvent) {
 
 MOUSE.context.addEventListener('mouseup', function (mouseEvent) {
     if (!MOUSE.dragBox) {
-        CANVAS.points.push(Point.createFrom(mouseEvent))
+        CANVAS.shapes.push(Point.createFrom(mouseEvent))
     }
 
     MOUSE.downLocation = null
@@ -31,7 +31,10 @@ MOUSE.context.addEventListener('mouseup', function (mouseEvent) {
 
 MOUSE.context.addEventListener('mousemove', function (event) {
     if (MOUSE.downLocation) { // dragging the mouse
+
         MOUSE.dragBox = new Rectangle(MOUSE.downLocation, Point.createFrom(event))
+        CANVAS.shapes.push(MOUSE.dragBox)
+        
     }
 })
 
