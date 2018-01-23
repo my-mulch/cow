@@ -34,8 +34,8 @@ class Point {
     */
     static midpoint(a, b) {
         return new Point(
-            ...a.coordinates.map(function (val, dim) {
-                return (val + b.coordinates[dim]) / 2
+            ...a.coordinates.map(function (coordinate, axis) {
+                return (coordinate + b.coordinates[axis]) / 2
             })
         )
     }
@@ -74,24 +74,24 @@ class Point {
     }
 
     /**
-     * Multiply each dimension by specified factor
+     * Multiply each coordinate by specified factor
      * 
      * @param {Double} factor 
      * @memberof Point
      */
     scale(factor) {
-        this.coordinates = this.coordinates.map(function (val) {
-            return val * factor
+        this.coordinates = this.coordinates.map(function (coordinate) {
+            return coordinate * factor
         })
 
         return this
     }
 
     /**
-     * Compute the difference between two points
+     * Compute the difference between two points' coordinates
      * 
      * @param {Point} point 
-     * @returns The differences along each axis
+     * @returns The differences in coordinate value along each axis
      * @memberof Point
      */
     diff(point) {
@@ -140,5 +140,15 @@ class Point {
         return polygon.vertices.every(function (vertex) {
             return vertex.distanceTo(center) >= distanceToCenter
         })
+    }
+
+    /**
+     * Returns a clone of this Point instance
+     * 
+     * @returns 
+     * @memberof Point
+     */
+    clone() {
+        return new Point(...this.coordinates)
     }
 }
