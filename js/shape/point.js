@@ -141,4 +141,14 @@ class Point {
             return vertex.distanceTo(center) >= distanceToCenter
         })
     }
+
+    /**
+     * Returns a clone of this Point instance
+     * 
+     * @returns 
+     * @memberof Point
+     */
+    clone() {
+        return new Point(...this.coordinates)
+    }
 }

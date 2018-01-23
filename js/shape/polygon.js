@@ -66,33 +66,19 @@ class Polygon {
      * @memberof Polygon
      */
     rotate(theta) {
+        const center = this.center
+
         this.vertices.forEach(function (vertex) {
-            const [centerX, centerY] = this.center.coordinates
-            const [vertexX, vertexY] = vertex.coordinates
+            // const [centerX, centerY] = this.center.coordinates
+            // const [vertexX, vertexY] = vertex.coordinates
+            const radius = vertex.distanceTo(center)
+            const [w, h] = vertex.diff(center)
+            const oldAngle = Math.atan(h / w)
+            const newAngle = (2 * Math.PI - oldAngle - theta) % Math.PI
 
-            let X, Y
-            switch (this.getQuadrant(vertex)) {
-                case CARTESIAN.I:
-                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(centerX, vertexY))
-                    vertex.shift(Y, X)
-                    break
+            center.clone()
 
-                case CARTESIAN.II:
-                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(vertexX, centerY))
-                    vertex.shift(X, -Y)
-                    break
-
-                case CARTESIAN.III:
-                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(centerX, vertexY))
-                    vertex.shift(-Y, -X)
-                    break
-
-                case CARTESIAN.IV:
-                    [X, Y] = rotationCoords(vertex, this.center, theta, new Point(vertexX, centerY))
-                    vertex.shift(-X, Y)
-                    break
-            }
-        }, this)
+        })
 
         this.render()
         this.center = this.computeCenter()
