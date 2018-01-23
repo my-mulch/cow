@@ -24,7 +24,11 @@ class Scene {
 
         this.shapes.forEach(function (shape) { shape.render() })
 
-        this.eventHandler.runActions(this.keyBoard.pressedKeys)
+        this.eventHandler.runActions(
+            Array.from(this.keyBoard.pressedKeys),
+            this.selectedShape
+        )
+
         this.dragBox && this.dragBox.render()
 
         return this
