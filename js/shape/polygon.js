@@ -1,4 +1,3 @@
-
 class Polygon {
 
     /**
@@ -8,8 +7,8 @@ class Polygon {
      */
     constructor(...vertices) {
         this.vertices = vertices
-        this.context = null
         this.center = this.computeCenter()
+        this.context = CANVAS.context
 
         this.eraseEachRender = false
     }
@@ -26,7 +25,7 @@ class Polygon {
         this.context.beginPath()
         this.vertices.forEach(function (vertex, index) {
             const nextVertex = this.vertices[(index + 1) % this.vertices.length]
-            
+
             this.context.moveTo(...vertex.coordinates)
             this.context.lineTo(...nextVertex.coordinates)
         }, this)
@@ -116,18 +115,7 @@ class Polygon {
         return this.render()
     }
 
-    /**
-     * Set the graphics context
-     * 
-     * @param {CanvasContext} context 
-     * @returns The Polygon instance
-     * @memberof Polygon
-     */
-    setContext(context) {
-        this.context = context
 
-        return this
-    }
 
     /**
      * Compute the center of the Polygon
