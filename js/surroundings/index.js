@@ -21,9 +21,10 @@ MOUSE.context.addEventListener('mousedown', function (mouseEvent) {
 })
 
 MOUSE.context.addEventListener('mouseup', function (mouseEvent) {
-    if (!CANVAS.dragBox) {
+    if (!CANVAS.dragBox)
         CANVAS.shapes.push(Point.createFrom(mouseEvent))
-    }
+    else
+        CANVAS.mergeWithinDragRegion()
 
     MOUSE.downLocation = null
     CANVAS.dragBox = null

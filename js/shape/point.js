@@ -119,7 +119,7 @@ class Point {
         const distanceToCenter = this.distanceTo(center)
 
         return polygon.vertices.every(function (vertex) {
-            vertex.distanceTo(center) >= distanceToCenter
+            return vertex.distanceTo(center) >= distanceToCenter
         })
     }
 }
