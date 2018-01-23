@@ -19,8 +19,16 @@ class Canvas {
         })
 
         this.dragBox && this.dragBox.render()
-        
+
         return this
+    }
+
+    mergeWithinDragRegion() {
+        const selectedPoints = this.shapes.filter(function (shape) {
+            return shape instanceof Point && shape.isWithin(this.dragBox)
+        }, this)
+
+        this.shapes.push(new Polygon(...selectedPoints))
     }
 
 }
