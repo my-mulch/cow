@@ -1,4 +1,4 @@
-class Clock {
+class Engine {
 
     constructor() {
         this.time = 0.01

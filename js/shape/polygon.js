@@ -1,4 +1,3 @@
-
 class Polygon {
 
     /**
@@ -8,8 +7,8 @@ class Polygon {
      */
     constructor(...vertices) {
         this.vertices = vertices
-        this.context = null
         this.center = this.computeCenter()
+        this.context = CANVAS.context
 
         this.eraseEachRender = false
     }
@@ -24,20 +23,13 @@ class Polygon {
             this.context.clearRect(0, 0, CANVAS.width, CANVAS.height)
 
         this.context.beginPath()
+        this.vertices.forEach(function (vertex, index) {
+            const nextVertex = this.vertices[(index + 1) % this.vertices.length]
 
-        this.vertices.forEach(function (currentVertex, index) {
-            const nextVertex =
-                index < this.vertices.length - 1
-                    ? this.vertices[index + 1]
-                    : this.vertices[0]
-
-            this.context.moveTo(...currentVertex.coordinates)
+            this.context.moveTo(...vertex.coordinates)
             this.context.lineTo(...nextVertex.coordinates)
-
         }, this)
-
         this.context.stroke();
-
         return this
     }
 
@@ -123,18 +115,7 @@ class Polygon {
         return this.render()
     }
 
-    /**
-     * Set the graphics context
-     * 
-     * @param {CanvasContext} context 
-     * @returns The Polygon instance
-     * @memberof Polygon
-     */
-    setContext(context) {
-        this.context = context
 
-        return this
-    }
 
     /**
      * Compute the center of the Polygon
@@ -143,9 +124,9 @@ class Polygon {
      * @memberof Polygon
      */
     computeCenter() {
-        return this.vertices.reduce(function (center, vertex, index) {
+        return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
-        }, ORIGIN.clone())
+        }, new Point(0, 0))
             // Reduce the vertices by adding combining all coordinate values
             // then average the lot with a scale
             .scale(1 / this.vertices.length)
