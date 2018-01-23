@@ -8,6 +8,7 @@ window.setInterval(CANVAS.render.bind(CANVAS))
 
 KEYBOARD.context.addEventListener("keydown", function (event) {
     KEYBOARD.pressedKeys.add(event.key)
+    
 }, this)
 
 KEYBOARD.context.addEventListener("keyup", function (event) {
