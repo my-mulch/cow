@@ -113,4 +113,13 @@ class Point {
         this.context.arc(...this.coordinates, ...this.displayOpts)
         this.context.stroke()
     }
+
+    isWithin(polygon) {
+        const center = polygon.computeCenter()
+        const distanceToCenter = this.distanceTo(center)
+
+        return polygon.vertices.every(function (vertex) {
+            vertex.distanceTo(center) >= distanceToCenter
+        })
+    }
 }
