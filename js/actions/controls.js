@@ -1,5 +1,4 @@
-
-this.HANDLERS = {
+HANDLERS = {
     /*  MOVEMENT */
     ArrowUp: (velocity) => SELECTED.shift(new Point(0, -velocity)),
     ArrowDown: (velocity) => SELECTED.shift(new Point(0, velocity)),

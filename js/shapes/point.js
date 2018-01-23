@@ -8,7 +8,7 @@ class Point {
      * @memberof Point
      */
     constructor(...dims) {
-        this.context = CANVAS.context
+        this.context = SCENE.context
         this.coordinates = dims
         // 5 -> radius | 0 -> startAngle | Math.PI * 2 -> endAngle 
         this.displayOpts = [5, 0, Math.PI * 2]
