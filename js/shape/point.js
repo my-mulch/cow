@@ -100,6 +100,13 @@ class Point {
         })
     }
 
+    /**
+     * Returns the two corners forming a rectangle with the passed point
+     * 
+     * @param {Point} point 
+     * @returns 
+     * @memberof Point
+     */
     corners(point) {
         return [
             new Point(point.coordinates[AXIS.X], this.coordinates[AXIS.Y]),
@@ -107,6 +114,11 @@ class Point {
         ]
     }
 
+    /**
+     * Renders the Point as a circle
+     * 
+     * @memberof Point
+     */
     render() {
         this.context.beginPath()
         this.context.moveTo(...this.coordinates)
@@ -114,6 +126,13 @@ class Point {
         this.context.stroke()
     }
 
+    /**
+     * Checks whether the point is within the given Polygon
+     * 
+     * @param {Polygon} polygon 
+     * @returns 
+     * @memberof Point
+     */
     isWithin(polygon) {
         const center = polygon.computeCenter()
         const distanceToCenter = this.distanceTo(center)
