@@ -124,6 +124,8 @@ class Point {
         this.context.moveTo(...this.coordinates)
         this.context.arc(...this.coordinates, ...this.displayOpts)
         this.context.stroke()
+
+        return this
     }
 
     /**
