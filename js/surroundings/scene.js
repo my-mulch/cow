@@ -1,6 +1,6 @@
 class Scene {
 
-    constructor(handlers) {
+    constructor() {
         this.canvas = document.getElementById('myCanvas')
         this.context = this.canvas.getContext('2d')
 
@@ -19,7 +19,7 @@ class Scene {
     }
 
     render() {
-        this.context.clearRect(0, 0, this.width, this.height)
+        // this.context.clearRect(0, 0, this.width, this.height)
         this.context.beginPath()
 
         this.shapes.forEach(function (shape) { shape.render() })
@@ -29,7 +29,8 @@ class Scene {
             this.selectedShape
         )
 
-        this.dragBox && this.dragBox.render()
+        if (this.dragBox)
+            this.dragBox.render()
 
         return this
     }
@@ -39,6 +40,7 @@ class Scene {
             return shape instanceof Point && shape.isWithin(this.dragBox)
         }, this)
 
-        this.shapes.push(new Polygon(...selectedPoints))
+        this.selectedShape = new Polygon(...selectedPoints)
+        this.shapes.push(this.selectedShape)
     }
 }

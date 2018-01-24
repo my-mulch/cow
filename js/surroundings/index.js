@@ -1,13 +1,23 @@
-const SCENE = new Scene(HANDLERS)
+const SCENE = new Scene()
 window.setInterval(SCENE.render)
+
+SCENE.selectedShape = new Rectangle(
+    new Point(533, 233),
+    new Point(213, 324)
+).render()
+
+SCENE.shapes.push(SCENE.selectedShape)
+
 
 ///////////////////////////////////////////////////////////////////
 
 SCENE.keyBoard.context.addEventListener("keydown", function (event) {
+    event.preventDefault()
     SCENE.keyBoard.pressedKeys.add(event.key)
 }, this)
 
 SCENE.keyBoard.context.addEventListener("keyup", function (event) {
+    event.preventDefault()
     SCENE.keyBoard.pressedKeys.delete(event.key)
 })
 
