@@ -1,40 +1,46 @@
-const CANVAS = new Canvas()
-const MOUSE = new Mouse(CANVAS.canvas)
-const KEYBOARD = new KeyBoard(window)
+const SCENE = new Scene()
+window.setInterval(SCENE.render)
 
-window.setInterval(CANVAS.render.bind(CANVAS))
+SCENE.selectedShape = new Rectangle(
+    new Point(533, 233),
+    new Point(213, 324)
+).render()
+
+SCENE.shapes.push(SCENE.selectedShape)
+
 
 ///////////////////////////////////////////////////////////////////
 
-KEYBOARD.context.addEventListener("keydown", function (event) {
-    KEYBOARD.pressedKeys.add(event.key)
-    
+SCENE.keyBoard.context.addEventListener("keydown", function (event) {
+    event.preventDefault()
+    SCENE.keyBoard.pressedKeys.add(event.key)
 }, this)
 
-KEYBOARD.context.addEventListener("keyup", function (event) {
-    KEYBOARD.pressedKeys.delete(event.key)
+SCENE.keyBoard.context.addEventListener("keyup", function (event) {
+    event.preventDefault()
+    SCENE.keyBoard.pressedKeys.delete(event.key)
 })
 
 ///////////////////////////////////////////////////////////////////
 
-MOUSE.context.addEventListener('mousedown', function (mouseEvent) {
-    MOUSE.downLocation = Point.createFrom(mouseEvent)
+SCENE.mouse.context.addEventListener('mousedown', function (mouseEvent) {
+    SCENE.mouse.downLocation = Point.createFrom(mouseEvent)
 })
 
-MOUSE.context.addEventListener('mouseup', function (mouseEvent) {
-    if (!CANVAS.dragBox)
-        CANVAS.shapes.push(Point.createFrom(mouseEvent))
+SCENE.mouse.context.addEventListener('mouseup', function (mouseEvent) {
+    if (!SCENE.dragBox)
+        SCENE.shapes.push(Point.createFrom(mouseEvent))
     else
-        CANVAS.mergeWithinDragRegion()
+        SCENE.mergeWithinDragRegion()
 
-    MOUSE.downLocation = null
-    CANVAS.dragBox = null
+    SCENE.mouse.downLocation = null
+    SCENE.dragBox = null
 })
 
-MOUSE.context.addEventListener('mousemove', function (event) {
-    if (MOUSE.downLocation) { // dragging the mouse
-        CANVAS.dragBox = new Rectangle(
-            MOUSE.downLocation,
+SCENE.mouse.context.addEventListener('mousemove', function (event) {
+    if (SCENE.mouse.downLocation) { // dragging the mouse
+        SCENE.dragBox = new Rectangle(
+            SCENE.mouse.downLocation,
             Point.createFrom(event)
         )
     }

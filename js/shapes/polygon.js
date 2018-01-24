@@ -8,7 +8,7 @@ class Polygon {
     constructor(...vertices) {
         this.vertices = vertices
         this.center = this.computeCenter()
-        this.context = CANVAS.context
+        this.context = SCENE.context
     }
 
     /**
@@ -39,20 +39,21 @@ class Polygon {
      * @memberof Polygon
      */
     rotate(theta) {
-        const center = this.center
-
-        this.vertices = this.vertices.map(function (vertex) {
-            const radius = vertex.distanceTo(center)
-            const [w, h] = vertex.diff(center)
+        this.vertices = this.vertices.map(function (vertex, index) {
+            const radius = vertex.distanceTo(this.center)
+            const [w, h] = vertex.diff(this.center)
             const oldAngle = Math.atan(h / w)
             const newAngle = (2 * Math.PI - oldAngle - theta) % Math.PI
 
             const X = radius * Math.cos(newAngle)
             const Y = radius * Math.sin(newAngle)
 
-            return center.clone().shift(X, Y)
+            if (index === 0 || index === 3)
+                return this.center.clone().shift(X, -Y)
+            else
+                return this.center.clone().shift(-X, Y)
 
-        })
+        }, this)
 
         this.center = this.computeCenter()
         this.render()
