@@ -3,14 +3,14 @@ class EventHandler {
     constructor() {
         this.actions = {
             /*  MOVEMENT */
-            ArrowUp: (shape) => shape.shift(new Point(0, -5)),
-            ArrowDown: (shape) => shape.shift(new Point(0, 5)),
-            ArrowLeft: (shape) => shape.shift(new Point(-5, 0)),
-            ArrowRight: (shape) => shape.shift(new Point(5, 0)),
+            ArrowUp: (shape) => shape.shift(new Point(0, -4)),
+            ArrowDown: (shape) => shape.shift(new Point(0, 4)),
+            ArrowLeft: (shape) => shape.shift(new Point(-4, 0)),
+            ArrowRight: (shape) => shape.shift(new Point(4, 0)),
 
             /*  ROTATION */
-            s: (shape) => shape.rotate(Math.PI / 256),
-            a: (shape) => shape.rotate(-Math.PI / 256),
+            s: (shape) => shape.rotate(Math.PI / 1024),
+            a: (shape) => shape.rotate(-Math.PI / 1024),
         }
     }
 
