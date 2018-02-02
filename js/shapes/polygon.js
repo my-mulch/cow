@@ -27,7 +27,7 @@ class Polygon {
 
         }, this)
 
-        this.context.stroke();
+        this.context.stroke()
         return this
     }
 
@@ -42,22 +42,19 @@ class Polygon {
         this.vertices = this.vertices.map(function (vertex, index) {
             const radius = vertex.distanceTo(this.center)
             const [w, h] = vertex.diff(this.center)
-            const oldAngle = Math.atan(h / w)
-            const newAngle = (2 * Math.PI - oldAngle - theta) % Math.PI
+            const angle = Math.atan(h / w)
 
-            const X = radius * Math.cos(newAngle)
-            const Y = radius * Math.sin(newAngle)
+            let X = Math.sign(w) * Math.abs(radius * Math.cos(angle + theta))
+            let Y = Math.sign(h) * Math.abs(radius * Math.sin(angle + theta))
 
-            if (index === 0 || index === 3)
-                return this.center.clone().shift(X, -Y)
-            else
-                return this.center.clone().shift(-X, Y)
+            if (angle + theta > Math.PI / 2) X *= -1
+            else if (angle < 0 && (angle + theta) > 0) Y *= -1
+
+            return this.center.clone().shift(X, Y)
 
         }, this)
 
         this.center = this.computeCenter()
-        this.render()
-
         return this
     }
 
@@ -73,7 +70,7 @@ class Polygon {
             vertex.shift(...point.coordinates)
         })
 
-        return this.render()
+        return this
     }
 
     /**
@@ -85,10 +82,8 @@ class Polygon {
     computeCenter() {
         return this.vertices.reduce(function (center, vertex) {
             return center.shift(...vertex.coordinates)
-        }, new Point(0, 0))
-            // Reduce the vertices by adding combining all coordinate values
-            // then average the lot with a scale
+        }, new Point(0, 0)) // reduce from origin
+            // Combine all coordinate values then average the lot with a scale
             .scale(1 / this.vertices.length)
     }
-
 }
