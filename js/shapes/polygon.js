@@ -39,7 +39,7 @@ class Polygon {
      * @memberof Polygon
      */
     rotate(theta) {
-        this.vertices = this.vertices.map(function (vertex, index) {
+        this.vertices = this.vertices.map(function (vertex) {
             const radius = vertex.distanceTo(this.center)
             const [w, h] = vertex.diff(this.center)
             const angle = Math.atan(h / w)
@@ -56,6 +56,12 @@ class Polygon {
 
         this.center = this.computeCenter()
         return this
+    }
+
+    zoom(factor) {
+        this.vertices = this.vertices.map(function (vertex) {
+            return vertex.scale(factor)
+        })
     }
 
     /**
