@@ -1,6 +1,8 @@
 const SCENE = new Scene()
 window.setInterval(SCENE.render)
 
+SCENE.selectedShape = new Rectangle(new Point(0,0), new Point(200,200))
+SCENE.shapes.push(SCENE.selectedShape)
 ///////////////////////////////////////////////////////////////////
 
 SCENE.keyBoard.context.addEventListener("keydown", function (event) {

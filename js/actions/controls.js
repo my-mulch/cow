@@ -11,6 +11,10 @@ class EventHandler {
             /*  ROTATION */
             s: (shape) => shape.rotate(Math.PI / 1024),
             a: (shape) => shape.rotate(-Math.PI / 1024),
+
+            /* ZOOM */
+            i: (shape) => shape.zoom(1.005),
+            o: (shape) => shape.zoom(0.99)
         }
     }
 
