@@ -39,29 +39,38 @@ class Polygon {
      * @memberof Polygon
      */
     rotate(theta) {
-        this.vertices = this.vertices.map(function (vertex) {
+        this.vertices = this.vertices.map(function (vertex, index) {
             const radius = vertex.distanceTo(this.center)
             const [w, h] = vertex.diff(this.center)
-            const angle = Math.atan(h / w)
 
-            let X = Math.sign(w) * Math.abs(radius * Math.cos(angle + theta))
-            let Y = Math.sign(h) * Math.abs(radius * Math.sin(angle + theta))
+            const wAngle = Math.acos(w / radius)
+            const hAngle = Math.asin(h / radius)
 
-            if (angle + theta > Math.PI / 2) X *= -1
-            else if (angle < 0 && (angle + theta) > 0) Y *= -1
-
-            return this.center.clone().shift(X, Y)
+            return this.center.clone().shift(
+                radius * Math.cos(wAngle + Math.sign(h) * theta),
+                radius * Math.sin(hAngle + Math.sign(w) * theta)
+            )
 
         }, this)
 
-        this.center = this.computeCenter()
         return this
     }
-
+    
+    /**
+     * Zoom the polygon by a scaling factor
+     * 
+     * @param {double} factor 
+     * @returns The zoomed Polygon
+     * @memberof Polygon
+     */
     zoom(factor) {
         this.vertices = this.vertices.map(function (vertex) {
-            return vertex.scale(factor)
-        })
+            const [w, h] = vertex.diff(this.center)
+
+            return this.center.clone().shift(w * factor, h * factor)
+        }, this)
+
+        return this
     }
 
     /**
@@ -76,6 +85,7 @@ class Polygon {
             vertex.shift(...point.coordinates)
         })
 
+        this.center = this.computeCenter()
         return this
     }
 

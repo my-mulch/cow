@@ -9,12 +9,12 @@ class EventHandler {
             ArrowRight: (shape) => shape.shift(new Point(4, 0)),
 
             /*  ROTATION */
-            s: (shape) => shape.rotate(Math.PI / 1024),
-            a: (shape) => shape.rotate(-Math.PI / 1024),
+            s: (shape) => shape.rotate(Math.PI / 256),
+            a: (shape) => shape.rotate(-Math.PI / 256),
 
             /* ZOOM */
-            i: (shape) => shape.zoom(1.005),
-            o: (shape) => shape.zoom(0.99)
+            i: (shape) => shape.zoom(1.1),
+            o: (shape) => shape.zoom(0.89)
         }
     }
 
