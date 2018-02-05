@@ -39,7 +39,7 @@ class Polygon {
      * @memberof Polygon
      */
     rotate(theta) {
-        this.vertices = this.vertices.map(function (vertex, index) {
+        this.vertices = this.vertices.map(function (vertex) {
             const radius = vertex.distanceTo(this.center)
             const [w, h] = vertex.diff(this.center)
 
@@ -50,7 +50,7 @@ class Polygon {
                 radius * Math.cos(wAngle + Math.sign(h) * theta),
                 radius * Math.sin(hAngle + Math.sign(w) * theta)
             )
-
+            
         }, this)
 
         return this
