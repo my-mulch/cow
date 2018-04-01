@@ -1,6 +1,8 @@
 
 class EventHandler {
-    constructor() {
+    constructor(transformer) {
+        this.transformer = transformer
+
         this.actions = {
             /*  MOVEMENT */
             ArrowUp: (shape) => shape.shift(new Point(0, -4)),
