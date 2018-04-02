@@ -4,12 +4,12 @@ class Point {
 
     /**
      * Creates an instance of Point.
-     * @param {...Double} dims 
+     * @param {...Double} coordinates 
      * @memberof Point
      */
-    constructor(...dims) {
+    constructor(...coordinates) {
         this.context = SCENE.context
-        this.coordinates = dims
+        this.coordinates = coordinates
         // 5 -> radius | 0 -> startAngle | Math.PI * 2 -> endAngle 
         this.displayOpts = [5, 0, Math.PI * 2]
     }
@@ -53,38 +53,6 @@ class Point {
                 return distance + Math.pow(difference, 2)
             }, 0)
         )
-    }
-
-    /**
-     * Shifts the point by provided offsets
-     * 
-     * @param {Array} offsets 
-     * @returns 
-     * @memberof Point
-     */
-    shift(...offsets) {
-        if (offsets.length !== this.coordinates.length)
-            throw new Error('Dims must be equal!')
-
-        this.coordinates = this.coordinates.map(function (val, dim) {
-            return val + offsets[dim]
-        })
-
-        return this
-    }
-
-    /**
-     * Multiply each coordinate by specified factor
-     * 
-     * @param {Double} factor 
-     * @memberof Point
-     */
-    scale(factor) {
-        this.coordinates = this.coordinates.map(function (coordinate) {
-            return coordinate * factor
-        })
-
-        return this
     }
 
     /**
