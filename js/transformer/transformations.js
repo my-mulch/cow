@@ -4,21 +4,21 @@ const ONE_FN = () => 1
 const ROTATION = {
 
     X: new Matrix([
-        [ONE_FN, ZERO_FN, ZERO_FN],
-        [ZERO_FN, Math.cos, Math.sin],
-        [ZERO_FN, -Math.sin, Math.cos]
+        [1, 0, 0],
+        [0, Math.cos, Math.sin],
+        [0, -Math.sin, Math.cos],
     ]),
 
     Y: new Matrix([
-        [Math.cos, ZERO_FN, -Math.sin],
-        [ZERO_FN, ONE_FN, ZERO_FN],
-        [Math.sin, ZERO_FN, Math.cos]
+        [Math.cos, 0, -Math.sin],
+        [0, 1, 0],
+        [Math.sin, 0, Math.cos]
     ]),
 
     Z: new Matrix([
-        [Math.cos, Math.sin, ZERO_FN],
-        [-Math.sin, Math.cos, ZERO_FN],
-        [ZERO_FN, ZERO_FN, ONE_FN]
+        [Math.cos, Math.sin, 0],
+        [-Math.sin, Math.cos, 0],
+        [0, 0, 1],
     ])
 
 }
