@@ -2,7 +2,17 @@ const SCENE = new Scene()
 window.setInterval(SCENE.render)
 
 SCENE.shapes.push(
-    SCENE.selectedShape = new Rectangle(new Point(50, 50), new Point(300, 300))
+    SCENE.selectedShape = new Polygon(
+        new Point(1, 300, 400, 1),
+        new Point(400, 300, 400, 1),
+        new Point(400, 300, 500, 1),
+        new Point(1, 300, 500, 1),
+
+        new Point(1, 500, 500, 1),
+        new Point(400, 500, 500, 1),
+        new Point(400, 500, 400, 1),
+        new Point(1, 500, 400, 1)
+    )
 )
 
 ///////////////////////////////////////////////////////////////////
