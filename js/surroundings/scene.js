@@ -25,7 +25,7 @@ class Scene {
         this.shapes.forEach(function (shape) { shape.render() })
 
         this.eventHandler.runActions(
-            Array.from(this.keyBoard.pressedKeys),
+            this.keyBoard.getPressedKeys(),
             this.selectedShape
         )
 

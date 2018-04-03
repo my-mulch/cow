@@ -1,25 +1,55 @@
-const ZERO_FN = () => 0
-const ONE_FN = () => 1
+Math.nsin = (angle) => Math.sin(-angle)
+
+const ZERO = () => 0
+const ONE = () => 1
+const SCALAR = (k) => k
+
 
 const ROTATION = {
 
     X: new Matrix([
-        [1, 0, 0],
-        [0, Math.cos, Math.sin],
-        [0, -Math.sin, Math.cos],
+        [ONE, ZERO, ZERO, ZERO],
+        [ZERO, Math.cos, Math.sin, ZERO],
+        [ZERO, Math.nsin, Math.cos, ZERO],
+        [ZERO, ZERO, ZERO, ONE]
     ]),
 
     Y: new Matrix([
-        [Math.cos, 0, -Math.sin],
-        [0, 1, 0],
-        [Math.sin, 0, Math.cos]
+        [Math.cos, ZERO, Math.sin, ZERO],
+        [ZERO,      ONE, ZERO, ZERO],
+        [Math.nsin, ZERO, Math.cos, ZERO],
+        [ZERO,      ZERO, ZERO, ONE]
     ]),
 
     Z: new Matrix([
-        [Math.cos, Math.sin, 0],
-        [-Math.sin, Math.cos, 0],
-        [0, 0, 1],
+        [Math.cos, Math.sin, ZERO, ZERO],
+        [Math.nsin, Math.cos, ZERO, ZERO],
+        [ZERO, ZERO, ONE, ZERO],
+        [ZERO, ZERO, ZERO, ONE]
     ])
 
 }
 
+const TRANSLATION = {
+    X: new Matrix([
+        [ONE, ZERO, ZERO, SCALAR],
+        [ZERO, ONE, ZERO, ZERO],
+        [ZERO, ZERO, ONE, ZERO],
+        [ZERO, ZERO, ZERO, ONE]
+    ]),
+
+    Y: new Matrix([
+        [ONE, ZERO, ZERO, ZERO],
+        [ZERO, ONE, ZERO, SCALAR],
+        [ZERO, ZERO, ONE, ZERO],
+        [ZERO, ZERO, ZERO, ONE]
+    ]),
+
+    Z: new Matrix([
+        [ONE, ZERO, ZERO, ZERO],
+        [ZERO, ONE, ZERO, ZERO],
+        [ZERO, ZERO, ONE, SCALAR],
+        [ZERO, ZERO, ZERO, ONE]
+    ]),
+
+}

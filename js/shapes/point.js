@@ -55,32 +55,8 @@ class Point {
         )
     }
 
-    /**
-     * Compute the difference between two points' coordinates
-     * 
-     * @param {Point} point 
-     * @returns The differences in coordinate value along each axis
-     * @memberof Point
-     */
-    diff(point) {
-        return this.coordinates.map(function (val, dim) {
-            return val - point.coordinates[dim]
-        })
-    }
 
-    /**
-     * Returns the two corners forming a rectangle with the passed point
-     * 
-     * @param {Point} point 
-     * @returns 
-     * @memberof Point
-     */
-    corners(point) {
-        return [
-            new Point(point.coordinates[AXIS.X], this.coordinates[AXIS.Y]),
-            new Point(this.coordinates[AXIS.X], point.coordinates[AXIS.Y]),
-        ]
-    }
+
 
     /**
      * Renders the Point as a circle
