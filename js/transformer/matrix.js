@@ -20,16 +20,16 @@ class Matrix {
     multiply(matrix) {
         const newData = new Array()
 
-        for (let rowLeftmost = 0; rowLeftmost < this.shape[0]; rowLeftmost++) {
-            const innerProducts = new Array(matrix.shape[1]).fill(0)
+        for (let r = 0; r < this.shape[0]; r++) {
+            const innProd = new Array(matrix.shape[1]).fill(0)
 
-            for (let colOutmost = 0; colOutmost < matrix.shape[1]; colOutmost++) {
-                for (let inner = 0; inner < this.shape[1]; inner++) {
-                    innerProducts[colOutmost] += this.data[rowLeftmost][inner] * matrix.data[inner][colOutmost]
+            for (let c = 0; c < matrix.shape[1]; c++) {
+                for (let i = 0; i < this.shape[1]; i++) {
+                    innProd[c] += this.data[r][i] * matrix.data[i][c]
                 }
             }
 
-            newData.push(innerProducts)
+            newData.push(innProd)
         }
 
         return new Matrix(newData, [this.shape[0], matrix.shape[1]])
