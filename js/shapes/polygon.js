@@ -8,6 +8,7 @@ class Polygon {
     constructor(...vertices) {
         this.vertices = vertices
         this.context = SCENE.context
+        this.center = this.computeCenter()
     }
 
     /**
@@ -28,6 +29,20 @@ class Polygon {
 
         this.context.stroke()
         return this
+    }
+
+    /**
+     * Compute the center of the Polygon
+     * 
+     * @returns The center point
+     * @memberof Polygon
+     */
+    computeCenter() {
+        return this.vertices.reduce(function (center, vertex) {
+            return center.shift(...vertex.coordinates)
+        }, new Point(0, 0, 0, 0)) // reduce from origin
+            // Combine all coordinate values then average the lot with a scale
+            .scale(1 / this.vertices.length)
     }
 
 }

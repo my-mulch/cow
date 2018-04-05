@@ -10,8 +10,8 @@ SCENE.shapes.push(
 
         new Point(1, 500, 500, 1),
         new Point(400, 500, 500, 1),
+        new Point(1, 500, 400, 1),
         new Point(400, 500, 400, 1),
-        new Point(1, 500, 400, 1)
     )
 )
 

@@ -12,36 +12,45 @@ class EventHandler {
             /*  ROTATION */
             q: (shape) => {
                 shape.vertices.forEach(vertex => {
-                    vertex.coordinates = TRANSLATION.Y.parametrize(-300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(-350).transform(vertex.coordinates)
+                    const [X, Y, Z, _] = shape.computeCenter().coordinates
+                    vertex.coordinates = TRANSLATION.X.parametrize(-X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(-Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(-Z).transform(vertex.coordinates)
 
                     vertex.coordinates = ROTATION.Y.parametrize(-Math.PI / 512).transform(vertex.coordinates)
 
-                    vertex.coordinates = TRANSLATION.Y.parametrize(300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(350).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.X.parametrize(X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(Z).transform(vertex.coordinates)
                 })
             },
             a: (shape) => {
                 shape.vertices.forEach(vertex => {
-                    vertex.coordinates = TRANSLATION.Y.parametrize(-300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(-350).transform(vertex.coordinates)
+                    const [X, Y, Z, _] = shape.computeCenter().coordinates
+                    vertex.coordinates = TRANSLATION.X.parametrize(-X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(-Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(-Z).transform(vertex.coordinates)
 
                     vertex.coordinates = ROTATION.Z.parametrize(-Math.PI / 512).transform(vertex.coordinates)
 
-                    vertex.coordinates = TRANSLATION.Y.parametrize(300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(350).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.X.parametrize(X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(Z).transform(vertex.coordinates)
                 })
             },
 
             z: (shape) => {
                 shape.vertices.forEach(vertex => {
-                    vertex.coordinates = TRANSLATION.Y.parametrize(-300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(-350).transform(vertex.coordinates)
+                    const [X, Y, Z, _] = shape.computeCenter().coordinates
+                    vertex.coordinates = TRANSLATION.X.parametrize(-X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(-Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(-Z).transform(vertex.coordinates)
 
                     vertex.coordinates = ROTATION.X.parametrize(-Math.PI / 512).transform(vertex.coordinates)
 
-                    vertex.coordinates = TRANSLATION.Y.parametrize(300).transform(vertex.coordinates)
-                    vertex.coordinates = TRANSLATION.X.parametrize(350).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.X.parametrize(X).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Y.parametrize(Y).transform(vertex.coordinates)
+                    vertex.coordinates = TRANSLATION.Z.parametrize(Z).transform(vertex.coordinates)
                 })
             },
 

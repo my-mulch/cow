@@ -5,8 +5,34 @@ class Matrix {
      * @param {Array{Array}} matrix eg. [[1,2,3],[4,5,6],[7,8,9]]
      * @memberof Matrix
      */
-    constructor(matrix) {
-        this.matrix = matrix
+    constructor(data, shape) {
+        this.data = data
+        this.shape = shape
+    }
+
+    /**
+     * Multiply the current matrix by another   
+     * 
+     * @param {any} matrix 
+     * @returns 
+     * @memberof Matrix
+     */
+    multiply(matrix) {
+        const newData = new Array()
+
+        for (let rowLeftmost = 0; rowLeftmost < this.shape[0]; rowLeftmost++) {
+            const innerProducts = new Array(matrix.shape[1]).fill(0)
+
+            for (let colOutmost = 0; colOutmost < matrix.shape[1]; colOutmost++) {
+                for (let inner = 0; inner < this.shape[1]; inner++) {
+                    innerProducts[colOutmost] += this.data[rowLeftmost][inner] * matrix.data[inner][colOutmost]
+                }
+            }
+
+            newData.push(innerProducts)
+        }
+
+        return new Matrix(newData, [this.shape[0], matrix.shape[1]])
     }
 
     /**
