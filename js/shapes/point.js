@@ -27,17 +27,21 @@ class Point {
     }
 
     /**
-    * Computes the midpoint of self and point
-    * 
-    * @param {Point} b 
-    * @memberof Point
-    */
-    static midpoint(a, b) {
-        return new Point(
-            ...a.coordinates.map(function (coordinate, axis) {
-                return (coordinate + b.coordinates[axis]) / 2
-            })
-        )
+     * Shifts the point by provided offsets
+     * 
+     * @param {Array} offsets 
+     * @returns 
+     * @memberof Point
+     */
+    shift(...offsets) {
+        if (offsets.length !== this.coordinates.length)
+            throw new Error('Dims must be equal!')
+
+        this.coordinates = this.coordinates.map(function (val, dim) {
+            return val + offsets[dim]
+        })
+
+        return this
     }
 
     /**
@@ -53,6 +57,20 @@ class Point {
                 return distance + Math.pow(difference, 2)
             }, 0)
         )
+    }
+
+    /**
+     * Multiply each coordinate by specified factor
+     * 
+     * @param {Double} factor 
+     * @memberof Point
+     */
+    scale(factor) {
+        this.coordinates = this.coordinates.map(function (coordinate) {
+            return coordinate * factor
+        })
+
+        return this
     }
 
 
