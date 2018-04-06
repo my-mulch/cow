@@ -4,10 +4,10 @@ class EventHandler {
 
         this.actions = {
             /*  MOVEMENT */
-            ArrowUp: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.Y.parametrize(-8).transform(vertex.coordinates)),
-            ArrowDown: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.Y.parametrize(8).transform(vertex.coordinates)),
-            ArrowLeft: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.X.parametrize(-8).transform(vertex.coordinates)),
-            ArrowRight: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.X.parametrize(8).transform(vertex.coordinates)),
+            ArrowUp: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.Y.parametrize(-1).transform(vertex.coordinates)),
+            ArrowDown: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.Y.parametrize(1).transform(vertex.coordinates)),
+            ArrowLeft: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.X.parametrize(-1).transform(vertex.coordinates)),
+            ArrowRight: (shape) => shape.vertices.forEach(vertex => vertex.coordinates = TRANSLATION.X.parametrize(1).transform(vertex.coordinates)),
 
             /*  ROTATION */
             q: (shape) => {

@@ -1,55 +1,29 @@
-Math.nsin = (angle) => Math.sin(-angle)
-
-const ZERO = () => 0
-const ONE = () => 1
-const SCALAR = (k) => k
 
 
-const ROTATION = {
-
-    X: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, Math.cos, Math.sin, ZERO],
-        [ZERO, Math.nsin, Math.cos, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
-    ]),
-
-    Y: new Matrix([
-        [Math.cos, ZERO, Math.sin, ZERO],
-        [ZERO,      ONE, ZERO, ZERO],
-        [Math.nsin, ZERO, Math.cos, ZERO],
-        [ZERO,      ZERO, ZERO, ONE]
-    ]),
-
-    Z: new Matrix([
-        [Math.cos, Math.sin, ZERO, ZERO],
-        [Math.nsin, Math.cos, ZERO, ZERO],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
-    ])
-
+function translate(shape, params) {
+    return params.dimensions
+        .map(function (dim, i) {
+            return TRANSLATION[dim].parametrize(params.distances[i])
+        })
+        .reduce(function (composition, current, idx) {
+            return composition.compose(current)
+        }, Matrix.eye(4))
 }
 
-const TRANSLATION = {
-    X: new Matrix([
-        [ONE, ZERO, ZERO, SCALAR],
-        [ZERO, ONE, ZERO, ZERO],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
-    ]),
+function rotate(shape, params) {
+    const [Xt, Yt, Zt, _] = shape.computeCenter().coordinates
 
-    Y: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, ONE, ZERO, SCALAR],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
-    ]),
+    const translationOrigin = translate(shape, {
+        dimensions: ['X', 'Y', 'Z'],
+        distances: [-Xt, -Yt, -Zt]
+    })
 
-    Z: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, ONE, ZERO, ZERO],
-        [ZERO, ZERO, ONE, SCALAR],
-        [ZERO, ZERO, ZERO, ONE]
-    ]),
+    const rotation = ROTATION[params.angle].parametrize(params.angle)
 
+    const translationBackToOriginalPos = translate(shape, {
+        dimensions: ['X', 'Y', 'Z'],
+        distances: [Xt, Yt, Zt]
+    })
+
+    return translationOrigin.compose(rotation).compose(translationBackToOriginalPos)
 }
