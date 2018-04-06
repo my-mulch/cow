@@ -17,7 +17,7 @@ class Matrix {
      * @returns 
      * @memberof Matrix
      */
-    multiply(matrix) {
+    compose(matrix) {
         const newData = new Array()
 
         for (let r = 0; r < this.shape[0]; r++) {
@@ -43,7 +43,7 @@ class Matrix {
      * @memberof Matrix
      */
     transform(vertex) {
-        return this.matrix.map(function (basisVector) {
+        return this.data.map(function (basisVector) {
             return basisVector.reduce(function (result, basisVectorValueAtIndex, index) {
                 return result + basisVectorValueAtIndex * vertex[index]
             }, 0)
@@ -60,7 +60,7 @@ class Matrix {
      * @memberof Matrix
      */
     parametrize(param) {
-        return new Matrix(this.matrix.map(function (row) {
+        return new Matrix(this.data.map(function (row) {
             return row.map(function (fn) {
                 return fn(param)
             })
