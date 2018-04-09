@@ -3,15 +3,15 @@ window.setInterval(SCENE.render)
 
 SCENE.shapes.push(
     SCENE.selectedShape = new Polygon(
-        new Point(1, 300, 1000, 1),
-        new Point(400, 300, 1000, 1),
-        new Point(400, 300, 1000, 1),
-        new Point(1, 300, 1000, 1),
+        new Point(400, 400, 10, 1),
+        new Point(300, 400, 10, 1),
+        new Point(300, 300, 10, 1),
+        new Point(400, 300, 10, 1),
 
-        new Point(1, 500, 1, 1),
-        new Point(400, 500, 1000, 1),
-        new Point(1, 500, 1000, 1),
-        new Point(400, 500, 5000, 1),
+        new Point(400, 400, 400, 1),
+        new Point(300, 400, 400, 1),
+        new Point(300, 300, 400, 1),
+        new Point(400, 300, 400, 1),
     )
 )
 

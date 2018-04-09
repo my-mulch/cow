@@ -1,55 +1,55 @@
-Math.nsin = (angle) => Math.sin(-angle)
 
-const ZERO = () => 0
-const ONE = () => 1
-const SCALAR = (k) => k
+const sin = Math.sin
+const cos = Math.cos
+const c = c => c
+const nsin = angle => sin(-angle)
 
 
 const ROTATION = {
 
     X: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, Math.cos, Math.sin, ZERO],
-        [ZERO, Math.nsin, Math.cos, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
+        [1, 0, 0, 0],
+        [0, cos, sin, 0],
+        [0, nsin, cos, 0],
+        [0, 0, 0, 1]
     ]),
 
     Y: new Matrix([
-        [Math.cos, ZERO, Math.sin, ZERO],
-        [ZERO, ONE, ZERO, ZERO],
-        [Math.nsin, ZERO, Math.cos, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
+        [cos, 0, sin, 0],
+        [0, 1, 0, 0],
+        [nsin, 0, cos, 0],
+        [0, 0, 0, 1]
     ]),
 
     Z: new Matrix([
-        [Math.cos, Math.sin, ZERO, ZERO],
-        [Math.nsin, Math.cos, ZERO, ZERO],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
+        [cos, sin, 0, 0],
+        [nsin, cos, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
     ])
 
 }
 
-const TRANSLATION = {
-    X: new Matrix([
-        [ONE, ZERO, ZERO, SCALAR],
-        [ZERO, ONE, ZERO, ZERO],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
+const TRANSLATION = new Matrix([
+    [1, 0, 0, c],
+    [0, 1, 0, c],
+    [0, 0, 1, c],
+    [0, 0, 0, 1]
+])
+
+const CAMERA = {
+    orthographic: new Matrix([
+        [c, 0, 0, 0],
+        [0, c, 0, 0],
+        [0, 0, c, c],
+        [0, 0, 0, 1]
     ]),
 
-    Y: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, ONE, ZERO, SCALAR],
-        [ZERO, ZERO, ONE, ZERO],
-        [ZERO, ZERO, ZERO, ONE]
-    ]),
-
-    Z: new Matrix([
-        [ONE, ZERO, ZERO, ZERO],
-        [ZERO, ONE, ZERO, ZERO],
-        [ZERO, ZERO, ONE, SCALAR],
-        [ZERO, ZERO, ZERO, ONE]
+    projection: new Matrix([
+        [c, 0, 0, 0],
+        [0, c, 0, 0],
+        [0, 0, c, c],
+        [0, 0, -1, 0]
     ]),
 
 }
