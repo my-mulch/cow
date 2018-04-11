@@ -39,3 +39,18 @@ console.assert(AB.data[2].get(0) === -7)
 console.assert(AB.data[2].get(1) === -9)
 console.assert(AB.data[2].get(2) === 10)
 
+
+const R = new Matrix([
+    new Vector(2, 1, -4, 0),
+    new Vector(1, 0, 4, 0),
+    new Vector(-1, -1, -2, 0),
+    new Vector(0, 0, 0, 1)
+], [4, 4])
+
+const T = R.transform(new Point(1, 1, 1, 1))
+console.assert(T instanceof Point)
+console.assert(T.get(0) === -1)
+console.assert(T.get(1) === 5)
+console.assert(T.get(2) === -4)
+console.assert(T.get(3) === 1)
+

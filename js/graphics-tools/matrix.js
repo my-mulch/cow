@@ -33,10 +33,8 @@ class Matrix {
      * @memberof Matrix
      */
     transform(point) {
-        const pvec = point.subtractPoint(new Point(0, 0, 0, 1))
-
         return new Point(...this.data.map(function (basisVector) {
-            return basisVector.dot(pvec)
+            return basisVector.dot(point)
         }))
     }
 
