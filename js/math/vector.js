@@ -22,6 +22,17 @@ class Vector {
     }
 
     /**
+     * Set value along axis
+     * 
+     * @param {int} axis 
+     * @param {double} data 
+     * @memberof Vector
+     */
+    set(axis, data) {
+        this.dimensions[axis] = data
+    }
+
+    /**
      *  Adds two vectors elementwise
      * 
      * @param {Vector} vector 
