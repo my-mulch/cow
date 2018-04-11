@@ -67,8 +67,6 @@ class Matrix {
 
                 if (typeof member === 'function')
                     vec.set(c, member(params.shift()))
-
-
             }
         }
 
