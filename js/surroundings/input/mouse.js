@@ -1,5 +1,5 @@
 class Mouse {
-    constructor(context) {
+    constructor(context = window) {
         this.context = context
 
         this.context.addEventListener('mousedown', function (mouseEvent) { })

@@ -26,6 +26,21 @@ class Matrix {
     }
 
     /**
+     * Matrix multiply to transform vertex (array of numbers)
+     * 
+     * @param {Array} Coordinates representing vertex 
+     * @returns {Array} Coordinates of transformed vertex
+     * @memberof Matrix
+     */
+    transform(point) {
+        const pvec = point.subtractPoint(new Point(0, 0, 0, 1))
+
+        return new Point(...this.data.map(function (basisVector) {
+            return basisVector.dot(pvec)
+        }))
+    }
+
+    /**
      * Multiply the current matrix by another   
      * 
      * @param {any} matrix 

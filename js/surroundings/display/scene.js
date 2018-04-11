@@ -1,7 +1,7 @@
 class Scene {
 
     constructor() {
-        this.transform = null
+        this.transformer = null
 
         this.canvas = document.getElementById('myCanvas')
         this.context = this.canvas.getContext('2d')
@@ -10,7 +10,6 @@ class Scene {
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
 
-        window.setInterval(this.render.bind(this))
     }
 
     add(shape) {
@@ -22,8 +21,10 @@ class Scene {
         this.context.beginPath()
 
         this.points.map(function (point) {
-            return point.render()
+            return this.transformer.transform(point).render()
         })
+
+        this.context.stroke()
     }
 
 
