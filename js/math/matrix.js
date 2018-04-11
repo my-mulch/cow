@@ -19,8 +19,8 @@ class Matrix {
      */
     getColumn(i) {
         return new Vector(
-            ...this.data.map(function (row) {
-                return row[i]
+            ...this.data.map(function (rowVec) {
+                return rowVec.get(i)
             })
         )
     }

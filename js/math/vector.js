@@ -84,14 +84,9 @@ class Vector {
      */
     cross(vector) {
         return new Vector(
-            this.get(1) * vector.get(2)
-            - this.get(2) * vector.get(1),
-
-            this.get(0) * vector.get(2)
-            - this.get(2) * vector.get(0),
-
-            this.get(0) * vector.get(1)
-            - this.get(1) * vector.get(0)
+            this.get(1) * vector.get(2) - this.get(2) * vector.get(1),
+            this.get(2) * vector.get(0) - this.get(0) * vector.get(2),
+            this.get(0) * vector.get(1) - this.get(1) * vector.get(0)
         )
     }
 
