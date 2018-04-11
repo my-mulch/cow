@@ -7,12 +7,17 @@ class Point {
      * @memberof Point
      */
     constructor(...coordinates) {
+        this.canvas = document.getElementById('myCanvas')
+        this.context = this.canvas.getContext('2d')
+
         this.coordinates = coordinates
     }
 
     render() {
-        scene.context.fillStyle = "rgba(0,0,0,1)";
-        scene.context.fillRect(this.get(0), this.get(1), 1, 1);
+        this.context.fillStyle = "rgba(0,0,0,1)";
+        this.context.fillRect(this.get(0), this.get(1), 1, 1);
+
+        return this
     }
 
     /**

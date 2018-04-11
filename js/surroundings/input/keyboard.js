@@ -4,13 +4,13 @@ class KeyBoard {
         this.pressedKeys = new Set()
 
         this.keyPressedAction = function (event) {
+            event.preventDefault()
             this.pressedKeys.add(event.key)
-            console.log(this.pressedKeys)
         }
 
         this.keyReleasedAction = function (event) {
+            event.preventDefault()
             this.pressedKeys.delete(event.key)
-            console.log(this.pressedKeys)
         }
 
         this.context.addEventListener("keydown", this.keyPressedAction.bind(this))
