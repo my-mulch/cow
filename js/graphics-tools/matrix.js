@@ -70,20 +70,13 @@ class Matrix {
      * @memberof Matrix
      */
     parametrize(...params) {
-        const numParams = params.length
-        const [rows, cols] = this.shape
-
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                const vec = this.data[r]
-                const member = vec.get(c)
-
-                if (typeof member === 'function')
-                    vec.set(c, member(params.shift()))
-            }
-        }
-
-        return this
+        return new Matrix(this.data.map(function (rowVec) {
+            return new Vector(...rowVec.dimensions.map(function (element) {
+                return typeof element === 'function'
+                    ? element(params.shift())
+                    : element
+            }))
+        }, this), this.shape)
     }
 }
 
