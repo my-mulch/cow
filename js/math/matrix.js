@@ -48,6 +48,32 @@ class Matrix {
 
         return new Matrix(newData, newShape)
     }
+
+    /**
+     * Parametrize a matrix eg rotation with angle
+     * 
+     * @param {any} params 
+     * @returns 
+     * @memberof Matrix
+     */
+    parametrize(...params) {
+        const numParams = params.length
+        const [rows, cols] = this.shape
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const vec = this.data[r]
+                const member = vec.get(c)
+
+                if (typeof member === 'function')
+                    vec.set(c, member(params.shift()))
+
+
+            }
+        }
+
+        return this
+    }
 }
 
 

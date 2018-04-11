@@ -16,11 +16,11 @@ const B = new Matrix([
     new Vector(-1, -1, -2)
 ], [3, 3])
 
-const c0 = A.getColumn(0)
+const c0 = B.getColumn(1)
 console.assert(c0 instanceof Vector)
-console.assert(c0.get(0) === 22)
-console.assert(c0.get(1) === -23)
-console.assert(c0.get(2) === -2)
+console.assert(c0.get(0) === 1)
+console.assert(c0.get(1) === 0)
+console.assert(c0.get(2) === -1)
 
 const AI = I.multiply(A)
 console.assert(AI.shape[0] === 3 && AI.shape[1] === 3)
