@@ -3,20 +3,15 @@ class KeyBoard {
         this.context = context
         this.pressedKeys = new Set()
 
-        this.context.addEventListener("keydown", function (event) {
+        this.keyPressedAction = (function (event) {
             this.pressedKeys.add(event.key)
-        }, this)
+        }).bind(this)
 
-        this.context.addEventListener("keyup", function (event) {
+        this.keyReleasedAction = (function (event) {
             this.pressedKeys.delete(event.key)
-        })
-    }
+        }).bind(this)
 
-    /**
-     * @returns The keys currently pressed
-     * @memberof KeyBoard
-     */
-    getPressedKeys() {
-        return Array.from(this.pressedKeys)
+        this.context.addEventListener("keydown", this.keyPressedAction)
+        this.context.addEventListener("keyup", this.keyReleasedAction)
     }
 }
