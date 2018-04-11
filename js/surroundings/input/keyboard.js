@@ -1,17 +1,20 @@
 class KeyBoard {
-    constructor(context) {
+    constructor(context = window) {
         this.context = context
         this.pressedKeys = new Set()
 
-        this.keyPressedAction = (function (event) {
+        this.keyPressedAction = function (event) {
             this.pressedKeys.add(event.key)
-        }).bind(this)
+            console.log(this.pressedKeys)
+        }
 
-        this.keyReleasedAction = (function (event) {
+        this.keyReleasedAction = function (event) {
             this.pressedKeys.delete(event.key)
-        }).bind(this)
+            console.log(this.pressedKeys)
+        }
 
-        this.context.addEventListener("keydown", this.keyPressedAction)
-        this.context.addEventListener("keyup", this.keyReleasedAction)
+        this.context.addEventListener("keydown", this.keyPressedAction.bind(this))
+        this.context.addEventListener("keyup", this.keyReleasedAction.bind(this))
+
     }
 }
