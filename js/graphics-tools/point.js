@@ -10,6 +10,11 @@ class Point {
         this.coordinates = coordinates
     }
 
+    render() {
+        scene.context.fillStyle = "rgba(0,0,0,1)";
+        scene.context.fillRect(this.get(0), this.get(1), 1, 1);
+    }
+
     /**
      * Retrieves a value along a particular axis
      * 

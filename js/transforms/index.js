@@ -37,6 +37,13 @@ const TRANSLATION = new Matrix([
     new Vector(0, 0, 0, 1)
 ], [4, 4])
 
+const SCALE = new Matrix([
+    new Vector(c, 0, 0, 0),
+    new Vector(0, c, 0, 0),
+    new Vector(0, 0, c, 0),
+    new Vector(0, 0, 0, 1)
+], [4, 4])
+
 const CAMERA = {
     orthographic: new Matrix([
         new Vector(c, 0, 0, 0),
