@@ -1,6 +1,8 @@
 const SCENE = new Scene()
 window.setInterval(SCENE.render)
 
+const CAMERA = new CAMERA()
+
 SCENE.shapes.push(
     SCENE.selectedShape = new Polygon(
         new Point(400, 400, 10, 1),
