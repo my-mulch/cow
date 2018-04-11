@@ -1,9 +1,10 @@
 class Mouse {
     constructor(context) {
         this.context = context
-        
-        this.downLocation = null
-        this.dragBox = null
+
+        this.context.addEventListener('mousedown', function (mouseEvent) { })
+        this.context.addEventListener('mouseup', function (mouseEvent) { })
+        this.context.addEventListener('mousemove', function (event) { })
     }
 }
 

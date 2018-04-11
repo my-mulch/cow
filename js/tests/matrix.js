@@ -39,4 +39,3 @@ console.assert(AB.data[2].get(0) === -7)
 console.assert(AB.data[2].get(1) === -9)
 console.assert(AB.data[2].get(2) === 10)
 
-
