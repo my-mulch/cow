@@ -1,45 +1,19 @@
-const SCENE = new Scene()
-window.setInterval(SCENE.render)
-
-SCENE.shapes.push(
-    SCENE.selectedShape = new Rectangle(new Point(50, 50), new Point(300, 300))
+const APP = new Handler(
+    new Scene(),
+    new KeyBoard(),
+    new Mouse()
 )
 
-///////////////////////////////////////////////////////////////////
+// APP.scene.points.push(
+//     new Point(300, 500, 0, 1),
+//     new Point(500, 500, 0, 1),
+//     new Point(300, 700, 0, 1),
+//     new Point(500, 700, 0, 1),
 
-SCENE.keyBoard.context.addEventListener("keydown", function (event) {
-    event.preventDefault()
-    SCENE.keyBoard.pressedKeys.add(event.key)
-}, this)
+//     new Point(300, 500, 100, 1),
+//     new Point(500, 500, 100, 1),
+//     new Point(300, 700, 100, 1),
+//     new Point(500, 700, 100, 1),
+// )
 
-SCENE.keyBoard.context.addEventListener("keyup", function (event) {
-    event.preventDefault()
-    SCENE.keyBoard.pressedKeys.delete(event.key)
-})
-
-///////////////////////////////////////////////////////////////////
-
-SCENE.mouse.context.addEventListener('mousedown', function (mouseEvent) {
-    SCENE.mouse.downLocation = Point.createFrom(mouseEvent)
-})
-
-SCENE.mouse.context.addEventListener('mouseup', function (mouseEvent) {
-    if (!SCENE.dragBox)
-        SCENE.shapes.push(Point.createFrom(mouseEvent))
-    else
-        SCENE.mergeWithinDragRegion()
-
-    SCENE.mouse.downLocation = null
-    SCENE.dragBox = null
-})
-
-SCENE.mouse.context.addEventListener('mousemove', function (event) {
-    if (SCENE.mouse.downLocation) { // dragging the mouse
-        SCENE.dragBox = new Rectangle(
-            SCENE.mouse.downLocation,
-            Point.createFrom(event)
-        )
-    }
-})
-
-
+APP.scene.add(teapot)
