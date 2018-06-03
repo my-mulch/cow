@@ -3,13 +3,10 @@ class Point {
 
     /**
      * Creates an instance of Point.
-     * @param {any} coordinates 
+     * @param {...int} coordinates 
      * @memberof Point
      */
     constructor(...coordinates) {
-        this.canvas = document.getElementById('myCanvas')
-        this.context = this.canvas.getContext('2d')
-
         this.coordinates = coordinates
     }
 
@@ -20,8 +17,8 @@ class Point {
      * @memberof Point
      */
     render() {
-        this.context.fillStyle = "rgba(0,0,0,1)";
-        this.context.fillRect(...this.coordinates.slice(0, 2), 4, 4);
+        scene.context.fillStyle = "rgba(0,0,0,1)";
+        scene.context.fillRect(...this.coordinates.slice(0, 2), 1, 1);
 
         return this
     }
@@ -29,7 +26,7 @@ class Point {
     /**
      * Retrieves a value along a particular axis
      * 
-     * @param {any} axis 
+     * @param {int} axis 
      * @returns 
      * @memberof Point
      */
@@ -40,7 +37,8 @@ class Point {
     /**
      * Sets a value along a particular axis
      * 
-     * @param {any} axis 
+     * @param {int} axis
+     * @param {double} value 
      * @returns 
      * @memberof Point
      */
