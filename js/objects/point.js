@@ -13,9 +13,15 @@ class Point {
         this.coordinates = coordinates
     }
 
+    /**
+     *  Renders the point to the canvas
+     *
+     * @returns
+     * @memberof Point
+     */
     render() {
         this.context.fillStyle = "rgba(0,0,0,1)";
-        this.context.fillRect(this.get(0), this.get(1), 1, 1);
+        this.context.fillRect(...this.coordinates.slice(0, 2), 4, 4);
 
         return this
     }
@@ -32,33 +38,13 @@ class Point {
     }
 
     /**
-     * Adds a vector to a point
+     * Sets a value along a particular axis
      * 
-     * @param {any} vector 
-     * @returns {Point}
+     * @param {any} axis 
+     * @returns 
      * @memberof Point
      */
-    addVector(vector) {
-        return new Point(
-            ...this.coordinates.map(function (ci, i) {
-                return ci + vector.get(i)
-            })
-        )
+    set(axis, value) {
+        this.coordinates[axis] = value
     }
-
-    /**
-     * Subtracts two points returning a vector
-     * 
-     * @param {any} point 
-     * @returns {Vector}
-     * @memberof Point
-     */
-    subtractPoint(point) {
-        return new Vector(
-            ...this.coordinates.map(function (ci, i) {
-                return ci - point.get(i)
-            })
-        )
-    }
-
 }

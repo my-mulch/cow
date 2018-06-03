@@ -8,20 +8,18 @@ class Scene {
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
 
+        window.setInterval(this.render.bind(this))
+
     }
 
-    add(shape) {
-        this.points = this.points.concat(shape)
+    add(newPoints) {
+        this.points = this.points.concat(newPoints)
     }
 
-    render(transformer) {
+    render() {
         this.context.clearRect(0, 0, this.width, this.height)
         this.context.beginPath()
-
-        this.points = this.points.map(function (point) {
-            return transformer.transform(point).render()
-        })
-
+        this.points.forEach(point => point.render())
         this.context.stroke()
     }
 
