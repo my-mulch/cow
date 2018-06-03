@@ -1,15 +1,16 @@
 const scene = new Scene()
+const keyboard = new Keyboard()
 
 const cube = new Solid(
     vertices = [
-        new Point(100, 100, 100),
-        new Point(100, 100, 200),
-        new Point(100, 200, 100),
-        new Point(100, 200, 200),
-        new Point(200, 100, 100),
-        new Point(200, 100, 200),
-        new Point(200, 200, 100),
-        new Point(200, 200, 200),
+        new Point(100, 100, 100, 1),
+        new Point(100, 100, 200, 1),
+        new Point(100, 200, 100, 1),
+        new Point(100, 200, 200, 1),
+        new Point(200, 100, 100, 1),
+        new Point(200, 100, 200, 1),
+        new Point(200, 200, 100, 1),
+        new Point(200, 200, 200, 1),
     ],
     edges = [
         [0, 1],
