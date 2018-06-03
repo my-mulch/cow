@@ -1,4 +1,4 @@
-class KeyBoard {
+class Keyboard {
     constructor(context = window) {
         this.context = context
         this.pressedKeys = new Set()
