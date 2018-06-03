@@ -9,10 +9,23 @@ import logging
 import re
 
 
-def parse_coordinates(str):
+def parse_coordinates(coord_string):
     regex = 'coordinates":\[(.*?)\]'
     return np.array([np.fromstring(match.groups()[0], sep=',')
-                     for match in re.finditer(regex, str)])
+                     for match in re.finditer(regex, coord_string)])
+
+
+def center_and_back(coordinates):
+    x, y, z, _ = np.mean(coordinates[:, :-1], axis=1)
+
+    center = np.array([
+        [1, 0, 0, -x],
+        [0, 1, 0, -y],
+        [0, 0, 1, -z],
+        [0, 0, 0, 1]
+    ])
+
+    return center, np.linalg.inv(center)
 
 
 def rotY(theta):
@@ -20,9 +33,10 @@ def rotY(theta):
     s = np.sin(theta)
 
     return np.array([
-        [c, 0, -s],
-        [0, 1, 0],
-        [s, 0, c]
+        [c, 0, s, 0],
+        [0, 1, 0, 0],
+        [-s, 0, c, 0],
+        [0, 0, 0, 1]
     ])
 
 
@@ -44,14 +58,17 @@ class S(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         # <--- Gets the data itself
         post_data = self.rfile.read(content_length)
-        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                     str(self.path), str(self.headers), post_data.decode('utf-8'))
+        # logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
+        #              str(self.path), str(self.headers), post_data.decode('utf-8'))
 
         coords = parse_coordinates(post_data.decode('utf-8'))
+        center, back = center_and_back(coords.T)
+        cp = center.dot(coords.T)
+        rp = rotY(np.pi / 128).dot(cp)
+        bp = back.dot(rp)
 
         self._set_response()
-        self.wfile.write("POST request for {}".format(
-            self.path).encode('utf-8'))
+        self.wfile.write("{}".format(bp.T).encode('utf-8'))
 
 
 def run(server_class=HTTPServer, handler_class=S, port=8080):
