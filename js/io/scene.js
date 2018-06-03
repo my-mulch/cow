@@ -28,7 +28,8 @@ class Scene {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
         })
+            .then(function (res) { return res.text() })
             .then(console.log)
     }
-    
+
 }

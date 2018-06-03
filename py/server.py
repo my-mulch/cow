@@ -9,6 +9,23 @@ import logging
 import re
 
 
+def parse_coordinates(str):
+    regex = 'coordinates":\[(.*?)\]'
+    return np.array([np.fromstring(match.groups()[0], sep=',')
+                     for match in re.finditer(regex, str)])
+
+
+def rotY(theta):
+    c = np.cos(theta)
+    s = np.sin(theta)
+
+    return np.array([
+        [c, 0, -s],
+        [0, 1, 0],
+        [s, 0, c]
+    ])
+
+
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
         self.send_response(200)
@@ -29,6 +46,8 @@ class S(BaseHTTPRequestHandler):
         post_data = self.rfile.read(content_length)
         logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
                      str(self.path), str(self.headers), post_data.decode('utf-8'))
+
+        coords = parse_coordinates(post_data.decode('utf-8'))
 
         self._set_response()
         self.wfile.write("POST request for {}".format(
