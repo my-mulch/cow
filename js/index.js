@@ -1,5 +1,3 @@
-const keyboard = new Keyboard()
-const mouse = new Mouse()
 const scene = new Scene()
 
 const cube = new Solid(
@@ -28,4 +26,5 @@ const cube = new Solid(
         [6, 7]
     ]
 )
+
 scene.add(cube)
