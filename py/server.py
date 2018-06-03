@@ -4,21 +4,23 @@ Usage::
     ./server.py [<port>]
 """
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import numpy as np
 import logging
+import re
 
 
 class S(BaseHTTPRequestHandler):
     def _set_response(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
+        self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
     def do_GET(self):
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n",
                      str(self.path), str(self.headers))
         self._set_response()
-        self.wfile.write("GET request for {}".format(
-            self.path).encode('utf-8'))
+        self.wfile.write("{}".format(np.random.randn(2, 2)).encode('utf-8'))
 
     def do_POST(self):
         # <--- Gets the size of data
