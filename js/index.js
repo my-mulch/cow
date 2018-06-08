@@ -1,5 +1,5 @@
-const scene = new Scene()
 const keyboard = new Keyboard()
+const scene = new Scene()
 
 const cube = new Solid(
     vertices = [
