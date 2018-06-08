@@ -4,9 +4,8 @@ class Keyboard {
         this.pressedKeys = new Set()
 
         this.keyPressedAction = function (event) {
-            scene.transform()
-            // event.preventDefault()
-            // this.pressedKeys.add(event.key)
+            event.preventDefault()
+            this.pressedKeys.add(event.key)
         }
 
         this.keyReleasedAction = function (event) {
