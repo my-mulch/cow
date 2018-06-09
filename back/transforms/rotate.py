@@ -44,4 +44,4 @@ def rotate_in_place(shape, rot_temp):
     rotator = rot_temp(np.pi / 1024)
     to_origin, to_initial = translate_to_origin_and_back(shape)
 
-    return compose(to_initial, rotator, to_origin)
+    return shape.dot(compose(to_initial, rotator, to_origin).T)

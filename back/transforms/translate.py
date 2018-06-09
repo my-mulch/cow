@@ -12,9 +12,9 @@ def translate(x, y, z):
 
 def translate_to_origin_and_back(shape):
     # assumes 4d coordinates lying flat
-    x, y, z, _ = np.mean(shape[:, :-1], axis=1)
+    x, y, z = np.mean(shape[:, :-1], axis=0)
 
     origin = translate(-x, -y, -z)
-    back = np.linalg.inv(center)
+    back = np.linalg.inv(origin)
 
     return origin, back
