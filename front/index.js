@@ -52,6 +52,17 @@ const triangle = new Solid(
     ]
 )
 
+const line = new Solid(
+    vertices = [
+        new Point(240, 375, 0, 1),
+        new Point(240, 600, 0, 1),
+    ],
+    edges = [
+        [0, 1],
+    ]
+)
+
 scene.add(cube)
 scene.add(triangle)
+scene.add(line)
 

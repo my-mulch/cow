@@ -21,8 +21,8 @@ class Solid {
         })
 
         this.edges && this.edges.forEach(function ([i, j]) {
-            scene.context.moveTo(...this.vertices[i].coordinates)
-            scene.context.lineTo(...this.vertices[j].coordinates)
+            scene.context.moveTo(...this.vertices[i])
+            scene.context.lineTo(...this.vertices[j])
         }, this)
 
     }

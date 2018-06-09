@@ -26,11 +26,16 @@ class Scene {
 
     addActionListeners() {
         for (let key in this.keyboard.bindings)
-            this.socket.on(this.keyboard.bindings[key], this.update)
+            this.socket.on(this.keyboard.bindings[key], this.update.bind(this))
     }
 
     update(newSceneObjects) {
-        console.log(newSceneObjects)
+        this.objects = newSceneObjects.map(function (object) {
+            // Convert each vertex array to a Point instance
+            return new Solid(object.vertices.map(function (vertex) {
+                return new Point(...vertex)
+            }), object.edges)
+        }, this)
     }
 
     add(object) {
