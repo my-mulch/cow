@@ -1,6 +1,7 @@
 class Keyboard {
-    constructor(context = window) {
+    constructor(context = window, bindings = {}) {
         this.context = context
+        this.bindings = bindings
         this.pressedKeys = new Set()
 
         this.keyPressedAction = function (event) {

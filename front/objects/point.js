@@ -22,27 +22,4 @@ class Point {
 
         return this
     }
-
-    /**
-     * Retrieves a value along a particular axis
-     * 
-     * @param {int} axis 
-     * @returns 
-     * @memberof Point
-     */
-    get(axis) {
-        return this.coordinates[axis]
-    }
-
-    /**
-     * Sets a value along a particular axis
-     * 
-     * @param {int} axis
-     * @param {double} value 
-     * @returns 
-     * @memberof Point
-     */
-    set(axis, value) {
-        this.coordinates[axis] = value
-    }
 }
