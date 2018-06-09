@@ -1,5 +1,5 @@
 class Keyboard {
-    constructor(context = window, bindings = {}) {
+    constructor(bindings, context = window) {
         this.context = context
         this.bindings = bindings
         this.pressedKeys = new Set()
