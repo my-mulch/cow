@@ -35,7 +35,23 @@ const cube = new Solid(
         [4, 5],
         [4, 6],
         [5, 7],
-        [6, 7]
+        [6, 7],
     ]
 )
+
+const triangle = new Solid(
+    vertices = [
+        new Point(400, 400, 0, 1),
+        new Point(300, 400, 0, 1),
+        new Point(400, 500, 0, 1),
+    ],
+    edges = [
+        [1, 2],
+        [2, 0],
+        [0, 1],
+    ]
+)
+
+scene.add(cube)
+scene.add(triangle)
 
