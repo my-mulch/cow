@@ -1,7 +1,7 @@
 const keyboard = new Keyboard(bindings = {
     'q': 'rotateX',
     'w': 'rotateY',
-    'z': 'rotateZ',
+    'e': 'rotateZ',
 })
 
 const PORT = 5000
