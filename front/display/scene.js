@@ -18,9 +18,9 @@ class Scene {
         window.setInterval(this.render.bind(this))
     }
 
-    runActions() {
+    runActionsFromKeys() {
         this.keyboard.pressedKeys.forEach(function (key) {
-            this.socket.emit(this.keyboard.bindings[key], this.objects)
+            this.socket.emit(this.keyboard.bindings[key], JSON.stringify(this.objects))
         }, this)
     }
 
@@ -33,8 +33,12 @@ class Scene {
         console.log(newSceneObjects)
     }
 
+    add(object) {
+        this.objects = this.objects.concat(object)
+    }
+
     render() {
-        this.runActions()
+        this.runActionsFromKeys()
         this.context.clearRect(0, 0, this.width, this.height)
         this.context.beginPath()
         this.objects.forEach(function (object) { object.render() })
