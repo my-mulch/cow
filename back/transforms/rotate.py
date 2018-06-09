@@ -1,3 +1,5 @@
+import numpy as np
+
 
 def rotX(theta):
     c = np.cos(theta)

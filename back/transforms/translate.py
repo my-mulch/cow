@@ -1,3 +1,5 @@
+import numpy as np
+
 
 def translate(x, y, z):
     return np.array([

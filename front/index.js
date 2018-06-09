@@ -1,5 +1,16 @@
-const keyboard = new Keyboard()
-const scene = new Scene()
+const keyboard = new Keyboard(bindings = {
+    'q': 'rotateX',
+    'w': 'rotateY',
+    'z': 'rotateZ',
+})
+
+const PORT = 5000
+const DOMAIN = 'localhost'
+const CONNSTR = `http://${DOMAIN}:${PORT}/`
+const socket = io.connect(CONNSTR)
+
+
+const scene = new Scene(keyboard = keyboard, socket = socket)
 
 const cube = new Solid(
     vertices = [
@@ -28,4 +39,3 @@ const cube = new Solid(
     ]
 )
 
-scene.add(cube)
