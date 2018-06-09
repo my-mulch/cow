@@ -1,15 +1,5 @@
 
-class Point {
-
-    /**
-     * Creates an instance of Point.
-     * @param {...int} coordinates 
-     * @memberof Point
-     */
-    constructor(...coordinates) {
-        this.coordinates = coordinates
-    }
-
+class Point extends Array {
     /**
      *  Renders the point to the canvas
      *
@@ -18,7 +8,7 @@ class Point {
      */
     render() {
         scene.context.fillStyle = "rgba(0,0,0,1)";
-        scene.context.fillRect(...this.coordinates.slice(0, 2), 1, 1);
+        scene.context.fillRect(...this.slice(0, 2), 1, 1);
 
         return this
     }

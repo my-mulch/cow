@@ -11,7 +11,8 @@ socketio = SocketIO(app)
 
 @socketio.on('rotateX')
 def rotateX(json_scene):
-    load_scene(json_scene)
+    scene = load_scene(json_scene)
+    emit('rotateX', scene)
     # x, y, z = np.mean(shape[:, :-1], axis=0)
     # t_origin = translate(-x, -y, -z)
     # t_initial = np.linalg.inv(t_origin)
