@@ -10,7 +10,7 @@ const CONNSTR = `http://${DOMAIN}:${PORT}/`
 const socket = io.connect(CONNSTR)
 
 
-const scene = new Scene(keyboard = keyboard, socket = socket)
+const scene = new Scene(keyboard, socket)
 
 const cube = new Solid(
     vertices = [
