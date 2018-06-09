@@ -1,4 +1,5 @@
 from transforms.translate import translate_to_origin_and_back
+from transforms.compose import compose
 
 import numpy as np
 
@@ -41,9 +42,6 @@ def rotZ(theta):
 
 def rotate_in_place(shape, rot_temp):
     rotator = rot_temp(np.pi / 1024)
-    to_origin, back = translate_to_origin_and_back(shape)
-    
+    to_origin, to_initial = translate_to_origin_and_back(shape)
 
-    # rotX_in_place = t_initial.dot(rotX(np.pi / 1024).dot(t_origin))
-
-    # print(json.dumps(shape.dot(rotX_in_place.T).tolist()))
+    return compose(to_initial, rotator, to_origin)
