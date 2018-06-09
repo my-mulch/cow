@@ -1,5 +1,4 @@
 
-
 class Scene {
 
     constructor(keyboard = null, socket = null, mouse = null, canvas = document.getElementById('myCanvas')) {
@@ -31,7 +30,7 @@ class Scene {
 
     update(newSceneObjects) {
         this.objects = newSceneObjects.map(function (object) {
-            // Convert each vertex array to a Point instance
+            // Convert each vertex coordinate array to a Point instance
             return new Solid(object.vertices.map(function (vertex) {
                 return new Point(...vertex)
             }), object.edges)

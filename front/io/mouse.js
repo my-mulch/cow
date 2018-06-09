@@ -8,4 +8,3 @@ class Mouse {
         this.context.addEventListener('mousemove', function (event) { })
     }
 }
-
