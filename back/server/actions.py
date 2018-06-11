@@ -1,3 +1,4 @@
+from transforms.rotate import rotX_in_place, rotY_in_place, rotZ_in_place
 from loader.parse import load_scene
 
 
