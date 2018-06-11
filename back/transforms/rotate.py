@@ -4,6 +4,14 @@ from transforms.compose import compose
 import numpy as np
 
 
+def rotate_in_place(axis_of_rotation):
+    # hard coded angle -- eventually replace
+    rotate = axis_of_rotation(np.pi / 128)
+    move_to_origin, move_to_initial = translate_to_origin_and_back(shape)
+
+    return compose(move_to_initial, rotate, move_to_origin)
+
+
 def rotX(theta):
     c = np.cos(theta)
     s = np.sin(theta)
@@ -38,10 +46,3 @@ def rotZ(theta):
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ])
-
-
-def rotate_in_place(shape, rot_temp):
-    rotator = rot_temp(np.pi / 128)
-    to_origin, to_initial = translate_to_origin_and_back(shape)
-
-    return shape.dot(compose(to_initial, rotator, to_origin).T)
