@@ -12,7 +12,7 @@ def translate(x, y, z):
 
 def translate_to_origin_and_back(shape):
     # assumes 4d coordinates lying flat
-    x, y, z = np.mean(shape[:, :-1], axis=0)
+    x, y, z, _ = np.mean(shape['vertices'], axis=0)
 
     origin = translate(-x, -y, -z)
     back = np.linalg.inv(origin)
