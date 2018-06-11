@@ -1,6 +1,5 @@
-from transforms.rotate import rotX, rotate_in_place
+from transforms.rotate import rotX_in_place, rotY_in_place, rotZ_in_place
 from loader.parse import load_scene
-import numpy as np
 
 
 class Action():
@@ -10,26 +9,19 @@ class Action():
 
 
 action_list = [
-    Action('rotateX', ),
-    Action('rotateY', ),
-    Action('rotateZ', ),
+    Action('rotateX', rotX_in_place),
+    Action('rotateY', rotY_in_place),
+    Action('rotateZ', rotZ_in_place),
 ]
 
 
-def run(action, send_to_front_end):
-    return """ 
-    a function that takes in the data from the front end, processes it,
-    then calls emit with that transformed result
-    """
+def deploy(action, send_processed_scene_to_front_end):
+    def runner(json_scene):
+        scene = load_scene(json_scene)
 
-    def deploy(self, action, socket_action):
-        def rotate(json_scene):
-            scene = load_scene(json_scene)
+        send_processed_scene_to_front_end(
+            action.name,
+            [action.handler(shape) for shape in scene]
+        )
 
-            for shape in scene:
-                shape['vertices'] = rotate_in_place(
-                    np.array(shape['vertices']), rotX).tolist()
-
-            socket_action(action, scene)
-
-        return rotate
+    return runner
