@@ -21,15 +21,15 @@ class Scene {
     }
 
     render() {
-        const actions = this.keyboard.pressedKeys.getActions()
+        const events = this.keyboard.getEvents()
 
         if (actions) {
             this.context.clearRect(0, 0, this.width, this.height)
             this.context.beginPath()
 
-            for (const action of actions)
+            for (const event of events)
                 for (const object of this.objects)
-                    object.apply(action).render()
+                    object.apply(event).render()
 
             this.context.stroke()
         }
