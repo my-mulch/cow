@@ -1,16 +1,17 @@
-const keyboard = new Keyboard(bindings = {
-    'q': 'rotateX',
-    'w': 'rotateY',
-    'e': 'rotateZ',
-})
-
 const PORT = 5000
 const DOMAIN = 'localhost'
 const CONNSTR = `http://${DOMAIN}:${PORT}/`
-const socket = io.connect(CONNSTR)
 
-
-const scene = new Scene(keyboard, socket)
+const scene = new Scene({
+    // socket: io.connect(CONNSTR),
+    canvas: document.getElementById('canvas'),
+    keyboard: new Keyboard({
+        // Bindings if you aint know
+        'q': 'rotateX',
+        'w': 'rotateY',
+        'e': 'rotateZ',
+    }),
+})
 
 const cube = new Solid(
     vertices = [
