@@ -1,17 +1,18 @@
 
 class Scene {
 
-    constructor(keyboard = null, socket = null, mouse = null, canvas = document.getElementById('myCanvas')) {
-        this.canvas = canvas
+    constructor(props) {
+        this.canvas = props.canvas
         this.context = this.canvas.getContext('2d')
+
+
+        this.socket = props.socket || null
+        this.keyboard = props.keyboard || null
+        this.mouse = props.mouse || null
+        this.objects = new Array()
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
-
-        this.socket = socket
-        this.keyboard = keyboard
-        this.mouse = mouse
-        this.objects = []
 
         window.setInterval(this.render.bind(this))
     }
@@ -21,17 +22,9 @@ class Scene {
     }
 
     render() {
-        const events = this.keyboard.getEvents()
-
-        if (actions) {
-            this.context.clearRect(0, 0, this.width, this.height)
-            this.context.beginPath()
-
-            for (const event of events)
-                for (const object of this.objects)
-                    object.apply(event).render()
-
-            this.context.stroke()
-        }
+        this.context.clearRect(0, 0, this.width, this.height)
+        this.context.beginPath()
+        this.objects.forEach(function (object) { object.render() })
+        this.context.stroke()
     }
 }
