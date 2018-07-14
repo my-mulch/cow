@@ -1,0 +1,29 @@
+{
+  "name": "graphics",
+  "version": "1.0.0",
+  "description": "A repository for all things visualizable",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack -w & nodemon -e js,html ./index.js",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trumanpurnell/plotter.git"
+  },
+  "keywords": [
+    "math",
+    "matrices",
+    "money"
+  ],
+  "author": "Truman Purnell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trumanpurnell/plotter/issues"
+  },
+  "homepage": "https://github.com/trumanpurnell/plotter#readme",
+  "dependencies": {
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8"
+  }
+}

@@ -1,5 +1,5 @@
 
-class Solid {
+export default class Solid {
 
     /**
      * Creates an instance of Solid.
@@ -16,10 +16,10 @@ class Solid {
      *
      * @memberof Solid
      */
-    render() {
+    render(scene) {
         this.vertices.forEach(function (vertex) {
-            vertex.render()
-        })
+            vertex.render(scene)
+        }, this)
 
         this.edges && this.edges.forEach(function ([i, j]) {
             scene.context.moveTo(...this.vertices[i])
