@@ -1,5 +1,5 @@
 
-class Keyboard {
+export default class Keyboard {
     constructor(bindings, context = window) {
         this.context = context
         this.bindings = bindings

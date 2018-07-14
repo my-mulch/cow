@@ -1,5 +1,5 @@
 
-class Scene {
+export default class Scene {
 
     constructor(props) {
         this.canvas = props.canvas
@@ -24,7 +24,7 @@ class Scene {
     render() {
         this.context.clearRect(0, 0, this.width, this.height)
         this.context.beginPath()
-        this.objects.forEach(function (object) { object.render() })
+        this.objects.forEach(function (object) { object.render(this) }, this)
         this.context.stroke()
     }
 }
