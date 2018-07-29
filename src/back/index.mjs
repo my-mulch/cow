@@ -1,5 +1,3 @@
-import net from 'net'
-import repo from './repository.mjs'
+import WebSocketServer from './server.mjs'
 
-net.createServer(repo.acceptClient)
-    .listen(3000)
+new WebSocketServer('localhost', 3000)
