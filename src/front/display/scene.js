@@ -15,6 +15,9 @@ export default class Scene {
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
+
+        this.context.fillStyle = "black";
+        this.context.fillRect(0, 0, this.width, this.height);
     }
 
     add(message) {
