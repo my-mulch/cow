@@ -15,18 +15,11 @@ export default class Scene {
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
-
-        window.setInterval(this.render.bind(this))
     }
 
-    add(object) {
-        
+    add(rawArrayString) {
+        this.objects.push(nd.array(JSON.parse(rawArrayString)))
     }
 
-    render() {
-        this.context.clearRect(0, 0, this.width, this.height)
-        this.context.beginPath()
-        this.objects.forEach(function (object) { object.render(this) }, this)
-        this.context.stroke()
-    }
+    render() { }
 }
