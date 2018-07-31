@@ -4,16 +4,6 @@ import Point from './display/point'
 import Keyboard from './io/keyboard'
 import ndim from 'multi-dim'
 
-
-const PORT = 3000
-const DOMAIN = 'localhost'
-const CONNSTR = `ws://${DOMAIN}:${PORT}/`
-
-const socket = new WebSocket(CONNSTR)
-socket.addEventListener('message', function (event) {
-    console.log(ndim.array(JSON.parse(event.data)).toString())
-})
-
 const scene = new Scene({
     socket: socket,
     canvas: document.getElementById('canvas'),
