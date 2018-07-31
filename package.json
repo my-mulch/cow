@@ -4,7 +4,7 @@
   "description": "A repository for all things visualizable",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & nodemon -e js,html ./index.js",
+    "start": "webpack -w & node --experimental-modules src/back/index.mjs",
     "build": "webpack"
   },
   "repository": {
