@@ -1,7 +1,7 @@
 class Illustrator {
 
     /**
-     *  Draws a shape with vertices and edges
+     *  Draws the contents of a Pod
      *
      * @memberof Illustrator
      */
@@ -16,5 +16,6 @@ class Illustrator {
             scene.context.lineTo(...pod.points[j])
         })
     }
-
 }
+
+export default new Illustrator()
