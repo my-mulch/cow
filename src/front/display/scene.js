@@ -19,7 +19,5 @@ export default class Scene {
         this.height = this.canvas.clientHeight
     }
 
-    render() {
-        
-    }
+    render() { }
 }
