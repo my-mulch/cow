@@ -7,8 +7,9 @@ class Illustrator {
      */
 
     draw(scene, pod) {
-        pod.points.forEach(function (point) {
-            point.render(scene)
+        pod.step().forEach(function (point) {
+            scene.context.fillStyle = "rgba(0,0,0,1)"
+            scene.context.fillRect(...this.slice(0, 2), 1, 1)
         })
 
         pod.edges && pod.edges.forEach(function ([i, j]) {
