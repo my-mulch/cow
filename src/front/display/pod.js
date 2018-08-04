@@ -13,15 +13,15 @@ export default class Pod {
     static createFrom(socketMessage) {
         return new Pod({
             data: nd.array(JSON.parse(socketMessage.data)),
-            downTime: 1000
+            downTime: 50
         })
     }
 
-    getDataExecutor(resolve) {
+    executor(resolve) {
         setTimeout(resolve, this.downTime, this.data.next().value)
     }
 
     step() {
-        return new Promise(this.getDataExecutor.bind(this))
+        return new Promise(this.executor.bind(this))
     }
 }

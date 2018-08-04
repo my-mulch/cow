@@ -1,5 +1,4 @@
 import Pod from './pod'
-import Illustrator from './illustrator';
 
 export default class Scene {
 
@@ -24,7 +23,12 @@ export default class Scene {
         this.pods.push(Pod.createFrom(socketMessage))
     }
 
-    render() {
-        this.pods.forEach(Illustrator.drawWithScene(this))
+    async render() {
+        while (this.pods.length) {
+            let data
+            const pod = this.pods.pop()
+            while (data = await pod.step())
+                this.context.fillRect(...data.slice(0, 2), 3, 3)
+        }
     }
 }
