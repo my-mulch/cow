@@ -1,23 +1,30 @@
 import Pod from './pod'
+import Illustrator from './illustrator';
 
 export default class Scene {
 
     constructor(props) {
-        this.pods = []
         this.canvas = props.canvas
         this.context = this.canvas.getContext('2d')
 
+        this.pods = props.pods || [new Pod({})]
         this.keyboard = props.keyboard || null
         this.mouse = props.mouse || null
         this.socket = props.socket || null
 
-        this.socket.getInstance().addEventListener('message', function (message) {
-            this.pods.push(Pod.createFrom(message))
-        }, this)
+        this.socket.listen('message', this.addPod.bind(this))
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
+
+        window.setInterval(this.render.bind(this))
     }
 
-    render() { }
+    addPod(socketMessage) {
+        this.pods.push(Pod.createFrom(socketMessage))
+    }
+
+    render() {
+        this.pods.forEach(Illustrator.drawWithScene(this))
+    }
 }

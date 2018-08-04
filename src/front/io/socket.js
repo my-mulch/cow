@@ -6,7 +6,7 @@ export default class Socket {
         this.socket = new WebSocket(`ws://${this.host}:${this.port}/`)
     }
 
-    getInstance() {
-        return this.socket
+    listen(message, fn) {
+        this.socket.addEventListener(message, fn)
     }
 }
