@@ -7,9 +7,9 @@ export default class Illustrator {
      */
 
     static drawWithScene(scene) {
-        return function (pod) {
-            while (data = pod.getData())
-                scene.context.fillRect(...data.slice(0, 2), 1, 1)
+        return async function (pod) {
+            while (data = await pod.getData())
+                scene.context.fillRect(...data.slice(0, 2), 25, 25)
         }
     }
 }

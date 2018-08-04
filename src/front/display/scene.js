@@ -7,7 +7,7 @@ export default class Scene {
         this.canvas = props.canvas
         this.context = this.canvas.getContext('2d')
 
-        this.pods = props.pods || [new Pod({})]
+        this.pods = props.pods || []
         this.keyboard = props.keyboard || null
         this.mouse = props.mouse || null
         this.socket = props.socket || null
