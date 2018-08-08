@@ -4,7 +4,7 @@
   "description": "A repository for all things visualizable",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & node --experimental-modules src/back/index.mjs",
+    "start": "webpack & node --experimental-modules src/back/index.mjs",
     "build": "webpack"
   },
   "repository": {
@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/trumanpurnell/plotter#readme",
   "dependencies": {
-    "multi-dim": "^3.0.0",
-    "webpack": "^4.16.0",
-    "webpack-cli": "^3.0.8",
+    "multi-dim": "^3.1.0",
+    "webpack": "^4.16.4",
+    "webpack-cli": "^3.1.0",
     "ws": "^6.0.0"
   }
 }

@@ -5,17 +5,21 @@ export default class Keyboard {
         this.bindings = bindings
         this.pressedKeys = new Set()
 
-        this.keyPressedAction = function (event) {
-            if (event.key in this.bindings) event.preventDefault()
-            this.pressedKeys.add(event.key)
-        }
+        this.context.addEventListener("keydown", this.addKey.bind(this))
+        this.context.addEventListener("keyup", this.deleteKey.bind(this))
+    }
 
-        this.keyReleasedAction = function (event) {
-            if (event.key in this.bindings) event.preventDefault()
-            this.pressedKeys.delete(event.key)
-        }
+    addKey(event) {
+        if (event.key in this.bindings)
+            event.preventDefault()
 
-        this.context.addEventListener("keydown", this.keyPressedAction.bind(this))
-        this.context.addEventListener("keyup", this.keyReleasedAction.bind(this))
+        this.pressedKeys.add(event.key)
+    }
+
+    deleteKey(event) {
+        if (event.key in this.bindings)
+            event.preventDefault()
+
+        this.pressedKeys.delete(event.key)
     }
 }
