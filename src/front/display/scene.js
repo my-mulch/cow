@@ -10,6 +10,7 @@ export default class Scene {
         this.keyboard = props.keyboard || null
         this.mouse = props.mouse || null
         this.socket = props.socket || null
+        this.renderer = props.renderer || null
 
         this.socket.listen('message', this.addPod.bind(this))
 
@@ -23,12 +24,7 @@ export default class Scene {
         this.pods.push(Pod.createFrom(socketMessage))
     }
 
-    async render() {
-        while (this.pods.length) {
-            let data
-            const pod = this.pods.pop()
-            while (data = await pod.step())
-                this.context.fillRect(...data.slice(0, 2), 3, 3)
-        }
+    render() {
+        this.renderer.draw(this, this.pods)
     }
 }

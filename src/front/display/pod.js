@@ -13,7 +13,6 @@ export default class Pod {
     static createFrom(socketMessage) {
         return new Pod({
             data: nd.array(JSON.parse(socketMessage.data)),
-            downTime: 50
         })
     }
 
