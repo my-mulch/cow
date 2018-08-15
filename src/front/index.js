@@ -6,7 +6,7 @@ class App {
     constructor(components) {
         this.scene = components.scene
         this.socket = components.socket
-        this.pods = components.pods
+        this.pods = components.pods || []
 
         this.socket.listen('message', this.addPodFromSocketMessage.bind(this))
 

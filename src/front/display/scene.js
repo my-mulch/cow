@@ -1,5 +1,5 @@
-import Keyboard from './io/keyboard'
-import Mouse from './io/mouse'
+import Keyboard from '../io/keyboard'
+import Mouse from '../io/mouse'
 
 export default class Scene {
 
