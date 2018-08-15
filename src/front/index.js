@@ -18,7 +18,7 @@ class App {
     }
 
     render() {
-        this.scene.render(this.pods)
+        this.scene.render(this.pods.slice())
     }
 }
 
