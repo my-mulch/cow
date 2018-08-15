@@ -10,7 +10,7 @@ export default class Pod {
         this.data = props.data.toGenerator() || null
     }
 
-    static createFrom(socketMessage) {
+    static createFromSocketMessage(socketMessage) {
         return new Pod({
             data: nd.array(JSON.parse(socketMessage.data)),
         })
