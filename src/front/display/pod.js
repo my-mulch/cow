@@ -2,12 +2,10 @@ import nd from 'multi-dim'
 
 export default class Pod {
     constructor(props) {
-        this.downTime = props.downTime || 0
-        this.height = props.height || 200
-        this.width = props.width || 200
-        this.depth = props.depth || 200
         this.origin = props.origin || nd.array([0, 0, 0, 1])
-        this.data = props.data.toGenerator() || null
+        this.ndata = props.data || null
+        this.data = this.ndata.toGenerator() || null
+        this.animationPause = 0
     }
 
     static createFromSocketMessage(socketMessage) {
@@ -17,7 +15,7 @@ export default class Pod {
     }
 
     executor(resolve) {
-        setTimeout(resolve, this.downTime, this.data.next().value)
+        setTimeout(resolve, this.animationPause, this.data.next().value)
     }
 
     step() {
@@ -25,7 +23,15 @@ export default class Pod {
     }
 
     async render(scene, data = null) {
-        while (data = await this.step())
-            scene.context.fillRect(...data.slice(0, 2), 1, 1)
+
+        // FOR POINT DATA
+        // while (data = await this.step())
+        //     scene.context.fillRect(...data.slice(0, 2), 1, 1)
+
+        const clampedImage = new Uint8ClampedArray(this.ndata.data)
+        const imageData = new ImageData(clampedImage, 645, 363)
+        const imageBitmap = await createImageBitmap(imageData)
+
+        scene.context.drawImage(imageBitmap, 0, 0)
     }
 }
