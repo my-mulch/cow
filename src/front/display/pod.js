@@ -23,4 +23,9 @@ export default class Pod {
     step() {
         return new Promise(this.executor.bind(this))
     }
+
+    async render(scene, data = null) {
+        while (data = await this.step())
+            scene.context.fillRect(...data.slice(0, 2), 1, 1)
+    }
 }
