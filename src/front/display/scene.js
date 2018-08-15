@@ -1,5 +1,3 @@
-import Pod from './pod'
-
 export default class Scene {
 
     constructor(props) {
@@ -10,7 +8,6 @@ export default class Scene {
         this.keyboard = props.keyboard || null
         this.mouse = props.mouse || null
         this.socket = props.socket || null
-        this.renderer = props.renderer || null
 
         this.socket.listen('message', this.addPod.bind(this))
 
@@ -20,11 +17,12 @@ export default class Scene {
         window.setInterval(this.render.bind(this))
     }
 
-    addPod(socketMessage) {
-        this.pods.push(Pod.createFrom(socketMessage))
+    addPod(pod) {
+        this.pods.push(pod)
     }
 
     render() {
-        this.renderer.draw(this, this.pods)
+        for (const pod of this.pods)
+            pod.render(this)
     }
 }
