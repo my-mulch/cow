@@ -9,8 +9,8 @@ export default class ImageMedia {
         return createImageBitmap(new ImageData(this.media.data, x, y))
     }
 
-    render(scene) {
-        scene.context.drawImage(this.createBitmap(), 0, 0)
+    async render(scene) {
+        scene.context.drawImage(await this.createBitmap(), 0, 0)
     }
 
     static matches(ndArray) {
