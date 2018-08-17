@@ -1,3 +1,5 @@
+import MediaSources from './sources'
+
 export default class MediaManager {
     constructor(ndarray) {
         this.delay = 0
@@ -8,9 +10,11 @@ export default class MediaManager {
         for (const MediaSource of MediaSources)
             if (MediaSource.matches(ndarray))
                 return new MediaSource(ndarray)
+
+        return null
     }
 
     render(scene) {
-        this.source.render(scene)
+        this.source && this.source.render(scene)
     }
 }

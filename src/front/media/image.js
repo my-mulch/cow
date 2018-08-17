@@ -1,4 +1,4 @@
-class ImageMedia {
+export default class ImageMedia {
     constructor(ndArray) {
         this.media = ndArray
     }
@@ -10,12 +10,11 @@ class ImageMedia {
     }
 
     render(scene) {
-        scene.context.drawImage(imageBitmap, 0, 0)
+        scene.context.drawImage(this.createBitmap(), 0, 0)
     }
 
     static matches(ndArray) {
-        return ndArray.header.shape.length === 3
-            && ndArray.header.shape.slice(-1) === 4
+        return ndArray.data instanceof Uint8ClampedArray
     }
 
 }
