@@ -1,26 +1,22 @@
+import MediaManager from '../media/manager'
 import nd from 'multi-dim'
+import utils from '../utils'
 
 export default class Pod {
     constructor(props) {
-        this.downTime = props.downTime || 0
-        this.height = props.height || 200
-        this.width = props.width || 200
-        this.depth = props.depth || 200
-        this.origin = props.origin || nd.array([0, 0, 0, 1])
-        this.data = props.data.toGenerator() || null
+        this.origin = props.origin
+        this.mediaManager = new MediaManager(props.data)
     }
 
-    static createFrom(socketMessage) {
+    render(scene) {
+        this.mediaManager.render(scene)
+    }
+
+    static createFromSocketMessage(socketMessage) {
+        const [rawArray, type] = utils.parseSocketMessage(socketMessage.data)
+
         return new Pod({
-            data: nd.array(JSON.parse(socketMessage.data)),
+            data: nd.array(rawArray, type),
         })
-    }
-
-    executor(resolve) {
-        setTimeout(resolve, this.downTime, this.data.next().value)
-    }
-
-    step() {
-        return new Promise(this.executor.bind(this))
     }
 }
