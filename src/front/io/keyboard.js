@@ -1,8 +1,7 @@
-
 export default class Keyboard {
-    constructor(bindings, context = window) {
-        this.context = context
-        this.bindings = bindings
+    constructor(opts) {
+        this.context = opts.context || window
+        this.bindings = opts.bindings || {}
         this.pressedKeys = new Set()
 
         this.context.addEventListener("keydown", this.addKey.bind(this))
