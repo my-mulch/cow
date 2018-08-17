@@ -1,5 +1,6 @@
 import MediaManager from '../media/manager'
 import nd from 'multi-dim'
+import utils from '../utils'
 
 export default class Pod {
     constructor(props) {
@@ -12,8 +13,10 @@ export default class Pod {
     }
 
     static createFromSocketMessage(socketMessage) {
+        const [rawArray, type] = utils.parseSocketMessage(socketMessage.data)
+
         return new Pod({
-            data: nd.array(JSON.parse(socketMessage.data)),
+            data: nd.array(rawArray, type),
         })
     }
 }
