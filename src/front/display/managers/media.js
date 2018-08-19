@@ -1,4 +1,5 @@
-import MediaSources from '../../media/sources'
+import ScatterMedia from '../../media/scatter'
+import ImageMedia from '../../media/image'
 
 export default class MediaManager {
     constructor(ndarray) {
@@ -7,10 +8,14 @@ export default class MediaManager {
     }
 
     introspect(ndarray) {
-        for (const MediaSource of MediaSources)
+        for (const MediaSource of MediaManager.getSources())
             if (MediaSource.matches(ndarray))
                 return new MediaSource(ndarray)
 
         return null
+    }
+
+    static getSources() {
+        return [ScatterMedia, ImageMedia]
     }
 }

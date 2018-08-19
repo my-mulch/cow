@@ -12,9 +12,9 @@ export default class ScatterMedia {
         return new Promise(this.executor.bind(this))
     }
 
-    async render(scene, point = null) {
+    async render(scene, layout, point = null) {
         while (point = await this.step())
-            scene.context.fillRect(...point.slice(0, 2), 1, 1)
+            scene.context.fillRect(...layout.locate(point.slice(0, 2)), 1, 1)
     }
 
     static matches(ndArray) {

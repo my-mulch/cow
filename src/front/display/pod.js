@@ -9,7 +9,9 @@ export default class Pod {
         this.mediaManager = new MediaManager(props.data)
     }
 
-    render(scene) { }
+    render(scene) {
+        this.mediaManager.source.render(scene, this.layoutManager)
+    }
 
     static createFromSocketMessage(socketMessage) {
         const [rawArray, type] = utils.parseSocketMessage(socketMessage.data)
