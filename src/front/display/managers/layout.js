@@ -1,15 +1,33 @@
+import nd from 'multi-dim'
+
 export default class LayoutManager {
+
+    /**
+     * Creates an instance of LayoutManager.
+     * @param {*} layout
+     *  origin: ndarray
+     *  size: object
+     * @memberof LayoutManager
+     */
+
     constructor(layout) {
         this.origin = layout.origin
         this.size = layout.size
     }
+
+    /**
+     * Locates the incoming ndArray within the current Layout
+     *
+     * @param {ndArray} point
+     * @returns The transformed point
+     * @memberof LayoutManager
+     */
+    locate(point) {
+        return this.origin.add(point).toRawArray()
+    }
 }
 
 LayoutManager.DEFAULT_LAYOUT = {
-    origin: [0, 0],
-    size: {
-        x: 250,
-        y: 250,
-        z: 250,
-    },
+    origin: nd.zeros(1, 3),
+    size: { X: 250, Y: 250, Z: 250 }
 }
