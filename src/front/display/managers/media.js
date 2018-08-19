@@ -1,4 +1,4 @@
-import MediaSources from './sources'
+import MediaSources from '../../media/sources'
 
 export default class MediaManager {
     constructor(ndarray) {
@@ -12,9 +12,5 @@ export default class MediaManager {
                 return new MediaSource(ndarray)
 
         return null
-    }
-
-    render(scene) {
-        this.source && this.source.render(scene)
     }
 }
