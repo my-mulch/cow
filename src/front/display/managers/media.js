@@ -3,7 +3,6 @@ import ImageMedia from '../../media/image'
 
 export default class MediaManager {
     constructor(ndarray) {
-        this.delay = 0
         this.source = this.introspect(ndarray)
     }
 

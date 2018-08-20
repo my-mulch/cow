@@ -22,12 +22,13 @@ export default class LayoutManager {
      * @returns The transformed point
      * @memberof LayoutManager
      */
+
     locate(point) {
-        return this.origin.add(point).toRawArray()
+        return this.origin.add(point)
     }
 }
 
 LayoutManager.DEFAULT_LAYOUT = {
-    origin: nd.zeros(1, 3),
+    origin: nd.zeros(3),
     size: { X: 250, Y: 250, Z: 250 }
 }
