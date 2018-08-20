@@ -29,6 +29,6 @@ export default class LayoutManager {
 }
 
 LayoutManager.DEFAULT_LAYOUT = {
-    origin: nd.zeros(3),
+    origin: nd.array([100, 150, 0]),
     size: { X: 250, Y: 250, Z: 250 }
 }
