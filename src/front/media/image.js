@@ -10,8 +10,10 @@ export default class ImageMedia {
     }
 
     async render(scene, layout) {
-        scene.context.drawImage(await this.createBitmap(),
-            ...layout.origin.toRawArray())
+        scene.context.drawImage(
+            await this.createBitmap(),
+            layout.origin.slice(0),
+            layout.origin.slice(1))
     }
 
     static matches(ndArray) {
