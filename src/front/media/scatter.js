@@ -2,6 +2,8 @@ export default class ScatterMedia {
     constructor(ndArray) {
         this.media = ndArray.toGenerator()
         this.animateWait = 0
+
+        this.executor = this.executor.bind(this)
     }
 
     executor(resolve) {
@@ -9,12 +11,19 @@ export default class ScatterMedia {
     }
 
     step() {
-        return new Promise(this.executor.bind(this))
+        return new Promise(this.executor)
     }
 
     async render(scene, layout, point = null) {
-        while (point = await this.step())
-            scene.context.fillRect(...layout.locate(point.slice(0, 2)), 1, 1)
+        while (point = await this.step()) {
+            const newPoint = layout.locate(point)
+
+            scene.context.fillRect(
+                newPoint.slice(0),
+                newPoint.slice(1),
+                1, 1
+            )
+        }
     }
 
     static matches(ndArray) {
