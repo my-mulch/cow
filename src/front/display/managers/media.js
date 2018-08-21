@@ -2,14 +2,14 @@ import ScatterMedia from '../../media/scatter'
 import ImageMedia from '../../media/image'
 
 export default class MediaManager {
-    constructor(ndarray) {
-        this.source = this.introspect(ndarray)
+    constructor(data) {
+        this.source = this.introspect(data)
     }
 
-    introspect(ndarray) {
+    introspect(data) {
         for (const MediaSource of MediaManager.getSources())
-            if (MediaSource.matches(ndarray))
-                return new MediaSource(ndarray)
+            if (MediaSource.matches(data))
+                return new MediaSource(data)
 
         return null
     }

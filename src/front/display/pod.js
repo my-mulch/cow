@@ -9,19 +9,39 @@ export default class Pod {
     constructor(props) {
         this.props = props
 
-        this.layoutManager = new LayoutManager(this)
-        this.mediaManager = new MediaManager(this)
-        this.displayManager = new DisplayManager(this)
+        this.mediaManager = new MediaManager(props.data)
+        this.layoutManager = new LayoutManager(props.layout)
+        this.displayManager = new DisplayManager(props.display)
     }
 
-    render(scene) { }
+    render(scene) { /* Merge the Managers! */
+        this.props.alive
+
+        raw = this.mediaManager.source
+        formatted = this.layoutManager.format(raw)
+        this.displayManager.render(formatted)
+    }
+
 
     static createFromSocketMessage(socketMessage) {
         const [rawArray, type] = IoUtils.parseSocketMessage(socketMessage.data)
 
         return new Pod({
             data: nd.array(rawArray, type),
-            layout: LayoutManager.DEFAULT_LAYOUT
+            layout: {
+                origin: nd.zeros(3),
+                size: {
+                    X: 200,
+                    Y: 200,
+                    Z: 200
+                }
+            },
+            display: {
+                animate: true,
+                animationPause: 0,
+                repeat: false
+            },
+            alive: true
         })
     }
 }
