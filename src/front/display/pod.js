@@ -2,7 +2,7 @@ import MediaManager from './managers/media'
 import LayoutManager from './managers/layout'
 import DisplayManager from './managers/display'
 
-import utils from '../utils'
+import IoUtils from '../utils/io'
 import nd from 'multi-dim'
 
 export default class Pod {
@@ -17,7 +17,7 @@ export default class Pod {
     render(scene) { }
 
     static createFromSocketMessage(socketMessage) {
-        const [rawArray, type] = utils.parseSocketMessage(socketMessage.data)
+        const [rawArray, type] = IoUtils.parseSocketMessage(socketMessage.data)
 
         return new Pod({
             data: nd.array(rawArray, type),
