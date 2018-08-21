@@ -1,17 +1,20 @@
 import MediaManager from './managers/media'
 import LayoutManager from './managers/layout'
+import DisplayManager from './managers/display'
+
 import utils from '../utils'
 import nd from 'multi-dim'
 
 export default class Pod {
     constructor(props) {
-        this.layoutManager = new LayoutManager(props.layout)
-        this.mediaManager = new MediaManager(props.data)
+        this.props = props
+
+        this.layoutManager = new LayoutManager(this)
+        this.mediaManager = new MediaManager(this)
+        this.displayManager = new DisplayManager(this)
     }
 
-    render(scene) {
-        this.mediaManager.source.render(scene, this.layoutManager)
-    }
+    render(scene) { }
 
     static createFromSocketMessage(socketMessage) {
         const [rawArray, type] = utils.parseSocketMessage(socketMessage.data)
