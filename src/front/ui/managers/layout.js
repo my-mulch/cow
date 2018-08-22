@@ -2,7 +2,8 @@ import nd from 'multi-dim'
 
 export default class LayoutManager {
     constructor(layout) {
-        this.layout = layout
+        this.origin = layout.origin
+        this.size = layout.size
     }
 
     moveToOrigin(source) {
@@ -14,10 +15,6 @@ export default class LayoutManager {
             [0, 0, 1, z],
             [0, 0, 0, 1],
         ])
-    }
-
-    format(source) {
-        
     }
 }
 
