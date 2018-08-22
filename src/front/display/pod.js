@@ -7,19 +7,17 @@ import nd from 'multi-dim'
 
 export default class Pod {
     constructor(props) {
-        this.props = props
+        this.isAlive = props.alive
 
-        this.mediaManager = new MediaManager(props.data)
+        this.data = MediaManager.introspect(props.data)
         this.layoutManager = new LayoutManager(props.layout)
         this.displayManager = new DisplayManager(props.display)
     }
 
     render(scene) { /* Merge the Managers! */
-        this.props.alive
-
-        raw = this.mediaManager.source
-        formatted = this.layoutManager.format(raw)
-        this.displayManager.render(formatted)
+        if (this.isAlive)
+            this.displayManager.render(scene,
+                this.layoutManager.format(this.data))
     }
 
 
@@ -28,6 +26,7 @@ export default class Pod {
 
         return new Pod({
             data: nd.array(rawArray, type),
+            alive: true,
             layout: {
                 origin: nd.zeros(3),
                 size: {
@@ -40,8 +39,7 @@ export default class Pod {
                 animate: true,
                 animationPause: 0,
                 repeat: false
-            },
-            alive: true
+            }
         })
     }
 }

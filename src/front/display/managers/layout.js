@@ -5,7 +5,5 @@ export default class LayoutManager {
         this.layout = layout
     }
 
-    format(source){
-        
-    }
+    format(source) { }
 }
