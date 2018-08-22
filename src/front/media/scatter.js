@@ -1,9 +1,9 @@
 export default class ScatterMedia {
     constructor(ndArray) {
-        this.media = ndArray.toGenerator()
+        this.media = ndArray
     }
 
-    async render(scene) {
+    async render(scene, format, playback) {
         scene.context.fillRect(/* Put data in me! */)
     }
 

@@ -9,7 +9,7 @@ export default class ImageMedia {
         return createImageBitmap(new ImageData(this.media.data, x, y))
     }
 
-    async render(scene, layout) {
+    async render(scene, format, playback) {
         scene.context.drawImage(
             await this.createBitmap(),
             layout.origin.slice(0),
