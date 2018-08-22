@@ -3,7 +3,7 @@ export default class ScatterMedia {
         this.media = ndArray
     }
 
-    async render(scene, format, playback) {
+    async render(scene, layout, playback) {
         scene.context.fillRect(/* Put data in me! */)
     }
 

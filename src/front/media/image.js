@@ -9,11 +9,11 @@ export default class ImageMedia {
         return createImageBitmap(new ImageData(this.media.data, x, y))
     }
 
-    async render(scene, format, playback) {
-        scene.context.drawImage(
-            await this.createBitmap(),
-            layout.origin.slice(0),
-            layout.origin.slice(1))
+    async render(scene, layout, playback) {
+        const X = layout.origin.slice(0)
+        const Y = layout.origin.slice(1)
+
+        scene.context.drawImage(await this.createBitmap(), X, Y)
     }
 
     static matches(ndArray) {

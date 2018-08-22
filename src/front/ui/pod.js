@@ -33,9 +33,9 @@ export default class Pod {
             },
             playback: {
                 animate: true,
-                animationPause: 0,
                 repeat: false,
-                alive: true
+                alive: true,
+                animationPause: 0,
             }
         })
     }
