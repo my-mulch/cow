@@ -1,23 +1,20 @@
 import MediaManager from './managers/media'
 import LayoutManager from './managers/layout'
-import DisplayManager from './managers/display'
+import PlaybackManager from './managers/playback'
 
 import IoUtils from '../utils/io'
 import nd from 'multi-dim'
 
 export default class Pod {
     constructor(props) {
-        this.isAlive = props.alive
+        this.source = MediaManager.getMediaSource(props.data)
 
-        this.data = MediaManager.introspect(props.data)
         this.layoutManager = new LayoutManager(props.layout)
-        this.displayManager = new DisplayManager(props.display)
+        this.playbackManager = new PlaybackManager(props.playback)
     }
 
-    render(scene) { /* Merge the Managers! */
-        if (this.isAlive)
-            this.displayManager.render(scene,
-                this.layoutManager.format(this.data))
+    render(scene) {
+        this.source.render(scene, this.layoutManager, this.playbackManager)
     }
 
 
@@ -26,7 +23,6 @@ export default class Pod {
 
         return new Pod({
             data: nd.array(rawArray, type),
-            alive: true,
             layout: {
                 origin: nd.zeros(3),
                 size: {
@@ -35,10 +31,11 @@ export default class Pod {
                     Z: 200
                 }
             },
-            display: {
+            playback: {
                 animate: true,
                 animationPause: 0,
-                repeat: false
+                repeat: false,
+                alive: true
             }
         })
     }
