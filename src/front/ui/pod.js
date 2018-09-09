@@ -24,11 +24,14 @@ export default class Pod {
         return new Pod({
             data: nd.array(rawArray, type),
             layout: {
-                origin: nd.zeros(3),
+                origin: {
+                    X: 400,
+                    Y: 400
+                },
                 size: {
-                    X: 200,
-                    Y: 200,
-                    Z: 200
+                    X: 888,
+                    Y: 888,
+                    Z: 888
                 }
             },
             playback: {

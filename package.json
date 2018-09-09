@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/trumanpurnell/plotter#readme",
   "dependencies": {
-    "multi-dim": "^3.3.1",
-    "webpack": "^4.16.5",
+    "multi-dim": "^5.0.1",
+    "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
     "ws": "^6.0.0"
   }
