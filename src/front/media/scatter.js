@@ -1,40 +1,45 @@
+import nd from 'multi-dim'
+
 export default class ScatterMedia {
     constructor(ndArray) {
         this.media = ndArray
     }
 
     async render(scene, layout, playback) {
-        playback.start()
-
-        const shifts = this.media.min(axis = 0)
+        // playback.start()
+        const shifts = this.media.mean(0, 1)
         const shift = layout.transform(
-            shifts.slice(0),
-            shifts.slice(1),
-            shifts.slice(2))
+            -shifts.slice(0),
+            -shifts.slice(1),
+            -shifts.slice(2))
 
-        const scales = nd.norm(this.media.max(axis = 1))
+        const maxLength = this.media.norm(2).max()
         const scaleDown = layout.scale(
-            scales.slice(0),
-            scales.slice(1),
-            scales.slice(2))
+            1 / maxLength,
+            1 / maxLength,
+            1 / maxLength)
 
         const scaleUp = layout.scale(
             layout.size.X,
             layout.size.Y,
             layout.size.Z)
 
-        const layoutMatrix = nd.compose(shift, scaleDown, scaleUp)
-        const formattedMedia = layoutMatrix.dot(this.media)
+        const moveToLocation = layout.transform(
+            layout.origin.X,
+            layout.origin.Y,
+            0)
 
-        const genMedia = formattedMedia.toGenerator(axis = 0)
-        let point
 
-        while (point = genMedia.next().value) {
-            if (playback.isAnimated)
-                playback.animationWait()
+        const layoutMatrix = nd.dot(shift, scaleDown, scaleUp, moveToLocation)
+        const formattedMedia = this.media.reshape(144000, 4).dot(layoutMatrix)
 
-            scene.context.fillRect(point.slice(0), point.slice(1), 1, 1)
+        for (let i = 0; i < 144000; i++) {
+            const [x, y, z, w] = formattedMedia.slice(i).toRawArray()
+            scene.context.fillRect(x, y, 1, 1)
+
         }
+
+        // playback.stop()
     }
 
     static matches(ndArray) {

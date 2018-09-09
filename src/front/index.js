@@ -1,5 +1,5 @@
-import Scene from './display/scene'
-import Pod from './display/pod'
+import Scene from './ui/scene'
+import Pod from './ui/pod'
 import Socket from './io/socket'
 
 class App {
@@ -18,7 +18,7 @@ class App {
     }
 
     render() {
-        this.scene.render(this.pods.slice())
+        this.scene.render(this.pods)
     }
 }
 
