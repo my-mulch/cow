@@ -25,10 +25,13 @@ export default class LayoutManager {
     }
 
     rotate(angle) {
+        const c = Math.cos(angle)
+        const s = Math.sin(angle)
+
         return nd.array([
-            [x, 0, 0, 0],
-            [0, y, 0, 0],
-            [0, 0, z, 0],
+            [c, 0, s, 0],
+            [0, 1, 0, 0],
+            [-s, 0, c, 0],
             [0, 0, 0, 1],
         ])
     }
