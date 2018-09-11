@@ -1,21 +1,18 @@
-import Keyboard from '../io/keyboard'
-import Mouse from '../io/mouse'
-
 export default class Scene {
 
     constructor(props) {
         this.canvas = props.canvas || document.getElementById('canvas')
         this.context = this.canvas.getContext('2d')
 
-        this.keyboard = props.keyboard || new Keyboard({ /* Key Bindings */ })
-        this.mouse = props.mouse || new Mouse()
+        this.canvas.addEventListener('mousedown', console.log)
+        this.canvas.addEventListener('mouseup', console.log)
+        this.canvas.addEventListener('mousemove', console.log)
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
+
+        this.pods = props.pods || []
     }
 
-    render(pods, pod = null) {
-        while (pod = pods.pop())
-            pod.render(this)
-    }
+    render() { }
 }

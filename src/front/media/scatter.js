@@ -12,8 +12,8 @@ export default class ScatterMedia {
             -shifts.slice(1),
             -shifts.slice(2))
 
-        const rotate = layout.rotate(Math.PI / 4)
-        console.log(rotate.toString())
+        const rotate = layout.rotate(Math.PI / 6)
+
         const maxLength = this.media.norm(2).max()
         const scale = layout.scale(
             layout.size.X / maxLength,
@@ -26,10 +26,10 @@ export default class ScatterMedia {
             0)
 
         const layoutMatrix = nd.dot(shift, rotate, scale, relocate)
-        const reshapedMedia = this.media.reshape(144000, 4)
+        const reshapedMedia = this.media.reshape(-1, 4)
         const formattedMedia = reshapedMedia.dot(layoutMatrix)
 
-        for (let i = 0; i < 144000; i++) {
+        for (let i = 0; i < reshapedMedia.header.shape[0]; i++) {
             const [x, y, z, w] = formattedMedia.slice(i).toRawArray()
             const [r, g, b, a] = reshapedMedia.slice(i).toRawArray()
             scene.context.fillStyle = `rgb(${r}, ${g}, ${b})`

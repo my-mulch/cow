@@ -5,24 +5,23 @@ import Socket from './io/socket'
 class App {
     constructor(components) {
         this.scene = components.scene
-        this.socket = components.socket
-        this.pods = components.pods || []
 
+        this.socket = components.socket
         this.socket.listen('message', this.addPodFromSocketMessage.bind(this))
 
         window.setInterval(this.render.bind(this))
     }
 
     addPodFromSocketMessage(socketMessage) {
-        this.pods.push(Pod.createFromSocketMessage(socketMessage))
+        this.scene.pods.push(Pod.createFromSocketMessage(socketMessage))
     }
 
     render() {
-        this.scene.render(this.pods)
+        this.scene.render()
     }
 }
 
 new App({
-    scene: new Scene({}),
-    socket: new Socket({})
+    scene: new Scene({ canvas: document.getElementById('canvas') }),
+    socket: new Socket({ port: 3000, host: 'localhost' })
 })
