@@ -14,7 +14,7 @@ export default class Pod {
         this.source.render(scene, this.layoutManager, this.playbackManager)
     }
 
-    isWithin(click){
+    subsumes(click){
        return this.layoutManager.checkBounds(click)
     }
 }

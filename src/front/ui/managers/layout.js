@@ -6,7 +6,11 @@ export default class LayoutManager {
         this.size = layout.size
     }
 
-    checkBounds(){}
+    checkBounds(clickEvent) {
+        return nd.array([clickEvent.clientX, clickEvent.clientY, 0, 1])
+            .subtract(this.origin)
+            .norm() < this.size.slice(':3').norm() / 2
+    }
 
     transform(x, y, z) {
         return nd.array([
