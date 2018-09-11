@@ -6,6 +6,8 @@ export default class LayoutManager {
         this.size = layout.size
     }
 
+    checkBounds(){}
+
     transform(x, y, z) {
         return nd.array([
             [1, 0, 0, 0],

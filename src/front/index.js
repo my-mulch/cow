@@ -2,6 +2,9 @@ import Scene from './ui/scene'
 import Pod from './ui/pod'
 import Socket from './io/socket'
 
+import IoUtils from '../utils/io'
+import nd from 'multi-dim'
+
 class App {
     constructor(components) {
         this.scene = components.scene
@@ -13,7 +16,28 @@ class App {
     }
 
     addPodFromSocketMessage(socketMessage) {
-        this.scene.pods.push(Pod.createFromSocketMessage(socketMessage))
+        const [rawArray, type] = IoUtils.parseSocketMessage(socketMessage.data)
+
+        this.scene.pods.push(new Pod({
+            data: nd.array(rawArray, type),
+            layout: {
+                origin: {
+                    X: 400,
+                    Y: 400
+                },
+                size: {
+                    X: 888,
+                    Y: 888,
+                    Z: 888
+                }
+            },
+            playback: {
+                animate: true,
+                repeat: false,
+                alive: true,
+                animationPause: 0,
+            }
+        }))
     }
 
     render() {
