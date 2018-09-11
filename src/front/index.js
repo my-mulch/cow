@@ -21,15 +21,8 @@ class App {
         this.scene.pods.push(new Pod({
             data: nd.array(rawArray, type),
             layout: {
-                origin: {
-                    X: 400,
-                    Y: 400
-                },
-                size: {
-                    X: 888,
-                    Y: 888,
-                    Z: 888
-                }
+                origin: nd.array([300, 300, 0, 1]),
+                size: nd.array([300, 300, 300, 1]),
             },
             playback: {
                 animate: true,
