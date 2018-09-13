@@ -17,5 +17,5 @@ export default class Scene {
         this.selectedPod = this.pods[0]
     }
 
-    render() { this.keyboard.run(this.selectedPod) }
+    render() { this.pods[0].render(this) }
 }
