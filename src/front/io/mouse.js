@@ -1,8 +1,7 @@
 export default class Mouse {
-    constructor(scene) {
-        this.scene = scene
-        this.isPressed = false
-        this.selectedPod = null
+    constructor(props) {
+        this.scene = props.scene
+        this.isPressed = props.isPressed
 
         this.scene.canvas.addEventListener('mousedown', this.clickDown.bind(this))
         this.scene.canvas.addEventListener('mouseup', this.clickUp.bind(this))

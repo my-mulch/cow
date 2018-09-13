@@ -5,7 +5,6 @@ export default class Layout {
         this.origin = layout.origin
         this.size = layout.size
         this.shape = layout.shape(this.size, this.origin)
-        console.log(this.shape)
     }
 
     checkBounds(clickEvent) {
@@ -32,7 +31,7 @@ export default class Layout {
         ])
     }
 
-    rotate(angle, axis) {
+    static rotate(angle, axis) {
         const c = Math.cos(angle)
         const s = Math.sin(angle)
 
