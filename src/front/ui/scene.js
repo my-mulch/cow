@@ -16,5 +16,7 @@ export default class Scene {
         this.pods = props.pods || []
     }
 
-    render() { }
+    render() {
+        this.pods.length && this.pods.pop().render(this)
+    }
 }

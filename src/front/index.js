@@ -2,7 +2,7 @@ import Scene from './ui/scene'
 import Pod from './ui/pod'
 import Socket from './io/socket'
 
-import IoUtils from '../utils/io'
+import IoUtils from './utils/io'
 import nd from 'multi-dim'
 
 class App {
@@ -29,6 +29,9 @@ class App {
                 repeat: false,
                 alive: true,
                 animationPause: 0,
+            },
+            display: {
+                border: true
             }
         }))
     }
@@ -39,6 +42,21 @@ class App {
 }
 
 new App({
-    scene: new Scene({ canvas: document.getElementById('canvas') }),
+    scene: new Scene({
+        canvas: document.getElementById('canvas'),
+        pods: [new Pod({
+            data: nd.zeros(4),
+            layout: {
+                origin: nd.array([300, 300, 0, 1]),
+                size: nd.array([300, 300, 300, 1]),
+            },
+            playback: {
+                animate: true,
+                repeat: false,
+                alive: true,
+                animationPause: 0,
+            }
+        })]
+    }),
     socket: new Socket({ port: 3000, host: 'localhost' })
 })

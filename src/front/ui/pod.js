@@ -11,10 +11,17 @@ export default class Pod {
     }
 
     render(scene) {
-        this.source.render(scene, this.layoutManager, this.playbackManager)
+
+        this.layoutManager.edges.forEach(function ([i, j]) {
+            scene.context.moveTo(...this.layoutManager.vertices[i].toRawArray())
+            scene.context.lineTo(...this.layoutManager.vertices[j].toRawArray())
+        }, this)
+
+        scene.context.stroke()
+        // this.source.render(scene, this.layoutManager, this.playbackManager, this.displayManager)
     }
 
-    subsumes(click){
-       return this.layoutManager.checkBounds(click)
+    subsumes(click) {
+        return this.layoutManager.checkBounds(click)
     }
 }
