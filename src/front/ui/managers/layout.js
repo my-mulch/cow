@@ -13,7 +13,7 @@ export default class Layout {
             .norm() < this.size.slice(':2').norm() / 2
     }
 
-    static transform(x, y, z) {
+    static translate(x, y, z) {
         return nd.array([
             [1, 0, 0, 0],
             [0, 1, 0, 0],

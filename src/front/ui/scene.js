@@ -14,11 +14,12 @@ export default class Scene {
         this.height = this.canvas.clientHeight
 
         this.pods = props.pods || []
-        this.selectedPod = null
+        this.selectedPod = this.pods[0]
     }
 
     render() {
         this.keyboard.run(this.selectedPod)
-        this.pods.length && this.pods.pop().render(this)
+        this.pods[0].render(this)
+        this.context.clearRect(0, 0, this.width, this.height)
     }
 }
