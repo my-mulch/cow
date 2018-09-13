@@ -10,10 +10,11 @@ export default class Mouse {
     }
 
     clickDown(clickEvent) {
-        this.isPressed = true
-        this.selectedPod = this.scene.pods.filter(function (pod) {
-            return pod.isWithin(clickEvent)
-        })
+        console.log(clickEvent)
+        // this.isPressed = true
+        // this.selectedPod = this.scene.pods.filter(function (pod) {
+        //     return pod.isWithin(clickEvent)
+        // })
     }
 
     clickUp(event) {
