@@ -14,7 +14,7 @@ export default class Layout {
             .norm() < this.size.slice(':2').norm() / 2
     }
 
-    transform(x, y, z) {
+    static transform(x, y, z) {
         return nd.array([
             [1, 0, 0, 0],
             [0, 1, 0, 0],
@@ -23,7 +23,7 @@ export default class Layout {
         ])
     }
 
-    scale(x, y, z) {
+    static scale(x, y, z) {
         return nd.array([
             [x, 0, 0, 0],
             [0, y, 0, 0],
@@ -32,16 +32,33 @@ export default class Layout {
         ])
     }
 
-    rotate(angle) {
+    rotate(angle, axis) {
         const c = Math.cos(angle)
         const s = Math.sin(angle)
 
-        return nd.array([
-            [c, 0, s, 0],
-            [0, 1, 0, 0],
-            [-s, 0, c, 0],
-            [0, 0, 0, 1],
-        ])
+        if (axis === 'x')
+            return nd.array([
+                [1, 0, 0, 0],
+                [0, c, s, 0],
+                [0, -s, c, 0],
+                [0, 0, 0, 1],
+            ])
+
+        if (axis === 'y')
+            return nd.array([
+                [c, 0, s, 0],
+                [0, 1, 0, 0],
+                [-s, 0, c, 0],
+                [0, 0, 0, 1],
+            ])
+
+        if (axis === 'z')
+            return nd.array([
+                [c, s, 0, 0],
+                [-s, c, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1],
+            ])
     }
 }
 
