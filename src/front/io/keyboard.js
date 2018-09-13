@@ -8,11 +8,17 @@ export default class Keyboard {
     }
 
     [''](pod) { /* NOOP */ }
-
-    ['a'](pod) { pod.rotate(Math.PI / 16, 'x') }
-    ['s'](pod) { pod.rotate(Math.PI / 16, 'y') }
-    ['d'](pod) { pod.rotate(Math.PI / 16, 'z') }
     [' '](pod) { console.log('hi space!') }
+
+    ['a'](pod) { pod.rotate(Math.PI / 256, 'x') }
+    ['s'](pod) { pod.rotate(Math.PI / 256, 'y') }
+    ['d'](pod) { pod.rotate(Math.PI / 256, 'z') }
+
+    ['ArrowLeft'](pod) { pod.translate(-10, 0, 0, 0) }
+    ['ArrowRight'](pod) { pod.translate(10, 0, 0, 0) }
+    ['ArrowUp'](pod) { pod.translate(0, -10, 0, 0) }
+    ['ArrowDown'](pod) { pod.translate(0, 10, 0, 0) }
+
 
 
     run(pod) {

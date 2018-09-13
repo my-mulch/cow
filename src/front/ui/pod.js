@@ -12,10 +12,18 @@ export default class Pod {
         this.display = new Display(props.display)
     }
 
+    rotate(angle, axis) {
+        this.layout.shape.vertices = this.layout.shape.vertices.dot(Layout.rotate(angle, axis))
+    }
+
+    translate(x, y, z, w) {
+        this.layout.shape.vertices = this.layout.shape.vertices.dot(Layout.translate(x, y, z, w))
+    }
+
     render(scene) {
         if (this.display.border)
             this.layout.shape.render(scene)
-        
+
         scene.context.stroke()
         // this.data.render(scene, this.layoutManager, this.playbackManager, this.displayManager)
     }
