@@ -7,13 +7,14 @@ export default class Scene {
         this.canvas = props.canvas || document.getElementById('canvas')
         this.context = this.canvas.getContext('2d')
 
-        this.mouse = props.mouse || new Mouse(this)
-        // this.keyboard = props.keyboard || new Keyboard(this)
+        this.mouse = props.mouse || new Mouse({ scene: this, isPressed: false })
+        this.keyboard = props.keyboard || new Keyboard({})
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
 
         this.pods = props.pods || []
+        this.selectedPod = null
     }
 
     render() {

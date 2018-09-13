@@ -1,11 +1,11 @@
 export default class Keyboard {
-    constructor(opts) {
-        this.context = opts.context || window
-        this.bindings = opts.bindings || {}
+    constructor(props) {
+        this.scene = props.scene
         this.pressedKeys = new Set()
+        this.bindings = this.associateFunctionNamesWithThemselves()
 
-        this.context.addEventListener("keydown", this.addKey.bind(this))
-        this.context.addEventListener("keyup", this.deleteKey.bind(this))
+        this.scene.canvas.addEventListener("keydown", this.addKey.bind(this))
+        this.scene.canvas.addEventListener("keyup", this.deleteKey.bind(this))
     }
 
     addKey(event) {
@@ -20,5 +20,15 @@ export default class Keyboard {
             event.preventDefault()
 
         this.pressedKeys.delete(event.key)
+    }
+
+    associateFunctionNamesWithThemselves() {
+        const functionAssociator = function (bindings, action) {
+            return Object.assign(bindings, { action: this[action] })
+        }
+
+        return Object
+            .getOwnPropertyNames(this.__proto__)
+            .reduce(functionAssociator.bind(this), {})
     }
 }
