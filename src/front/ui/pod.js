@@ -1,22 +1,21 @@
 import MediaManager from './managers/media'
-import LayoutManager from './managers/layout'
-import PlaybackManager from './managers/playback'
+import Layout from './managers/layout'
+import Playback from './managers/playback'
+import Display from './managers/display'
 
 export default class Pod {
     constructor(props) {
         this.source = MediaManager.getMediaSource(props.data)
 
-        this.layoutManager = new LayoutManager(props.layout)
-        this.playbackManager = new PlaybackManager(props.playback)
+        this.layout = new LayoutManager(props.layout)
+        this.playback = new PlaybackManager(props.playback)
+        this.display = new DisplayManager(props.display)
     }
 
     render(scene) {
-
-        this.layoutManager.edges.forEach(function ([i, j]) {
-            scene.context.moveTo(...this.layoutManager.vertices[i].toRawArray())
-            scene.context.lineTo(...this.layoutManager.vertices[j].toRawArray())
-        }, this)
-
+        if (this.display.hasBorder)
+            this.layout.shape.render()
+        
         scene.context.stroke()
         // this.source.render(scene, this.layoutManager, this.playbackManager, this.displayManager)
     }
