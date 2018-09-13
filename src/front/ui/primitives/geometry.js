@@ -40,6 +40,8 @@ export default class Shape {
     }
 
     render(scene) {
+        scene.context.beginPath()
+
         for (const [i, j] of this.edges) {
             scene.context.moveTo(...this.vertices.slice(i))
             scene.context.lineTo(...this.vertices.slice(j))

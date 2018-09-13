@@ -21,10 +21,9 @@ export default class Pod {
     }
 
     render(scene) {
-        if (this.display.border)
-            this.layout.shape.render(scene)
 
-        scene.context.stroke()
+        this.layout.shape.render(scene)
+
         // this.data.render(scene, this.layoutManager, this.playbackManager, this.displayManager)
     }
 
