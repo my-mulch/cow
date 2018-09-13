@@ -2,6 +2,7 @@ import Scene from './ui/scene'
 import Pod from './ui/pod'
 import Socket from './io/socket'
 
+import Shape from './ui/primitives/geometry'
 import IoUtils from './utils/io'
 import nd from 'multi-dim'
 
@@ -50,7 +51,7 @@ new App({
             layout: {
                 origin: nd.array([300, 300, 0, 1]),
                 size: nd.array([300, 300, 300, 1]),
-                shape: 'cuboid'
+                shape: Shape.cuboid
             },
             playback: {
                 animate: true,

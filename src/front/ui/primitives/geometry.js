@@ -1,4 +1,4 @@
-export default class GeometricPrimitive {
+export default class Shape {
     constructor(vertices, edges) {
         this.vertices = vertices
         this.edges = edges
@@ -37,7 +37,7 @@ export default class GeometricPrimitive {
         return new Shape(vertices, edges)
     }
 
-    render() {
+    render(scene) {
         for (const [i, j] of this.edges) {
             scene.context.moveTo(...this.vertices[i].toRawArray())
             scene.context.lineTo(...this.vertices[j].toRawArray())

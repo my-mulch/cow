@@ -1,4 +1,4 @@
-export default class PlaybackManager {
+export default class Playback {
     constructor(display) {
         this.display = display
 

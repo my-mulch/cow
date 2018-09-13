@@ -1,10 +1,11 @@
 import nd from 'multi-dim'
 
-export default class LayoutManager {
+export default class Layout {
     constructor(layout) {
         this.origin = layout.origin
         this.size = layout.size
-        this.shape = layout.shape
+        this.shape = layout.shape(this.size, this.origin)
+        console.log(this.shape)
     }
 
     checkBounds(clickEvent) {
