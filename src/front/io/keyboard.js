@@ -22,9 +22,14 @@ export default class Keyboard {
 
 
     run(pod) {
+        this.scene.context.clearRect(0, 0, this.scene.width, this.scene.height)
+
         this[Array
             .from(this.pressedKeys)
             .sort()
             .join()](pod)
+
+        pod.render(this.scene)
+        this.scene.context.stroke()
     }
 }
