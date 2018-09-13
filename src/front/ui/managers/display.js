@@ -1,1 +1,5 @@
-export default class DisplayManager { }
+export default class Display {
+    constructor(display){
+        this.border = display.border
+    }
+}
