@@ -42,6 +42,7 @@ class App {
 }
 
 new App({
+    socket: new Socket({ port: 3000, host: 'localhost' }),
     scene: new Scene({
         canvas: document.getElementById('canvas'),
         pods: [new Pod({
@@ -49,14 +50,17 @@ new App({
             layout: {
                 origin: nd.array([300, 300, 0, 1]),
                 size: nd.array([300, 300, 300, 1]),
+                shape: 'cuboid'
             },
             playback: {
                 animate: true,
                 repeat: false,
                 alive: true,
                 animationPause: 0,
+            },
+            display: {
+                border: true
             }
         })]
     }),
-    socket: new Socket({ port: 3000, host: 'localhost' })
 })

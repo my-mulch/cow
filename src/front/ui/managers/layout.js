@@ -4,35 +4,7 @@ export default class LayoutManager {
     constructor(layout) {
         this.origin = layout.origin
         this.size = layout.size
-
-        const [x, y, z, w] = this.size.toRawArray().map(d => d / 2)
-
-        this.vertices = [
-            this.origin.add([x, y, z, 0]),
-            this.origin.add([x, y, -z, 0]),
-            this.origin.add([x, -y, z, 0]),
-            this.origin.add([x, -y, -z, 0]),
-
-            this.origin.add([-x, y, z, 0]),
-            this.origin.add([-x, y, -z, 0]),
-            this.origin.add([-x, -y, z, 0]),
-            this.origin.add([-x, -y, -z, 0]),
-        ]
-
-        this.edges = [
-            [0, 1],
-            [0, 2],
-            [0, 4],
-            [1, 3],
-            [1, 5],
-            [2, 3],
-            [2, 6],
-            [3, 7],
-            [4, 5],
-            [4, 6],
-            [5, 7],
-            [6, 7],
-        ]
+        this.shape = layout.shape
     }
 
     checkBounds(clickEvent) {

@@ -1,0 +1,46 @@
+export default class GeometricPrimitive {
+    constructor(vertices, edges) {
+        this.vertices = vertices
+        this.edges = edges
+    }
+
+    static cuboid(dimensions, origin) {
+        const [x, y, z, w] = dimensions.toRawArray()
+
+        const vertices = [
+            origin.add([0, 0, 0, 0]),
+            origin.add([0, 0, z, 0]),
+            origin.add([0, y, 0, 0]),
+            origin.add([0, y, z, 0]),
+
+            origin.add([x, 0, 0, 0]),
+            origin.add([x, 0, z, 0]),
+            origin.add([x, y, 0, 0]),
+            origin.add([x, y, z, 0]),
+        ]
+
+        const edges = [
+            [0, 1],
+            [0, 2],
+            [0, 4],
+            [1, 3],
+            [1, 5],
+            [2, 3],
+            [2, 6],
+            [3, 7],
+            [4, 5],
+            [4, 6],
+            [5, 7],
+            [6, 7],
+        ]
+
+        return new Shape(vertices, edges)
+    }
+
+    render() {
+        for (const [i, j] of this.edges) {
+            scene.context.moveTo(...this.vertices[i].toRawArray())
+            scene.context.lineTo(...this.vertices[j].toRawArray())
+        }
+    }
+}
