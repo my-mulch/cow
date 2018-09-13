@@ -1,28 +1,27 @@
 export default class Keyboard {
     constructor(props) {
-        this.scene = props.scene
         this.pressedKeys = new Set()
-        this.bindings = this.associateFunctionNamesWithThemselves()
+        this.scene = props.scene
+        this.bindings = this.makeFunctionsTheBindings()
 
-        this.scene.canvas.addEventListener("keydown", this.addKey.bind(this))
-        this.scene.canvas.addEventListener("keyup", this.deleteKey.bind(this))
+        window.addEventListener("keyup", (function () { this.pressedKeys = new Set() }).bind(this))
+        window.addEventListener("keydown", (function (event) { this.pressedKeys.add(event.key) }).bind(this))
     }
 
-    addKey(event) {
-        if (event.key in this.bindings)
-            event.preventDefault()
+    [''](pod) { /* NOOP */ }
 
-        this.pressedKeys.add(event.key)
+    ['a'](pod) { pod.rotate(Math.PI / 16, 'x') }
+    ['s'](pod) { pod.rotate(Math.PI / 16, 'y') }
+    ['d'](pod) { pod.rotate(Math.PI / 16, 'z') }
+
+
+    run(pod) {
+        this[Array.from(this.pressedKeys)
+            .sort()
+            .join()](pod)
     }
 
-    deleteKey(event) {
-        if (event.key in this.bindings)
-            event.preventDefault()
-
-        this.pressedKeys.delete(event.key)
-    }
-
-    associateFunctionNamesWithThemselves() {
+    makeFunctionsTheBindings() {
         const functionAssociator = function (bindings, action) {
             return Object.assign(bindings, { action: this[action] })
         }
