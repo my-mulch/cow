@@ -8,7 +8,7 @@ export default class Scene {
         this.context = this.canvas.getContext('2d')
 
         this.mouse = props.mouse || new Mouse({ scene: this, isPressed: false })
-        this.keyboard = props.keyboard || new Keyboard({})
+        this.keyboard = props.keyboard || new Keyboard({ scene: this })
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
@@ -18,6 +18,7 @@ export default class Scene {
     }
 
     render() {
+        this.keyboard.run(this.selectedPod)
         this.pods.length && this.pods.pop().render(this)
     }
 }
