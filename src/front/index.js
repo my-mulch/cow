@@ -1,28 +1,67 @@
-import Scene from './display/scene'
-import Pod from './display/pod'
+import Scene from './ui/scene'
+import Pod from './ui/pod'
 import Socket from './io/socket'
+
+import Shape from './ui/primitives/geometry'
+import IoUtils from './utils/io'
+import nd from 'multi-dim'
 
 class App {
     constructor(components) {
         this.scene = components.scene
-        this.socket = components.socket
-        this.pods = components.pods || []
 
+        this.socket = components.socket
         this.socket.listen('message', this.addPodFromSocketMessage.bind(this))
 
         window.setInterval(this.render.bind(this))
     }
 
     addPodFromSocketMessage(socketMessage) {
-        this.pods.push(Pod.createFromSocketMessage(socketMessage))
+        const [rawArray, type] = IoUtils.parseSocketMessage(socketMessage.data)
+
+        this.scene.pods.push(new Pod({
+            data: nd.array(rawArray, type),
+            layout: {
+                origin: nd.array([300, 300, 0, 1]),
+                size: nd.array([300, 300, 300, 1]),
+            },
+            playback: {
+                animate: true,
+                repeat: false,
+                alive: true,
+                animationPause: 0,
+            },
+            display: {
+                border: true
+            }
+        }))
     }
 
     render() {
-        this.scene.render(this.pods.slice())
+        this.scene.render()
     }
 }
 
 new App({
-    scene: new Scene({}),
-    socket: new Socket({})
+    socket: new Socket({ port: 3000, host: 'localhost' }),
+    scene: new Scene({
+        canvas: document.getElementById('canvas'),
+        pods: [new Pod({
+            data: nd.random.randint(0, 256, [100, 30, 4]).set(':', ':', 3)(1),
+            layout: {
+                origin: nd.array([600, 400, 0, 1]),
+                size: nd.array([500, 500, 500, 1]),
+                shape: Shape.cuboid
+            },
+            playback: {
+                animate: true,
+                repeat: false,
+                alive: true,
+                animationPause: 0,
+            },
+            display: {
+                border: true
+            }
+        })]
+    }),
 })

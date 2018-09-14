@@ -1,5 +1,5 @@
-import Keyboard from '../io/keyboard'
 import Mouse from '../io/mouse'
+import Keyboard from '../io/keyboard'
 
 export default class Scene {
 
@@ -7,15 +7,15 @@ export default class Scene {
         this.canvas = props.canvas || document.getElementById('canvas')
         this.context = this.canvas.getContext('2d')
 
-        this.keyboard = props.keyboard || new Keyboard({ /* Key Bindings */ })
-        this.mouse = props.mouse || new Mouse()
+        this.mouse = props.mouse || new Mouse({ scene: this, isPressed: false })
+        this.keyboard = props.keyboard || new Keyboard({ scene: this })
 
         this.width = this.canvas.clientWidth
         this.height = this.canvas.clientHeight
+
+        this.pods = props.pods || []
+        this.selectedPod = this.pods[0]
     }
 
-    render(pods, pod = null) {
-        while (pod = pods.pop())
-            pod.render(this)
-    }
+    render() { this.pods[0].render(this) }
 }

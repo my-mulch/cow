@@ -1,24 +1,23 @@
 export default class Keyboard {
-    constructor(opts) {
-        this.context = opts.context || window
-        this.bindings = opts.bindings || {}
+    constructor(props) {
+        this.scene = props.scene
         this.pressedKeys = new Set()
 
-        this.context.addEventListener("keydown", this.addKey.bind(this))
-        this.context.addEventListener("keyup", this.deleteKey.bind(this))
+        window.addEventListener("keyup", this.keyU.bind(this))
+        window.addEventListener("keydown", this.keyD.bind(this))
     }
 
-    addKey(event) {
-        if (event.key in this.bindings)
-            event.preventDefault()
+    ['a'](pod) { pod.rotate(Math.PI / 32, 'x') }
+    ['s'](pod) { pod.rotate(Math.PI / 32, 'y') }
+    ['d'](pod) { pod.rotate(Math.PI / 32, 'z') }
 
-        this.pressedKeys.add(event.key)
-    }
+    ['ArrowLeft'](pod) { pod.translate(-10, 0, 0, 0) }
+    ['ArrowRight'](pod) { pod.translate(10, 0, 0, 0) }
+    ['ArrowUp'](pod) { pod.translate(0, -10, 0, 0) }
+    ['ArrowDown'](pod) { pod.translate(0, 10, 0, 0) }
 
-    deleteKey(event) {
-        if (event.key in this.bindings)
-            event.preventDefault()
+    keyD(event) { this.pressedKeys.add(event.key) }
+    keyU(event) { this.pressedKeys = new Set() }
 
-        this.pressedKeys.delete(event.key)
-    }
+    run(pod) { return Array.from(this.pressedKeys).map(key => this[key](pod)) }
 }
