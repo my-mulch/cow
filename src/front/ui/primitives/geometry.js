@@ -19,7 +19,7 @@ export default class Shape {
             [...origin.add([x, 0, z, 0])],
             [...origin.add([x, y, 0, 0])],
             [...origin.add([x, y, z, 0])],
-        ])
+        ]).subtract([x / 2, y / 2, z / 2, 0])
 
         const edges = nd.array([
             [0, 1],
