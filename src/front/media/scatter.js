@@ -1,23 +1,21 @@
+import nd from 'multi-dim'
+
 export default class ScatterMedia {
     constructor(ndArray) {
-        this.media = ndArray.toGenerator()
-        this.animateWait = 0
+        this.originalMedia = ndArray.reshape(-1, 4)
     }
 
-    executor(resolve) {
-        setTimeout(resolve, this.animateWait, this.media.next().value)
+    async render(scene, layout, playback, display) {
+        if (!this.displayMedia)
+            this.displayMedia = layout.reposition(this.originalMedia)
+
+        for (let i = 0; i < this.displayMedia.header.shape[0]; i++) {
+            const [x, y, z, w] = this.displayMedia.slice(i)
+            const [r, g, b, a] = this.originalMedia.slice(i)
+
+            scene.context.fillStyle = `rgb(${r}, ${g}, ${b})`
+            scene.context.fillRect(x, y, 10, 10)
+        }
     }
 
-    step() {
-        return new Promise(this.executor.bind(this))
-    }
-
-    async render(scene, point = null) {
-        while (point = await this.step())
-            scene.context.fillRect(...point.slice(0, 2), 1, 1)
-    }
-
-    static matches(ndArray) {
-        return ndArray.data instanceof Float64Array
-    }
 }

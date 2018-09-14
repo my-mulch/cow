@@ -1,4 +1,7 @@
-import ScatterMedia from './scatter'
 import ImageMedia from './image'
+import ScatterMedia from './scatter'
 
-export default [ScatterMedia, ImageMedia]
+export default {
+    image: ImageMedia,
+    scatter: ScatterMedia
+}
