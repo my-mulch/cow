@@ -9,9 +9,9 @@ export default class Keyboard {
         window.addEventListener("keydown", this.keyD.bind(this))
     }
 
-    ['a'](pod) { pod.rotate(Math.PI / 1024, 'x') }
-    ['s'](pod) { pod.rotate(Math.PI / 1024, 'y') }
-    ['d'](pod) { pod.rotate(Math.PI / 1024, 'z') }
+    ['a'](pod) { pod.rotate(Math.PI / 128, 'x') }
+    ['s'](pod) { pod.rotate(Math.PI / 128, 'y') }
+    ['d'](pod) { pod.rotate(Math.PI / 128, 'z') }
 
     ['ArrowLeft'](pod) { pod.translate(-10, 0, 0, 0) }
     ['ArrowRight'](pod) { pod.translate(10, 0, 0, 0) }

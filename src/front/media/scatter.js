@@ -9,7 +9,7 @@ export default class ScatterMedia {
         const displayMedia = layout.reposition(this.media)
         const originalMedia = this.media.reshape(-1, this.media.header.shape.slice().pop())
 
-        for (let i = 0; i < displayMedia.header.shape[0].length; i++) {
+        for (let i = 0; i < displayMedia.header.shape[0]; i++) {
             const [x, y, z, w] = displayMedia.slice(i)
             const [r, g, b, a] = originalMedia.slice(i)
 
@@ -17,5 +17,5 @@ export default class ScatterMedia {
             scene.context.fillRect(x, y, 1, 1)
         }
     }
-    
+
 }
