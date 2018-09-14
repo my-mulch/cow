@@ -17,5 +17,5 @@ export default class Scene {
         this.selectedPod = this.pods[0]
     }
 
-    render() { this.pods.length && this.pods.pop().render(this) }
+    render() { this.pods[0].render(this) }
 }
