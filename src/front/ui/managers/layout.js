@@ -8,15 +8,12 @@ export default class Layout {
     }
 
     reposition(data) {
-        const dims = data.header.shape.slice(0, -1)
-        const lastDim = data.header.shape.slice().pop()
 
-
-        return data.reshape(-1, lastDim)
+        return data
             // move points to origin
-            .dot(Layout.translate(...data.mean(...dims.keys()).multiply(-1)))
+            .dot(Layout.translate(...data.mean(0).multiply(-1)))
             // scale to fill size of pod
-            .dot(Layout.scale(...this.size.divide(data.norm(dims.length).max()).set(3)(1)))
+            .dot(Layout.scale(...this.size.multiply(2).divide(data.norm(1).max()).set(3)(1)))
             // move to location of pod
             .dot(Layout.translate(...this.origin))
 
