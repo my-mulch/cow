@@ -46,5 +46,7 @@ export default class Shape {
             scene.context.moveTo(...this.vertices.slice(i))
             scene.context.lineTo(...this.vertices.slice(j))
         }
+
+        scene.context.stroke()
     }
 }

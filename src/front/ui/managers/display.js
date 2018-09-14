@@ -1,5 +1,5 @@
 export default class Display {
     constructor(display){
-        this.border = display.border
+        this.hasBorder = display.border
     }
 }

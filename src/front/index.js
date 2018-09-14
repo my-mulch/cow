@@ -47,9 +47,9 @@ new App({
     scene: new Scene({
         canvas: document.getElementById('canvas'),
         pods: [new Pod({
-            data: nd.zeros(4),
+            data: nd.random.randint(0, 256, [100, 100, 4]).set(':', ':', 3)(1),
             layout: {
-                origin: nd.array([300, 300, 0, 1]),
+                origin: nd.array([300, 300, 300, 1]),
                 size: nd.array([300, 300, 300, 1]),
                 shape: Shape.cuboid
             },

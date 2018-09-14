@@ -7,18 +7,19 @@ export default class Layout {
         this.shape = layout.shape(this.size, this.origin)
     }
 
-    position(data) {
+    reposition(data) {
         const dims = data.header.shape.slice(0, -1)
         const lastDim = data.header.shape.slice().pop()
 
-        // move points to origin
-        return this.transform(...data.mean(...dims.keys()).multiply(-1))
+
+        return data.reshape(-1, lastDim)
+            // move points to origin
+            .dot(Layout.translate(...data.mean(...dims.keys()).multiply(-1)))
             // scale to fill size of pod
-            .dot(this.scale(this.size.divide(data.norm(dims.length).max())))
-            // move to location pod
-            .dot(this.transform(...this.origin))
-            // execute these steps on data
-            .dot(data.reshape(-1, lastDim))
+            .dot(Layout.scale(...this.size.divide(data.norm(dims.length).max()).set(3)(1)))
+            // move to location of pod
+            .dot(Layout.translate(...this.origin))
+
     }
 
     static translate(x, y, z) {
