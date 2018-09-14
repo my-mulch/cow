@@ -1,7 +1,7 @@
 export default class Keyboard {
     constructor(props) {
-        this.pressedKeys = new Set()
         this.scene = props.scene
+        this.pressedKeys = new Set()
 
         this.run = this.run.bind(this)
 
@@ -18,8 +18,8 @@ export default class Keyboard {
     ['ArrowUp'](pod) { pod.translate(0, -10, 0, 0) }
     ['ArrowDown'](pod) { pod.translate(0, 10, 0, 0) }
 
-    keyU(event) { this.pressedKeys = new Set() }
     keyD(event) { this.pressedKeys.add(event.key) }
+    keyU(event) { this.pressedKeys = new Set() }
 
     run(pod) { return key => this[key](pod) }
 }

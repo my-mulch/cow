@@ -31,15 +31,10 @@ export default class Pod {
     }
 
     render(scene) {
-        // scene.context.clearRect(0, 0, scene.width, scene.height)
-        
-        scene.keyboard.run(Array.from(scene.keyboard.pressedKeys).sort().join())
-        Array.from(scene.keyboard.pressedKeys).map(scene.keyboard.run(this))
-        
-        this.layout.shape.render(scene)
-        scene.context.stroke()
+        if (this.display.hasBorder)
+            this.layout.shape.render(scene)
 
-        // this.data.render(scene, this.layoutManager, this.playbackManager, this.displayManager)
+        this.data.render(scene, this.layout, this.playback, this.display)
     }
 
     subsumes(click) {

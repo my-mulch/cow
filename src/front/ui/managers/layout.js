@@ -7,10 +7,18 @@ export default class Layout {
         this.shape = layout.shape(this.size, this.origin)
     }
 
-    checkBounds(clickEvent) {
-        return nd.array([clickEvent.clientX, clickEvent.clientY, 0, 1])
-            .subtract(this.origin)
-            .norm() < this.size.slice(':2').norm() / 2
+    position(data) {
+        const dims = data.header.shape.slice(0, -1)
+        const lastDim = data.header.shape.slice().pop()
+
+        // move points to origin
+        return this.transform(...data.mean(...dims.keys()).multiply(-1))
+            // scale to fill size of pod
+            .dot(this.scale(this.size.divide(data.norm(dims.length).max())))
+            // move to location pod
+            .dot(this.transform(...this.origin))
+            // execute these steps on data
+            .dot(data.reshape(-1, lastDim))
     }
 
     static translate(x, y, z) {
