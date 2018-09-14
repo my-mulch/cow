@@ -2,6 +2,7 @@
 export default class App {
     constructor(components) {
         this.scene = components.scene
+        this.camera = components.camera
 
         this.fileDrop = components.fileDrop
         this.socket = components.socket
