@@ -28,5 +28,5 @@ export default class Camera {
 
     record() { this.recording.start() }
     stop() { this.recording.stop() }
-    save(blob) { this.reader.readAsArrayBuffer(blob.data) }
+    save(blob) { console.log(blob); this.reader.readAsArrayBuffer(blob.data) }
 }
