@@ -6,11 +6,10 @@ import ServerHandlers from './utils'
 const port = process.env.PORT || 3000
 const app = express()
 
-app.listen(port, ServerHandlers.listen)
 app.use(express.static("dist"))
 
-app.post('/audio', console.log)
-app.post('/video', console.log)
-
+app.post('/audio', ServerHandlers.writeBuffer)
+app.post('/video', ServerHandlers.writeBuffer)
 app.use('*', ServerHandlers.sendIndex)
 
+app.listen(port, console.error)
