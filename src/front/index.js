@@ -4,8 +4,7 @@ import App from './ui/app'
 
 import Socket from './io/socket'
 import FileDrop from './io/drop'
-import Camera from './io/camera'
-import Mic from './io/mic'
+import AVSource from './io/av'
 
 import Shape from './ui/primitives/geometry'
 import nd from 'multi-dim'
@@ -14,8 +13,8 @@ import nd from 'multi-dim'
 new App({
     socket: new Socket({ port: 3001, host: 'localhost' }),
     fileDrop: new FileDrop({ zone: document.getElementById('canvas') }),
-    camera: new Camera({ screen: document.getElementById('video') }),
-    mic: new Mic({ line: document.getElementById('audio') }),
+    camera: new AVSource({ line: document.getElementById('video'), media: { video: true } }),
+    mic: new AVSource({ line: document.getElementById('audio'), media: { audio: true } }),
     scene: new Scene({
         canvas: document.getElementById('canvas'),
         pods: [new Pod({

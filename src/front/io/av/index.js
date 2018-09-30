@@ -1,5 +1,5 @@
 
-export default class Mic {
+export default class AVSource {
     constructor(props) {
         this.line = props.line
         this.onData = props.onData
@@ -12,7 +12,7 @@ export default class Mic {
 
         navigator
             .mediaDevices
-            .getUserMedia({ audio: true })
+            .getUserMedia(props.media)
             .then(this.connect.bind(this))
     }
 
