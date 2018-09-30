@@ -12,7 +12,7 @@ import nd from 'multi-dim'
 
 
 new App({
-    socket: new Socket({ port: 3000, host: 'localhost' }),
+    socket: new Socket({ port: 3001, host: 'localhost' }),
     fileDrop: new FileDrop({ zone: document.getElementById('canvas') }),
     camera: new Camera({ screen: document.getElementById('video') }),
     mic: new Mic({ line: document.getElementById('audio') }),
