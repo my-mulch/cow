@@ -13,7 +13,7 @@ export default class Layout {
             // move points to origin
             .dot(Layout.translate(...data.mean(0).multiply(-1)))
             // scale to fill size of pod
-            .dot(Layout.scale(...this.size.multiply(2).divide(data.norm(1).max()).set(3)(1)))
+            .dot(Layout.scale(...this.size.multiply(1.3).divide(data.norm(1).max()).set(3)(1)))
             // move to location of pod
             .dot(Layout.translate(...this.origin))
 
