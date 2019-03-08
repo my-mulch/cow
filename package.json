@@ -4,12 +4,11 @@
   "description": "A repository for all things visualizable",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && node --experimental-modules src/back",
     "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trumanpurnell/plotter.git"
+    "url": "git+https://github.com/trumanpurnell/parmesan.git"
   },
   "keywords": [
     "math",
@@ -17,11 +16,11 @@
     "money"
   ],
   "author": "Truman Purnell",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trumanpurnell/plotter/issues"
+    "url": "https://github.com/trumanpurnell/parmesan/issues"
   },
-  "homepage": "https://github.com/trumanpurnell/plotter#readme",
+  "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "webpack": "^4.20.2",
