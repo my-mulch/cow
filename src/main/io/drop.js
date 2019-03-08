@@ -2,7 +2,7 @@
 export default class FileDrop {
     constructor(props) {
         this.zone = props.zone
-        this.onData = props.onData
+        this.handler = props.handler
 
         this.reader = new FileReader()
         this.reader.onloadend = this.expose.bind(this)
@@ -11,11 +11,11 @@ export default class FileDrop {
         this.zone.addEventListener("dragover", this.noop, false)
     }
 
-    expose() { this.onData(this.reader.result) }
+    expose() { this.handler(this.reader.result) }
 
     read(event) {
-        event.stopPropagation();
-        event.preventDefault();
+        event.stopPropagation()
+        event.preventDefault()
 
         Array.from(event.dataTransfer.files)
             .forEach(this.reader.readAsArrayBuffer.bind(this.reader))
