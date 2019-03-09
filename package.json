@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "webpack": "^4.20.2"
+    "webpack": "^4.29.6"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.3"
