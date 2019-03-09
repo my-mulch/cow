@@ -8,15 +8,14 @@ export default class Mouse {
         this.scene.canvas.addEventListener('mousemove', this.move.bind(this))
     }
 
-    clickDown(event) {
-        console.log(event)
-    }
+    move(event) { }
 
     clickUp(event) {
         this.isPressed = false
+        console.log(event)
     }
 
-    move(event) {
-
+    clickDown(event) {
+        console.log(event)
     }
 }
