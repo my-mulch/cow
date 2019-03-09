@@ -4,6 +4,7 @@
   "description": "A repository for all things visualizable",
   "main": "index.js",
   "scripts": {
+    "start": "open dist/index.html",
     "build": "webpack"
   },
   "repository": {
@@ -23,8 +24,7 @@
   "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "webpack": "^4.20.2",
-    "ws": "^6.0.0"
+    "webpack": "^4.20.2"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.3"
