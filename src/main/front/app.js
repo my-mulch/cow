@@ -1,7 +1,7 @@
-import WebCam from '../io/webcam'
-import FileDrop from '../io/drop'
-import Mouse from '../io/mouse'
-import Keyboard from '../io/keyboard'
+import WebCam from './io/webcam'
+import FileDrop from './io/drop'
+import Mouse from './io/mouse'
+import Keyboard from './io/keyboard'
 
 export default class App {
     constructor(components) {

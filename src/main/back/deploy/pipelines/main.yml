@@ -1,0 +1,16 @@
+---
+resources:
+- name: parmesan-lambdas
+  type: git
+  source:
+    uri: https://github.com/trumanpurnell/parmesan.git/src/main/back
+    branch: master
+
+jobs:
+- name: job-deploy-parmesan
+  serial: true
+  trigger: true
+  plan:
+  - get: parmesan-lambdas
+  - task: task-zip-parmesan
+    file: src/main/back/deploy/tasks/zip-parmesan.yml
