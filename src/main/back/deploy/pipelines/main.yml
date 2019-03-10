@@ -3,7 +3,7 @@ resources:
 - name: parmesan-lambdas
   type: git
   source:
-    uri: https://github.com/trumanpurnell/parmesan.git/src/main/back
+    uri: https://github.com/trumanpurnell/parmesan.git
     branch: master
 
 jobs:
