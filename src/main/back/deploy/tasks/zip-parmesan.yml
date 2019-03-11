@@ -7,6 +7,6 @@ image_resource:
 
 inputs:
   - name: parmesan-lambdas
-
+  
 run:
   path: parmesan-lambdas/src/main/back/deploy/scripts/zip-parmesan.sh
