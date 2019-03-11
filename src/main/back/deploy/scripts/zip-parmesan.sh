@@ -1,2 +1,3 @@
 
-echo $(pwd)
+pwd
+ls -la
