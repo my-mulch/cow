@@ -4,7 +4,7 @@ resources:
       type: git
       source:
           uri: https://github.com/trumanpurnell/parmesan.git
-          branch: master
+          branch: deploy
 
 jobs:
     - name: job-deploy-parmesan
