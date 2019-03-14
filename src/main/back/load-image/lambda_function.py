@@ -1,4 +1,5 @@
 import json
+import numpy as np
 
 
 def lambda_handler(event, context):
@@ -6,5 +7,5 @@ def lambda_handler(event, context):
 
     return json.dumps({
         'statusCode': 200,
-        'body': 'this will eventually be a numpy array'
+        'body': np.arange(25).reshape(5, 5)
     })
