@@ -1,7 +1,7 @@
 locals {
   ###################################### AWS ########################################
   aws_role_arn = "arn:aws:iam::718734850255:role/service-role/admin"
-  aws_handler  = "index.handler"
+  aws_handler  = "lambda_function.lambda_handler"
   aws_runtime  = "python3.6"
   aws_region   = "us-west-1"
   aws_profile  = "play"
@@ -29,6 +29,7 @@ resource "aws_lambda_function" "lambda_load_image" {
   handler          = "${local.aws_handler}"
   source_code_hash = "${data.archive_file.archive_load_image.output_base64sha256}"
   runtime          = "${local.aws_runtime}"
+  publish          = true
 }
 
 # resource "aws_lambda_alias" "lambda_load_image" {
