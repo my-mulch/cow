@@ -1,5 +1,4 @@
 #!/bin/sh
 
-ls -la
+printenv
 
-which pip
