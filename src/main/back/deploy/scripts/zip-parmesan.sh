@@ -2,4 +2,4 @@
 
 ls -la
 
-echo "Bye Allie - sad Truman"
+which python
