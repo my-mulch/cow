@@ -2,4 +2,4 @@
 
 ls -la
 
-which python
+which pip
