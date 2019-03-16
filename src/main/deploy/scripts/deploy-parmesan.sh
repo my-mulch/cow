@@ -3,10 +3,10 @@
 pip install numpy
 cp -r /var/lang/lib/python3.6/site-packages/numpy parmesan-lambdas/src/main/back/load-image
 
+ls -la parmesan-lambdas/src/main/back/load-image
+
 cd parmesan-lambdas/src/main/deploy
 mv ~/.terraform .
-
-ls -la parmesan-lambdas/src/main/back/load-image
 
 terraform init
 
