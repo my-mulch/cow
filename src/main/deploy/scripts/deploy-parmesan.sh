@@ -2,13 +2,15 @@
 
 cd parmesan-lambdas/src/main/back/deploy
 
-terraform plan \
--out=parmesan-deploy-plan \
--input=false
+echo $(pwd)
 
-terraform apply \
--input=false \
--var="lambda_name=load_image" \
--var="lambda_path=../back/load-image" \
-parmesan-deploy-plan
+# terraform plan \
+# -out=parmesan-deploy-plan \
+# -input=false
+
+# terraform apply \
+# -input=false \
+# -var="lambda_name=load_image" \
+# -var="lambda_path=../back/load-image" \
+# parmesan-deploy-plan
 
