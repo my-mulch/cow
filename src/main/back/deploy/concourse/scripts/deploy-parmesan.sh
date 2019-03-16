@@ -1,7 +1,5 @@
 #!/bin/sh
 
-printenv
-
-which pip
-
+ls -la
 pip install numpy
+
