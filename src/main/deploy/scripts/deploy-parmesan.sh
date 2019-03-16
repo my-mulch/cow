@@ -1,5 +1,7 @@
 #!/bin/sh
 
+pwd
+
 pip install numpy
 cp -r /var/lang/lib/python3.6/site-packages/numpy parmesan-lambdas/src/main/back/load-image
 
