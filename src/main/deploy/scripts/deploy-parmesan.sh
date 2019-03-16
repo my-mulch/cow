@@ -1,11 +1,12 @@
 #!/bin/sh
 
 pip install numpy
-
 cp -r /var/lang/lib/python3.6/site-packages/numpy parmesan-lambdas/src/main/back/load-image
-mv ~/.terraform parmesan-lambdas/src/main/deploy
 
-terraform init parmesan-lambdas/src/main/deploy
+cd parmesan-lambdas/src/main/deploy
+mv ~/.terraform .
+
+terraform init
 
 terraform plan \
 -out=parmesan-deploy-plan \
