@@ -12,7 +12,7 @@ jobs:
   - get: parmesan-lambdas
     trigger: true
   - task: task-deploy-parmesan
-    file: parmesan-lambdas/src/main/back/deploy/concourse/tasks/deploy-parmesan.yml
+    file: parmesan-lambdas/src/main/deploy/tasks/deploy-parmesan.yml
     params:
       aws_access_key_id: ((aws_access_key_id))
       aws_secret_access_key: ((aws_secret_access_key))

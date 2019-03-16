@@ -9,4 +9,4 @@ inputs:
   - name: parmesan-lambdas
 
 run:
-  path: parmesan-lambdas/src/main/back/deploy/concourse/scripts/deploy-parmesan.sh
+  path: parmesan-lambdas/src/main/deploy/scripts/deploy-parmesan.sh
