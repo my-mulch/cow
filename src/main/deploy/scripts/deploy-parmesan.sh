@@ -3,6 +3,8 @@
 mv ~/.terraform parmesan-lambdas/src/main/deploy
 cd parmesan-lambdas/src/main/deploy
 
+terraform init
+
 terraform plan \
 -out=parmesan-deploy-plan \
 -input=false
