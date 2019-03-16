@@ -1,5 +1,6 @@
 #!/bin/sh
 
+mv ~/.terraform parmesan-lambdas/src/main/deploy
 cd parmesan-lambdas/src/main/deploy
 
 terraform plan \
