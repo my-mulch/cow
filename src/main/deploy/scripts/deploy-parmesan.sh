@@ -1,8 +1,8 @@
 #!/bin/sh
 
-cd parmesan-lambdas/src/main/back/deploy
-
-echo $(pwd)
+# cd parmesan-lambdas/src/main/back/deploy
+ls -laR
+# echo $(pwd)
 
 # terraform plan \
 # -out=parmesan-deploy-plan \
