@@ -1,13 +1,11 @@
 #!/bin/sh
 
-pwd
+root_dir=$(pwd)
 
 pip install numpy
-cp -r /var/lang/lib/python3.6/site-packages/numpy parmesan-lambdas/src/main/back/load-image
+cp -r /var/lang/lib/python3.6/site-packages/numpy $root_dir/parmesan-lambdas/src/main/back/load-image
 
-ls -la parmesan-lambdas/src/main/back/load-image
-
-cd parmesan-lambdas/src/main/deploy
+cd $root_dir/parmesan-lambdas/src/main/deploy
 mv ~/.terraform .
 
 terraform init
@@ -16,7 +14,7 @@ terraform plan \
 -out=parmesan-deploy-plan \
 -input=false \
 -var="lambda_name=parmesan-load-image" \
--var="lambda_path=parmesan-lambdas/src/main/back/load-image" \
+-var="lambda_path=$root_dir/parmesan-lambdas/src/main/back/load-image" \
 
 terraform apply \
 -input=false \
