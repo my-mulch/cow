@@ -3,7 +3,7 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source: { repository: lambci/lambda, tag: build-python3.6 }
+  source: { repository: trumanpurnell/aws-terraform }
 
 inputs:
   - name: parmesan-lambdas
