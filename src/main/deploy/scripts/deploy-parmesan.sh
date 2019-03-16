@@ -7,10 +7,10 @@ terraform init
 
 terraform plan \
 -out=parmesan-deploy-plan \
--input=false
-
-terraform apply \
 -input=false \
 -var="lambda_name=load_image" \
 -var="lambda_path=../back/load-image" \
+
+terraform apply \
+-input=false \
 parmesan-deploy-plan
