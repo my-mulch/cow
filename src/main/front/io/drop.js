@@ -1,28 +1,28 @@
 
 export default class FileDrop {
     constructor(props) {
-        this.zone = props.zone
+        this.dom = props.dom
         this.handler = props.handler
 
-        this.reader = new FileReader()
-        this.reader.onloadend = this.expose.bind(this)
-
-        this.zone.addEventListener("drop", this.read.bind(this), false)
-        this.zone.addEventListener("dragover", this.noop, false)
+        this.dom.livefeed.addEventListener("drop", this.read.bind(this), false)
+        this.dom.livefeed.addEventListener("dragover", this.ignore, false)
     }
 
-    expose() { this.handler(this.reader.result) }
+    ignore(event) { event.stopPropagation(); event.preventDefault() }
 
     read(event) {
-        event.stopPropagation()
-        event.preventDefault()
+        this.ignore(event)
 
-        Array.from(event.dataTransfer.files)
-            .forEach(this.reader.readAsArrayBuffer.bind(this.reader))
-    }
+        for (const file of event.dataTransfer.files) {
+            const reader = new FileReader()
 
-    noop(event) {
-        event.stopPropagation()
-        event.preventDefault()
+            reader.onloadend = (function () {
+                this.handler({
+                    meta: file, data: reader.result
+                })
+            }).bind(this)
+
+            reader.readAsArrayBuffer(file)
+        }
     }
 }

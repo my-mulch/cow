@@ -1,8 +1,10 @@
 import App from './app'
-import Scene from './ui/scene'
 
-new App({
-    scene: new Scene({
-        canvas: document.getElementById('canvas')
-    })
+window.app = new App({
+    dom: {
+        livefeed: document.getElementById('live-feed'),
+        backfeed: document.getElementById('back-feed'),
+        video: document.getElementById('video'),
+        audio: document.getElementById('audio'),
+    }
 })

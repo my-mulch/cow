@@ -4,7 +4,7 @@
   "description": "A repository for all things visualizable",
   "main": "index.js",
   "scripts": {
-    "start": "open docs/index.html",
+    "start": "webpack && open docs/index.html",
     "build": "webpack"
   },
   "repository": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
+    "papaparse": "^4.6.3",
     "webpack": "^4.29.6"
   },
   "devDependencies": {

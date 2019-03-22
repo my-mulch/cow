@@ -1,6 +1,6 @@
 export default class Keyboard {
     constructor(props) {
-        this.scene = props.scene
+        this.elements = props.elements
         this.pressedKeys = new Set()
 
         window.addEventListener("keyup", this.keyu.bind(this))
