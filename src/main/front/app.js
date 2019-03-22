@@ -1,27 +1,34 @@
-import WebCam from './io/webcam'
+import Camera from './io/camera'
 import FileDrop from './io/drop'
 import Mouse from './io/mouse'
 import Keyboard from './io/keyboard'
+import Microphone from './io/microphone'
 
 export default class App {
-    constructor(components) {
-        this.scene = components.scene
+    constructor(args) {
+        this.dom = args.dom
+        this.boxes = new Array()
 
-        this.mouse = new Mouse({ scene: this.scene })
-        this.keyboard = new Keyboard({ scene: this.scene })
+        this.mouse = new Mouse({ dom: this.dom })
+        this.keyboard = new Keyboard({ dom: this.dom })
 
-        this.webcam = new WebCam({
-            line: document.getElementById('video'),
-            media: { video: true, audio: true },
-            handler: this.onWebCam.bind(this)
+        this.microphone = new Microphone({
+            dom: this.dom,
+            media: { audio: true },
+            handler: this.loadfeed.bind(this)
+        })
+
+        this.camera = new Camera({
+            dom: this.dom,
+            media: { video: true },
+            handler: this.loadfeed.bind(this)
         })
 
         this.fileDrop = new FileDrop({
-            zone: this.scene.canvas,
-            handler: this.onFileDrop.bind(this)
+            dom: this.dom,
+            handler: this.loadfeed.bind(this)
         })
     }
 
-    onFileDrop(file) { console.log(file) }
-    onWebCam(file) { console.log(file) }
+    loadfeed(feed) { this.boxes.push(feed) }
 }

@@ -1,11 +1,11 @@
 export default class Mouse {
     constructor(props) {
-        this.scene = props.scene
+        this.dom = props.dom
         this.isPressed = false
 
-        this.scene.canvas.addEventListener('mousedown', this.clickDown.bind(this))
-        this.scene.canvas.addEventListener('mouseup', this.clickUp.bind(this))
-        this.scene.canvas.addEventListener('mousemove', this.move.bind(this))
+        this.dom.livefeed.addEventListener('mousedown', this.clickDown.bind(this))
+        this.dom.livefeed.addEventListener('mouseup', this.clickUp.bind(this))
+        this.dom.livefeed.addEventListener('mousemove', this.move.bind(this))
     }
 
     move(event) { }
@@ -16,6 +16,7 @@ export default class Mouse {
     }
 
     clickDown(event) {
+        this.isPressed = true
         console.log(event)
     }
 }
