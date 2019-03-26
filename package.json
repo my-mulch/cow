@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
-    "big-box": "^1.2.2",
+    "big-box": "^1.2.3",
     "papaparse": "^4.6.3",
     "webpack": "^4.29.6"
   },
