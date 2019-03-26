@@ -4,17 +4,24 @@
 <head>
   <meta charset="utf-8">
   <title>i am a cow</title>
+
+  <link rel="stylesheet" type="text/css" href="main.css">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-  <video id="video" controls></video>
-  <audio id="audio" controls></audio>
+  <canvas id="livefeed"></canvas>
+  <canvas id="backfeed"></canvas>
 
-  <canvas id="live-feed"></canvas>
-  <canvas id="back-feed"></canvas>
+  <div id="media">
+    <video id="video" controls></video>
+    <audio id="audio" controls></audio>
+  </div>
+
+  <a href="#" id="curtain">Media</a>
 
   <script src="main.js"></script>
+
 </body>
 
 </html>

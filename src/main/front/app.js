@@ -1,13 +1,13 @@
-import Camera from './io/camera'
-import FileDrop from './io/drop'
 import Mouse from './io/mouse'
+import FileDrop from './io/drop'
 import Keyboard from './io/keyboard'
+import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
 export default class App {
     constructor(args) {
+        this.boxes = []
         this.dom = args.dom
-        this.boxes = new Array()
 
         this.mouse = new Mouse({ dom: this.dom })
         this.keyboard = new Keyboard({ dom: this.dom })
@@ -18,8 +18,9 @@ export default class App {
             handler: this.loadfeed.bind(this)
         })
 
-        this.camera = new Camera({
+        this.camcorder = new Camcorder({
             dom: this.dom,
+            size: [20, 20],
             media: { video: true },
             handler: this.loadfeed.bind(this)
         })
