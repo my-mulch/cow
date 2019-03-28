@@ -10,8 +10,8 @@ export default class Microphone {
         this.reader = new FileReader()
         this.reader.onloadend = this.save.bind(this)
 
-        this.env.addEventListener('play', this.play.bind(this))
-        this.env.addEventListener('pause', this.pause.bind(this))
+        this.env.audiofeed.addEventListener('play', this.play.bind(this))
+        this.env.audiofeed.addEventListener('pause', this.pause.bind(this))
 
         navigator
             .mediaDevices
@@ -32,7 +32,7 @@ export default class Microphone {
     record(blob) { this.reader.readAsArrayBuffer(blob.data) }
 
     connect(stream) {
-        this.env.srcObject = stream
+        this.env.audiofeed.srcObject = stream
         this.recording = new MediaRecorder(stream)
         this.recording.ondataavailable = this.record.bind(this)
     }

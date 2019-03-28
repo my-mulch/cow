@@ -1,7 +1,8 @@
 
-class WebGlProgram {
+export default class WebGlProgram {
     constructor(args) {
         this.buffers = []
+        this.count = args.count
         this.runtime = args.runtime
         this.program = this.runtime.createProgram()
 
@@ -26,14 +27,18 @@ class WebGlProgram {
 
         this.runtime.attachShader(this.runtime.program, this.shaders.vertex.object)
         this.runtime.attachShader(this.runtime.program, this.shaders.fragment.object)
+
+        return this
     }
 
     link() {
         this.runtime.linkProgram(this.program)
         this.runtime.useProgram(this.program)
+
+        return this
     }
 
-    inject(args) {
+    execute(args) {
         this.buffers.unshift(this.runtime.createBuffer())
 
         this.runtime.bindBuffer(this.runtime.ARRAY_BUFFER, this.buffers[0])
@@ -49,11 +54,14 @@ class WebGlProgram {
                 attribute.normalized,
                 attribute.stride,
                 attribute.offset
-
             )
+
             this.runtime.enableVertexAttribArray(pointer)
         }
 
         this.runtime.bindBuffer(this.runtime.ARRAY_BUFFER, null)
+        this.runtime.drawArrays(this.runtime[args.mode], 0, args.count)
+
+        return this
     }
 }

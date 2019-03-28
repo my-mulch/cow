@@ -3,9 +3,9 @@ export default class Mouse {
         this.env = args.env
         this.isPressed = false
 
-        this.env.addEventListener('mousedown', this.clickDown.bind(this))
-        this.env.addEventListener('mouseup', this.clickUp.bind(this))
-        this.env.addEventListener('mousemove', this.move.bind(this))
+        this.env.livefeed.addEventListener('mousedown', this.clickDown.bind(this))
+        this.env.livefeed.addEventListener('mouseup', this.clickUp.bind(this))
+        this.env.livefeed.addEventListener('mousemove', this.move.bind(this))
     }
 
     move(event) { }

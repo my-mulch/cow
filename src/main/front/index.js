@@ -7,34 +7,40 @@ import Keyboard from './io/keyboard'
 import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
-const { livefeed, backfeed, audiofeed, videofeed, media } = document.all
+import WebGlEngine from './gl/engine'
+import WebGlProgram from './gl/program'
 
 window.bb = bb
+
+window.gl = new WebGlEngine({
+    runtimes: {
+        livefeed: document.all.livefeed.getContext('webgl'),
+        backfeed: document.all.backfeed.getContext('webgl'),
+    }
+})
+
 window.app = new App({
     dom: document.all,
-    mouse: new Mouse({ env: livefeed }),
-    keyboard: new Keyboard({ env: window }),
-    filedrop: new FileDrop({ env: livefeed }),
+    mouse: new Mouse({
+        env: { livefeed: document.all.livefeed }
+    }),
+    keyboard: new Keyboard({
+        env: { window }
+    }),
+    filedrop: new FileDrop({
+        env: { livefeed: document.all.livefeed }
+    }),
     microphone: new Microphone({
         media: { audio: true },
-        env: audiofeed
+        env: { audiofeed: document.all.audiofeed }
     }),
     camcorder: new Camcorder({
         size: [20, 20],
         media: { video: true },
-        env: { backfeed, videofeed, livefeed },
+        env: {
+            backfeed: document.all.backfeed,
+            videofeed: document.all.videofeed,
+            livefeed: document.all.livefeed
+        },
     })
-})
-
-livefeed.width = window.innerWidth
-livefeed.height = window.innerHeight
-
-window.addEventListener('resize', function () {
-    livefeed.width = window.innerWidth
-    livefeed.height = window.innerHeight
-})
-
-media.hidden = true
-curtain.addEventListener('click', function () {
-    media.hidden = !media.hidden
 })
