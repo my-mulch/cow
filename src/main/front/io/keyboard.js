@@ -1,12 +1,12 @@
 export default class Keyboard {
-    constructor(props) {
-        this.elements = props.elements
+    constructor(args) {
+        this.env = args.env
         this.pressedKeys = new Set()
 
-        window.addEventListener("keyup", this.keyu.bind(this))
-        window.addEventListener("keydown", this.keyd.bind(this))
+        this.env.addEventListener("keyup", this.keyup.bind(this))
+        this.env.addEventListener("keydown", this.keydown.bind(this))
     }
 
-    keyd(event) { this.pressedKeys.add(event.key) }
-    keyu(event) { this.pressedKeys = new Set() }
+    keyup(event) { this.pressedKeys = new Set() }
+    keydown(event) { this.pressedKeys.add(event.key) }
 }
