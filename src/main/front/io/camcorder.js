@@ -1,19 +1,19 @@
 
 export default class Camcorder {
     constructor(args) {
-        this.dom = args.dom
-        this.size = args.size
+        this.feed = args.feed
         this.media = args.media
-        this.handler = args.handler
-        this.region = [0, 0, ...this.size]
-        this.npixels = this.size[0] * this.size[1]
+        this.buffer = args.buffer
+        this.dimensions = args.dimensions
+        this.region = [0, 0, ...this.dimensions]
+        this.size = this.dimensions[0] * this.dimensions[1]
 
         this.take = null
         this.frames = []
 
-        this.tape = this.dom.backfeed.getContext('2d')
-        this.dom.video.addEventListener('play', this.play.bind(this))
-        this.dom.video.addEventListener('pause', this.pause.bind(this))
+        this.tape = this.buffer.getContext('2d')
+        this.feed.addEventListener('play', this.play.bind(this))
+        this.feed.addEventListener('pause', this.pause.bind(this))
 
         navigator
             .mediaDevices
@@ -22,7 +22,7 @@ export default class Camcorder {
     }
 
     record() {
-        this.tape.drawImage(this.dom.video, ...this.region)
+        this.tape.drawImage(this.feed, ...this.region)
         this.frames.push(this.tape.getImageData(...this.region).data)
     }
 
@@ -30,18 +30,18 @@ export default class Camcorder {
 
     pause() {
         clearInterval(this.take)
-        this.handler(this.save())
+        this.export(this.save())
         this.frames.length = 0
     }
 
     save() {
-        const video = new Uint8ClampedArray(4 * this.npixels * this.frames.length)
+        const videofeed = new Uint8ClampedArray(4 * this.size * this.frames.length)
 
         for (let i = 0; i < this.frames.length; i++)
-            video.set(this.frames[i], 4 * this.npixels * i)
+            videofeed.set(this.frames[i], 4 * this.size * i)
 
-        return video
+        return videofeed
     }
 
-    connect(stream) { this.dom.video.srcObject = stream }
+    connect(stream) { this.feed.srcObject = stream }
 }

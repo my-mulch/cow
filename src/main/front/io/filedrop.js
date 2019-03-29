@@ -1,11 +1,10 @@
 
 export default class FileDrop {
-    constructor(props) {
-        this.dom = props.dom
-        this.handler = props.handler
+    constructor(args) {
+        this.target = args.target
 
-        this.dom.livefeed.addEventListener("drop", this.read.bind(this), false)
-        this.dom.livefeed.addEventListener("dragover", this.ignore, false)
+        this.target.addEventListener("dragover", this.ignore, false)
+        this.target.addEventListener("drop", this.read.bind(this), false)
     }
 
     ignore(event) { event.stopPropagation(); event.preventDefault() }
@@ -17,9 +16,7 @@ export default class FileDrop {
             const reader = new FileReader()
 
             reader.onloadend = (function () {
-                this.handler({
-                    meta: file, data: reader.result
-                })
+                this.export({ meta: file, data: reader.result })
             }).bind(this)
 
             reader.readAsArrayBuffer(file)
