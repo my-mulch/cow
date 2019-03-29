@@ -13,9 +13,6 @@ window.bb = bb
 
 window.app = new App({
     dom: document.all,
-    graphics: new WebGlEngine({
-        target: document.all.mainstage
-    }),
     sources: {
         mouse: new Mouse({
             target: document.all.mainstage
@@ -39,3 +36,4 @@ window.app = new App({
     }
 })
 
+window.gl = new WebGlEngine({ target: document.all.mainstage })

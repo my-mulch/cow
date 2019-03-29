@@ -4,7 +4,6 @@ export default class App {
         this.boxes = []
         this.dom = args.dom
         this.sources = args.sources
-        this.graphics = args.graphics
 
         for (const [_, source] of Object.entries(this.sources))
             source.export = this.push.bind(this)

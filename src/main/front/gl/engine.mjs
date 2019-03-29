@@ -8,6 +8,8 @@ export default class WebGlEngine {
         for (const key in this.runtime)
             if (key === key.toUpperCase())
                 this[key] = this.runtime[key]
+
+        this.clear()
     }
 
     clear() {
