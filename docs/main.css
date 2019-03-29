@@ -1,20 +1,9 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-color: black;
 }
 
-#backfeed {
+#backstage {
     display: none;
-}
-
-#livefeed {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-#curtain {
-    position: absolute;
-    top: 0;
-    left: 0;
 }

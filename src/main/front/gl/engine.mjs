@@ -2,17 +2,23 @@ import WebGlProgram from './program'
 
 export default class WebGlEngine {
     constructor(args) {
-        this.runtimes = args.runtimes
+        this.target = args.target
+        this.runtime = this.target.getContext('webgl')
 
-        this.runtimes.livefeed.clearColor(0.0, 0.0, 0.0, 1.0)
-        this.runtimes.livefeed.clear(this.runtimes.livefeed.COLOR_BUFFER_BIT)
+        for (const key in this.runtime)
+            if (key === key.toUpperCase())
+                this[key] = this.runtime[key]
+    }
+
+    clear() {
+        this.runtime.clearColor(0.0, 0.0, 0.0, 1.0)
+        this.runtime.clear(this.COLOR_BUFFER_BIT)
     }
 
     run(args) {
         return new WebGlProgram({
-            vertex: args.source.vertex,
-            fragment: args.source.fragment,
-            runtime: this.runtimes.livefeed,
+            source: args.source,
+            runtime: this.runtime,
         })
             .compile()
             .link()

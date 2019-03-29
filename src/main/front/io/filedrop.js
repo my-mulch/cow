@@ -1,11 +1,10 @@
 
 export default class FileDrop {
     constructor(args) {
-        this.env = args.env
-        this.export = args.export
+        this.target = args.target
 
-        this.env.livefeed.addEventListener("dragover", this.ignore, false)
-        this.env.livefeed.addEventListener("drop", this.read.bind(this), false)
+        this.target.addEventListener("dragover", this.ignore, false)
+        this.target.addEventListener("drop", this.read.bind(this), false)
     }
 
     ignore(event) { event.stopPropagation(); event.preventDefault() }

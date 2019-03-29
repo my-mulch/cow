@@ -1,32 +1,27 @@
 
 export default class WebGlProgram {
     constructor(args) {
+        this.shaders = {}
         this.buffers = []
-        this.count = args.count
+        this.program = null
+        this.source = args.source
         this.runtime = args.runtime
-        this.program = this.runtime.createProgram()
-
-        this.shaders = {
-            vertex: {
-                source: args.vertex,
-                object: this.runtime.createShader(this.runtime.VERTEX_SHADER)
-            },
-            fragment: {
-                source: args.fragment,
-                object: this.runtime.createShader(this.runtime.FRAGMENT_SHADER)
-            }
-        }
     }
 
     compile() {
-        this.runtime.shaderSource(this.shaders.vertex.object, this.shaders.vertex.source)
-        this.runtime.shaderSource(this.shaders.fragment.object, this.shaders.fragment.source)
+        this.shaders.vertex = this.runtime.createShader(this.runtime.VERTEX_SHADER)
+        this.shaders.fragment = this.runtime.createShader(this.runtime.FRAGMENT_SHADER)
 
-        this.runtime.compileShader(this.shaders.vertex.object)
-        this.runtime.compileShader(this.shaders.fragment.object)
+        this.runtime.shaderSource(this.shaders.vertex, this.source.vertex)
+        this.runtime.shaderSource(this.shaders.fragment, this.source.fragment)
 
-        this.runtime.attachShader(this.runtime.program, this.shaders.vertex.object)
-        this.runtime.attachShader(this.runtime.program, this.shaders.fragment.object)
+        this.runtime.compileShader(this.shaders.vertex)
+        this.runtime.compileShader(this.shaders.fragment)
+
+        this.program = this.runtime.createProgram()
+
+        this.runtime.attachShader(this.program, this.shaders.vertex)
+        this.runtime.attachShader(this.program, this.shaders.fragment)
 
         return this
     }
@@ -41,10 +36,10 @@ export default class WebGlProgram {
     execute(args) {
         this.buffers.unshift(this.runtime.createBuffer())
 
-        this.runtime.bindBuffer(this.runtime.ARRAY_BUFFER, this.buffers[0])
-        this.runtime.bufferData(this.runtime.ARRAY_BUFFER, args.data, this.runtime[args.usage])
+        this.runtime.bindBuffer(args.buffer, this.buffers[0])
+        this.runtime.bufferData(args.buffer, args.data, args.usage)
 
-        for (attribute of args.attributes) {
+        for (const attribute of args.attributes) {
             const pointer = this.runtime.getAttribLocation(this.program, attribute.name)
 
             this.runtime.vertexAttribPointer(
@@ -59,8 +54,8 @@ export default class WebGlProgram {
             this.runtime.enableVertexAttribArray(pointer)
         }
 
-        this.runtime.bindBuffer(this.runtime.ARRAY_BUFFER, null)
-        this.runtime.drawArrays(this.runtime[args.mode], 0, args.count)
+        this.runtime.bindBuffer(args.buffer, null)
+        this.runtime.drawArrays(args.mode, 0, args.count)
 
         return this
     }

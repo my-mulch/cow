@@ -3,31 +3,25 @@ export default class App {
     constructor(args) {
         this.boxes = []
         this.dom = args.dom
+        this.sources = args.sources
+        this.graphics = args.graphics
 
-        this.mouse = args.mouse
-        this.filedrop = args.filedrop
-        this.keyboard = args.keyboard
-        this.camcorder = args.camcorder
-        this.microphone = args.microphone
+        for (const [_, source] of Object.entries(this.sources))
+            source.export = this.push.bind(this)
 
-        this.camcorder.export =
-            this.filedrop.export =
-            this.microphone.export = this.push.bind(this)
-
-        this.dom.livefeed.width = window.innerWidth
-        this.dom.livefeed.height = window.innerHeight
-
-        this.dom.media.hidden = true
-        this.dom.curtain.addEventListener('click', this.hide.bind(this))
+        this.resize()
         window.addEventListener('resize', this.resize.bind(this))
     }
 
     resize() {
-        this.dom.livefeed.width = window.innerWidth
-        this.dom.livefeed.height = window.innerHeight
-    }
+        this.dom.mainstage.width = window.innerWidth
+        this.dom.mainstage.height = window.innerHeight
 
-    hide() { this.dom.media.hidden = !this.dom.media.hidden }
+        this.dom.videofeed.width = window.innerWidth
+        this.dom.videofeed.height = window.innerHeight
+
+        this.dom.audiofeed.style.width = `${window.innerWidth}px`
+    }
 
     push(data) { this.boxes.push(data) }
 }
