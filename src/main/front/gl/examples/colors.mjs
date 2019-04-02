@@ -1,52 +1,68 @@
-const vertex = `
-attribute vec4 a_Position;
-attribute vec4 a_Color;
-varying vec4 v_Color;
-void main() {
-  gl_Position = a_Position;
-  gl_PointSize = 10.0;
-  v_Color = a_Color;
-}`
 
-const fragment = `
-#ifdef GL_ES
-precision mediump float;
-#endif
-varying vec4 v_Color;
-void main() {
-  gl_FragColor = v_Color;
-}`
+gl
+    .compile({
+        fragment:
+            'void main() {\n' +
+            '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
+            '}\n',
+        vertex:
+            'attribute vec4 a_Position;\n' +
+            'attribute float a_PointSize;\n' +
+            'void main() {\n' +
+            '  gl_Position = a_Position;\n' +
+            '  gl_PointSize = a_PointSize;\n' +
+            '}'
+    })
 
-
-gl.run({
-    source: { vertex, fragment },
-    meta: {
-        data: new Float32Array([
-            0.0, 0.5, 1.0, 0.0, 0.0,
-            -0.5, -0.5, 0.0, 1.0, 0.0,
-            0.5, -0.5, 0.0, 0.0, 1.0,
-        ]),
-        count: 3,
-        mode: gl.POINTS,
-        usage: gl.STATIC_DRAW,
-        buffer: gl.ARRAY_BUFFER,
+    .buffer({
+        buffers: [
+            {
+                type: gl.ARRAY_BUFFER,
+                usage: gl.STATIC_DRAW,
+                data: new Float32Array([10.0, 20.0, 30.0])
+            },
+            {
+                type: gl.ARRAY_BUFFER,
+                usage: gl.STATIC_DRAW,
+                data: new Float32Array([0.0, 0.5, -0.5, -0.5, 0.5, -0.5])
+            }
+        ],
         attributes: [
             {
                 name: 'a_Position',
                 size: 2,
                 type: gl.FLOAT,
                 normalized: false,
-                stride: 4 * 5,
+                stride: 0,
                 offset: 0
             },
             {
-                name: 'a_Color',
+                name: 'a_PointSize',
                 size: 3,
                 type: gl.FLOAT,
                 normalized: false,
-                stride: 4 * 5,
-                offset: 4 * 2
+                stride: 0,
+                offset: 0
             }
         ]
-    }
-})
+    })
+
+    .draw({
+        points: 3,
+        mode: gl.POINTS,
+        clear: [
+            gl.COLOR_BUFFER_BIT
+        ]
+    })
+
+
+
+
+
+
+
+
+
+
+
+
