@@ -7,7 +7,7 @@ import Keyboard from './io/keyboard'
 import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
-import WebGlEngine from './gl/engine'
+import WebGLFactory from './gl/factory'
 
 window.bb = bb
 
@@ -36,4 +36,4 @@ window.app = new App({
     }
 })
 
-window.gl = new WebGlEngine({ target: document.all.mainstage })
+window.gl = new WebGLFactory({ target: document.all.mainstage.getContext('webgl') })

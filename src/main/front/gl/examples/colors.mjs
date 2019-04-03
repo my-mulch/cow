@@ -1,59 +1,45 @@
 
 gl
+    .program()
     .compile({
         fragment:
+            'varying vec4 v_Color;\n' +
             'void main() {\n' +
-            '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
-            '}\n',
+            '  gl_FragColor = v_Color;\n' +
+            '}',
         vertex:
             'attribute vec4 a_Position;\n' +
-            'attribute float a_PointSize;\n' +
+            'attribute vec4 a_Color;\n' +
+            'uniform mat4 u_ViewMatrix;\n' +
+            'varying vec4 v_Color;\n' +
             'void main() {\n' +
-            '  gl_Position = a_Position;\n' +
-            '  gl_PointSize = a_PointSize;\n' +
-            '}'
+            '  gl_Position = u_ViewMatrix * a_Position;\n' +
+            '  v_Color = a_Color;\n' +
+            '}\n'
     })
+    .link()
+    .feed([{
+        box: bb.array({
+            with: [
+                // Vertex coordinates and color
+                [0.0, 0.5, -0.4, 0.4, 1.0, 0.4],
+                [-0.5, -0.5, -0.4, 0.4, 1.0, 0.4],
+                [0.5, -0.5, -0.4, 1.0, 0.4, 0.4],
 
-    .buffer({
-        buffers: [
-            {
-                type: gl.ARRAY_BUFFER,
-                usage: gl.STATIC_DRAW,
-                data: new Float32Array([10.0, 20.0, 30.0])
-            },
-            {
-                type: gl.ARRAY_BUFFER,
-                usage: gl.STATIC_DRAW,
-                data: new Float32Array([0.0, 0.5, -0.5, -0.5, 0.5, -0.5])
-            }
-        ],
-        attributes: [
-            {
-                name: 'a_Position',
-                size: 2,
-                type: gl.FLOAT,
-                normalized: false,
-                stride: 0,
-                offset: 0
-            },
-            {
-                name: 'a_PointSize',
-                size: 3,
-                type: gl.FLOAT,
-                normalized: false,
-                stride: 0,
-                offset: 0
-            }
-        ]
-    })
+                [0.5, 0.4, -0.2, 1.0, 0.4, 0.4],
+                [-0.5, 0.4, -0.2, 1.0, 1.0, 0.4],
+                [0.0, -0.6, -0.2, 1.0, 1.0, 0.4],
 
-    .draw({
-        points: 3,
-        mode: gl.POINTS,
-        clear: [
-            gl.COLOR_BUFFER_BIT
-        ]
-    })
+                [0.0, 0.5, 0.0, 0.4, 0.4, 1.0],
+                [-0.5, -0.5, 0.0, 0.4, 0.4, 1.0],
+                [0.5, -0.5, 0.0, 1.0, 0.4, 0.4],
+            ]
+        }),
+        meta: { 'a_Position': [':', ':3'], 'a_Color': [':', '3:'] }
+    }])
+
+    .draw({ mode: gl.POINTS })
+
 
 
 

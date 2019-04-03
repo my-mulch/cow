@@ -5,7 +5,7 @@ export default class App {
         this.dom = args.dom
         this.sources = args.sources
 
-        for (const [_, source] of Object.entries(this.sources))
+        for (const source of Object.values(this.sources))
             source.export = this.push.bind(this)
 
         this.resize()
