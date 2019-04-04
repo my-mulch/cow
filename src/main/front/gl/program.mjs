@@ -1,20 +1,22 @@
 
 export default class WebGLProgram {
     constructor(args) {
-        this.buffers = []
+        this.source = {}
         this.shaders = {}
+        this.buffers = []
 
+        this.size = 0
         this.program = null
-        this.source = null
+
         this.runtime = args.runtime
     }
 
     compile(args) {
-        this.shaders.vertex = this.runtime.createShader(this.runtime.VERTEX_SHADER)
-        this.shaders.fragment = this.runtime.createShader(this.runtime.FRAGMENT_SHADER)
-
         this.source.vertex = args.vertex
         this.source.fragment = args.fragment
+
+        this.shaders.vertex = this.runtime.createShader(this.runtime.VERTEX_SHADER)
+        this.shaders.fragment = this.runtime.createShader(this.runtime.FRAGMENT_SHADER)
 
         this.runtime.shaderSource(this.shaders.vertex, this.source.vertex)
         this.runtime.shaderSource(this.shaders.fragment, this.source.fragment)
@@ -37,37 +39,41 @@ export default class WebGLProgram {
         return this
     }
 
-    feed(args) {
-        // for (let i = 0; i < args.buffers.length; i++) {
-        //     this.buffers.unshift.push(this.runtime.createBuffer())
-        //     this.runtime.bindBuffer(args.buffers[i].type, this.buffers[0])
-        //     this.runtime.bufferData(args.buffers[i].type, args.buffers[i].data, args.buffers[i].usage)
-        // }
+    feed(buffers) {
+        for (const buffer of buffers) {
+            this.size += buffer.box.shape[0]
 
-        // for (let i = 0; i < args.attributes.length; i++) {
-        //     const pointer = this.runtime.getAttribLocation(this.program, args.attributes[i].name)
+            this.buffers.unshift(this.runtime.createBuffer())
+            this.runtime.bindBuffer(buffer.type, this.buffers[0])
+            this.runtime.bufferData(buffer.type, buffer.box.data, buffer.usage)
 
-        //     this.runtime.vertexAttribPointer(
-        //         pointer,
-        //         args.attributes[i].size,
-        //         args.attributes[i].type,
-        //         args.attributes[i].normalized,
-        //         args.attributes[i].stride,
-        //         args.attributes[i].offset
-        //     )
+            for (const [name, region] of Object.entries(buffer.attributes)) {
 
-        //     this.runtime.enableVertexAttribArray(pointer)
-        // }
+                const pointer = this.runtime.getAttribLocation(this.program, name)
+                const attribute = buffer.box.slice({ with: region })
+
+                this.runtime.vertexAttribPointer(
+                    pointer,
+                    attribute.shape[1],
+                    gl.FLOAT, // TODO map this to big box type
+                    false,
+                    attribute.strides[0] * attribute.type.BYTES_PER_ELEMENT,
+                    attribute.offset * attribute.type.BYTES_PER_ELEMENT
+                )
+
+                this.runtime.enableVertexAttribArray(pointer)
+            }
+        }
 
         return this
     }
 
     draw(args) {
-        // this.runtime.clearColor(0.0, 0.0, 0.0, 1.0)
 
-        // for (let i = 0; i < args.clear.length; i++)
-        //     this.runtime.clear(args.clear[i])
+        this.runtime.clear(gl.COLOR_BUFFER_BIT)
+        this.runtime.clearColor(0.0, 0.0, 0.0, 1.0)
+        this.runtime.drawArrays(args.mode, 0, this.size)
 
-        // gl.drawArrays(args.mode, 0, args.count)
+        return this
     }
 }
