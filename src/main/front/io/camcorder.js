@@ -1,19 +1,17 @@
 
-export default class Camcorder {
+export default class Camcorder extends HTMLVideoElement {
     constructor(args) {
-        this.feed = args.feed
-        this.media = args.media
-        this.buffer = args.buffer
-        this.dimensions = args.dimensions
-        this.region = [0, 0, ...this.dimensions]
-        this.size = this.dimensions[0] * this.dimensions[1]
+        super(args)
+
+        this.region = [0, 0, ...this.options.dimensions]
+        this.size = this.options.dimensions[0] * this.options.dimensions[1]
 
         this.take = null
         this.frames = []
 
         this.tape = this.buffer.getContext('2d')
-        this.feed.addEventListener('play', this.play.bind(this))
-        this.feed.addEventListener('pause', this.pause.bind(this))
+        this.addEventListener('play', this.play.bind(this))
+        this.addEventListener('pause', this.pause.bind(this))
 
         navigator
             .mediaDevices
@@ -22,7 +20,7 @@ export default class Camcorder {
     }
 
     record() {
-        this.tape.drawImage(this.feed, ...this.region)
+        this.tape.drawImage(this, ...this.region)
         this.frames.push(this.tape.getImageData(...this.region).data)
     }
 
@@ -43,5 +41,5 @@ export default class Camcorder {
         return videofeed
     }
 
-    connect(stream) { this.feed.srcObject = stream }
+    connect(stream) { this.srcObject = stream }
 }

@@ -1,15 +1,9 @@
+export default class Application extends HTMLBodyElement {
+    constructor(sources) {
+        super()
 
-export default class App {
-    constructor(args) {
         this.boxes = []
-        this.dom = args.dom
-        this.sources = args.sources
-
-        for (const source of Object.values(this.sources))
-            source.export = this.push.bind(this)
-
-        this.resize()
-        window.addEventListener('resize', this.resize.bind(this))
+        this.sources = sources
     }
 
     resize() {
