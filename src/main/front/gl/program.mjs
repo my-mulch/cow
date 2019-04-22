@@ -56,6 +56,10 @@ export default class GraphicsProgram {
     draw(options) {
         this.runtime.clear(this.runtime.COLOR_BUFFER_BIT)
         this.runtime.clearColor(0.0, 0.0, 0.0, 1.0)
+
+        if(options.animate)
+            options.animate(this)
+
         this.runtime.drawArrays(this.runtime[options.mode], 0, this.size)
 
         return this
