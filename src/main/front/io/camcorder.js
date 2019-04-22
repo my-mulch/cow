@@ -1,32 +1,40 @@
 
 export default class Camcorder {
-    constructor(args) {
-        this.feed = args.feed
-        this.media = args.media
-        this.buffer = args.buffer
-        this.dimensions = args.dimensions
-        this.region = [0, 0, ...this.dimensions]
-        this.size = this.dimensions[0] * this.dimensions[1]
+    constructor(options) {
+        this.target = options.target
+        this.export = options.export
+        this.dimensions = options.dimensions
 
         this.take = null
         this.frames = []
+        this.region = [0, 0, ...this.dimensions]
+        this.size = this.dimensions[0] * this.dimensions[1]
 
+        this.save = this.save.bind(this)
+        this.play = this.play.bind(this)
+        this.pause = this.pause.bind(this)
+        this.record = this.record.bind(this)
+        this.connect = this.connect.bind(this)
+
+        this.buffer = document.createElement('canvas')
+        this.buffer.hidden = true
         this.tape = this.buffer.getContext('2d')
-        this.feed.addEventListener('play', this.play.bind(this))
-        this.feed.addEventListener('pause', this.pause.bind(this))
+
+        this.target.addEventListener('play', this.play)
+        this.target.addEventListener('pause', this.pause)
 
         navigator
             .mediaDevices
-            .getUserMedia(this.media)
-            .then(this.connect.bind(this))
+            .getUserMedia({ video: true })
+            .then(this.connect)
     }
 
     record() {
-        this.tape.drawImage(this.feed, ...this.region)
+        this.tape.drawImage(this.target, ...this.region)
         this.frames.push(this.tape.getImageData(...this.region).data)
     }
 
-    play() { this.take = setInterval(this.record.bind(this)) }
+    play() { this.take = setInterval(this.record) }
 
     pause() {
         clearInterval(this.take)
@@ -43,5 +51,5 @@ export default class Camcorder {
         return videofeed
     }
 
-    connect(stream) { this.feed.srcObject = stream }
+    connect(stream) { this.target.srcObject = stream }
 }

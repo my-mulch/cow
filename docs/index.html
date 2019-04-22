@@ -2,22 +2,28 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>i am a cow</title>
+    <title>i am a cow</title>
 
-  <link rel="stylesheet" type="text/css" href="main.css">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+        }
+    </style>
 </head>
 
 <body>
-  <canvas id="mainstage"></canvas>
-  <canvas id="backstage"></canvas>
+    <canvas></canvas>
 
-  <video id="videofeed" controls></video>
-  <audio id="audiofeed" controls></audio>
-
-  <script src="main.js"></script>
-
+    <video controls></video>
+    <audio controls></audio>
+    
+    <script src="main.js"></script>
 </body>
 
 </html>

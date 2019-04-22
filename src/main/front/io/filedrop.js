@@ -1,8 +1,8 @@
 
 export default class FileDrop {
-    constructor(args) {
-        this.target = args.target
-
+    constructor(options) {
+        this.target = options.target
+        
         this.target.addEventListener("dragover", this.ignore, false)
         this.target.addEventListener("drop", this.read.bind(this), false)
     }
