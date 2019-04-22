@@ -1,6 +1,0 @@
-
-class Canvas extends  {
-    constructor() {
-        
-    }
-}

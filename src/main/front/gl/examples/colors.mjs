@@ -18,32 +18,22 @@ var fragment =
     '  gl_FragColor = v_Color;\n' +
     '}\n';
 
-gl
-    .program()
+app.graphics
     .compile({ vertex, fragment })
-    .link()
     .feed([{
-        box: bb.array({
+        buffer: bb.array({
             with: [
                 // Vertex coordinates and color
-                [0.0, 0.5, -0.4, 0.4, 1.0, 0.4],
-                [-0.5, -0.5, -0.4, 0.4, 1.0, 0.4],
-                [0.5, -0.5, -0.4, 1.0, 0.4, 0.4],
-
-                [0.5, 0.4, -0.2, 1.0, 0.4, 0.4],
-                [-0.5, 0.4, -0.2, 1.0, 1.0, 0.4],
-                [0.0, -0.6, -0.2, 1.0, 1.0, 0.4],
-
-                [0.0, 0.5, 0.0, 0.4, 0.4, 1.0],
-                [-0.5, -0.5, 0.0, 0.4, 0.4, 1.0],
-                [0.5, -0.5, 0.0, 1.0, 0.4, 0.4],
+                [0.0, 0.5, 1.0, 0.0, 0.0],
+                [-0.5, -0.5, 0.0, 1.0, 0.0],
+                [0.5, -0.5, 0.0, 0.0, 1.0]
             ]
         }),
-        type: gl.ARRAY_BUFFER,
-        usage: gl.STATIC_DRAW,
+        type: 'ARRAY_BUFFER',
+        usage: 'STATIC_DRAW',
         attributes: {
-            a_Color: [':', '3:6'],
-            a_Position: [':', '0:3'],
+            a_Color: [':', '2:5'],
+            a_Position: [':', '0:2'],
         }
     }])
-    .draw({ mode: gl.TRIANGLES })
+    .draw({ mode: 'TRIANGLES' })
