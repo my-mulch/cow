@@ -2,7 +2,6 @@ export default class Mouse {
     constructor(options) {
         this.isPressed = false
         this.target = options.target
-        this.export = options.export
 
         this.move = this.move.bind(this)
         this.clickUp = this.clickUp.bind(this)
@@ -13,7 +12,7 @@ export default class Mouse {
         this.target.addEventListener('mousemove', this.move)
     }
 
-    move(event) { this.export({ event, context: this }) }
+    move(event) { }
     clickUp(event) { this.isPressed = false }
     clickDown(event) { this.isPressed = true }
 }

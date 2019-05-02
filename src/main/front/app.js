@@ -4,7 +4,7 @@ import Keyboard from './io/keyboard'
 import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
-import GraphicsEngine from './gl/engine'
+import GraphicsEngine from './graphics/engine'
 
 class ParmesanApplication {
     constructor() {
@@ -18,7 +18,14 @@ class ParmesanApplication {
 
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
-        this.onevent = this.onevent.bind(this)
+
+        this.mouse = new Mouse({ target: this.canvas })
+        this.keyboard = new Keyboard({ target: window })
+
+        this.graphics = new GraphicsEngine({
+            target: this.canvas,
+            style: 'white'
+        })
 
         this.camcorder = new Camcorder({
             target: this.video,
@@ -36,22 +43,11 @@ class ParmesanApplication {
             export: this.ondata
         })
 
-        this.mouse = new Mouse({
-            target: this.canvas,
-            export: this.onevent
-        })
-
-        this.keyboard = new Keyboard({
-            target: window,
-            export: this.onevent
-        })
-
         window.addEventListener('resize', this.resize)
     }
 
     init() {
         this.resize()
-        this.graphics = new GraphicsEngine({ target: this.canvas })
 
         return this
     }
@@ -65,11 +61,12 @@ class ParmesanApplication {
 
         this.audio.style.width = `${window.innerWidth}px`
 
+        this.graphics.draw()
+
         return this
     }
 
     ondata(data) { this.data.push(data) }
-    onevent(event) { this.events.push(event) }
 }
 
 export default new ParmesanApplication()

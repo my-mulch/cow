@@ -13,11 +13,9 @@ export default class Keyboard {
 
     keyup(event) {
         this.pressedKeys.clear()
-        this.export({ event, context: this })
     }
 
     keydown(event) {
         this.pressedKeys.add(event.key)
-        this.export({ event, context: this })
     }
 }
