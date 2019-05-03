@@ -9,7 +9,6 @@ import GraphicsEngine from './graphics/engine'
 class ParmesanApplication {
     constructor() {
         this.data = []
-        this.events = []
         this.body = document.body
 
         this.video = document.querySelector('video')
@@ -18,18 +17,21 @@ class ParmesanApplication {
 
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
-
-        this.mouse = new Mouse({ target: this.canvas })
-        this.keyboard = new Keyboard({ target: window })
+        this.keyup = this.keyup.bind(this)
+        this.keydown = this.keydown.bind(this)
+        this.mousemove = this.mousemove.bind(this)
 
         this.graphics = new GraphicsEngine({
+            data: this.data,
             target: this.canvas,
-            style: 'white'
+            style: { stroke: 'white', fill: 'rgba(255, 165, 0, 1)' }
         })
 
-        this.camcorder = new Camcorder({
-            target: this.video,
-            dimensions: [50, 50],
+        this.mouse = new Mouse({})
+        this.keyboard = new Keyboard({ bindings: {} })
+
+        this.filedrop = new FileDrop({
+            target: this.canvas,
             export: this.ondata
         })
 
@@ -38,18 +40,33 @@ class ParmesanApplication {
             export: this.ondata
         })
 
-        this.filedrop = new FileDrop({
-            target: this.canvas,
+        this.camcorder = new Camcorder({
+            target: this.video,
+            dimensions: [50, 50],
             export: this.ondata
         })
 
+
         window.addEventListener('resize', this.resize)
+        window.addEventListener('keyup', this.keyup)
+        window.addEventListener('keydown', this.keydown)
+        window.addEventListener('mousemove', this.mousemove)
     }
 
-    init() {
-        this.resize()
+    init() { this.resize(); return this }
 
-        return this
+    keyup(event) {
+        this.keyboard.keyup(event)
+    }
+
+    keydown(event) {
+        const command = this.keyboard.keydown(event)
+        this.graphics.keydown(command)
+    }
+
+    mousemove(event) {
+        const position = this.mouse.mousemove(event)
+        this.graphics.mousemove(position.x, position.y)
     }
 
     resize() {

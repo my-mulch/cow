@@ -1,18 +1,16 @@
 export default class Mouse {
-    constructor(options) {
+    constructor() {
         this.isPressed = false
-        this.target = options.target
-
-        this.move = this.move.bind(this)
-        this.clickUp = this.clickUp.bind(this)
-        this.clickDown = this.clickDown.bind(this)
-
-        this.target.addEventListener('mousedown', this.clickDown)
-        this.target.addEventListener('mouseup', this.clickUp)
-        this.target.addEventListener('mousemove', this.move)
+        this.position = { x: 0, y: 0 }
     }
 
-    move(event) { }
-    clickUp(event) { this.isPressed = false }
-    clickDown(event) { this.isPressed = true }
+    mouseup(event) { this.isPressed = false }
+    mousedown(event) { this.isPressed = true }
+
+    mousemove(event) {
+        this.position.x = event.clientX
+        this.position.y = event.clientY
+
+        return this.position
+    }
 }
