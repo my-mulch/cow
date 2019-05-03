@@ -4,12 +4,11 @@ import Keyboard from './io/keyboard'
 import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
-import GraphicsEngine from './gl/engine'
+import GraphicsEngine from './graphics/engine'
 
 class ParmesanApplication {
     constructor() {
         this.data = []
-        this.events = []
         this.body = document.body
 
         this.video = document.querySelector('video')
@@ -18,11 +17,21 @@ class ParmesanApplication {
 
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
-        this.onevent = this.onevent.bind(this)
+        this.keyup = this.keyup.bind(this)
+        this.keydown = this.keydown.bind(this)
+        this.mousemove = this.mousemove.bind(this)
 
-        this.camcorder = new Camcorder({
-            target: this.video,
-            dimensions: [50, 50],
+        this.graphics = new GraphicsEngine({
+            data: this.data,
+            target: this.canvas,
+            style: { stroke: 'white', fill: 'rgba(255, 165, 0, 1)' }
+        })
+
+        this.mouse = new Mouse({})
+        this.keyboard = new Keyboard({ bindings: {} })
+
+        this.filedrop = new FileDrop({
+            target: this.canvas,
             export: this.ondata
         })
 
@@ -31,29 +40,33 @@ class ParmesanApplication {
             export: this.ondata
         })
 
-        this.filedrop = new FileDrop({
-            target: this.canvas,
+        this.camcorder = new Camcorder({
+            target: this.video,
+            dimensions: [50, 50],
             export: this.ondata
         })
 
-        this.mouse = new Mouse({
-            target: this.canvas,
-            export: this.onevent
-        })
-
-        this.keyboard = new Keyboard({
-            target: window,
-            export: this.onevent
-        })
 
         window.addEventListener('resize', this.resize)
+        window.addEventListener('keyup', this.keyup)
+        window.addEventListener('keydown', this.keydown)
+        window.addEventListener('mousemove', this.mousemove)
     }
 
-    init() {
-        this.resize()
-        this.graphics = new GraphicsEngine({ target: this.canvas })
+    init() { this.resize(); return this }
 
-        return this
+    keyup(event) {
+        this.keyboard.keyup(event)
+    }
+
+    keydown(event) {
+        const command = this.keyboard.keydown(event)
+        this.graphics.keydown(command)
+    }
+
+    mousemove(event) {
+        const position = this.mouse.mousemove(event)
+        this.graphics.mousemove(position.x, position.y)
     }
 
     resize() {
@@ -65,11 +78,12 @@ class ParmesanApplication {
 
         this.audio.style.width = `${window.innerWidth}px`
 
+        this.graphics.draw()
+
         return this
     }
 
     ondata(data) { this.data.push(data) }
-    onevent(event) { this.events.push(event) }
 }
 
 export default new ParmesanApplication()

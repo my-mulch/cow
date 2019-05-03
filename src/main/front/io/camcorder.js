@@ -18,6 +18,7 @@ export default class Camcorder {
 
         this.buffer = document.createElement('canvas')
         this.buffer.hidden = true
+        
         this.tape = this.buffer.getContext('2d')
 
         this.target.addEventListener('play', this.play)
