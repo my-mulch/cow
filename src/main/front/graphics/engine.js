@@ -25,6 +25,7 @@ export default class GraphicsEngine {
 
     keydown(command) { }
     mousemove(x, y) { }
+    mousedown(x, y) { console.log([x, y]) }
 
     draw(options = {}) {
         this.runtime.setModelMatrices({

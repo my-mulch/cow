@@ -21,6 +21,7 @@ class ParmesanApplication {
         this.keyup = this.keyup.bind(this)
         this.keydown = this.keydown.bind(this)
         this.mousemove = this.mousemove.bind(this)
+        this.mousedown = this.mousedown.bind(this)
 
         this.mouse = new Mouse({})
 
@@ -36,14 +37,14 @@ class ParmesanApplication {
         this.microphone = new Microphone({
             target: this.audio,
             export: this.ondata,
-            enabled: false
+            enabled: true
         })
 
         this.camcorder = new Camcorder({
             target: this.video,
             dimensions: [50, 50],
             export: this.ondata,
-            enabled: false
+            enabled: true
         })
 
         this.resize()
@@ -59,6 +60,7 @@ class ParmesanApplication {
         window.addEventListener('keyup', this.keyup)
         window.addEventListener('keydown', this.keydown)
         window.addEventListener('mousemove', this.mousemove)
+        window.addEventListener('mousedown', this.mousedown)
 
         return this
     }
@@ -73,6 +75,11 @@ class ParmesanApplication {
     mousemove(event) {
         const position = this.mouse.mousemove(event)
         this.graphics.mousemove(position.x, position.y)
+    }
+
+    mousedown(event) {
+        const position = this.mouse.mousedown(event)
+        this.graphics.mousedown(position.x, position.y)
     }
 
     resize() {

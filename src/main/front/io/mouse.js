@@ -5,7 +5,15 @@ export default class Mouse {
     }
 
     mouseup(event) { this.isPressed = false }
-    mousedown(event) { this.isPressed = true }
+    
+    mousedown(event) {
+        this.isPressed = true
+
+        this.position.x = event.clientX
+        this.position.y = event.clientY
+
+        return this.position
+    }
 
     mousemove(event) {
         this.position.x = event.clientX
