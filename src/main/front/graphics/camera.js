@@ -7,21 +7,9 @@ export default class GraphicsCamera {
         this.from = options.from
     }
 
-    lookAt(point) {
-        this.to = point || this.to
-
-        const transMatrix = bb.eye({
-            shape: [4, 4]
-        })
-
-        const viewMatrix = bb.array({
-            with: [
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 0],
-                [0, 0, 0, 1]
-            ]
-        })
+    lookAt() {
+        const viewMatrix = bb.eye({ shape: [4, 4] })
+        const transMatrix = bb.eye({ shape: [4, 4] })
 
         const f = this.from.subtract({ with: this.to })
         const s = this.up.cross({ with: f })

@@ -21,30 +21,32 @@ class ParmesanApplication {
         this.keydown = this.keydown.bind(this)
         this.mousemove = this.mousemove.bind(this)
 
-        this.graphics = new GraphicsEngine({
-            data: this.data,
-            target: this.canvas,
-            style: { stroke: 'white', fill: 'rgba(255, 165, 0, 1)' }
+        this.mouse = new Mouse({})
+
+        this.keyboard = new Keyboard({
+            bindings: {}
         })
 
-        this.mouse = new Mouse({})
-        this.keyboard = new Keyboard({ bindings: {} })
+        this.graphics = new GraphicsEngine({
+            data: this.data,
+            target: this.canvas
+        })
 
         this.filedrop = new FileDrop({
             target: this.canvas,
             export: this.ondata
         })
 
-        this.microphone = new Microphone({
-            target: this.audio,
-            export: this.ondata
-        })
+        // this.microphone = new Microphone({
+        //     target: this.audio,
+        //     export: this.ondata
+        // })
 
-        this.camcorder = new Camcorder({
-            target: this.video,
-            dimensions: [50, 50],
-            export: this.ondata
-        })
+        // this.camcorder = new Camcorder({
+        //     target: this.video,
+        //     dimensions: [50, 50],
+        //     export: this.ondata
+        // })
 
 
         window.addEventListener('resize', this.resize)
@@ -55,9 +57,7 @@ class ParmesanApplication {
 
     init() { this.resize(); return this }
 
-    keyup(event) {
-        this.keyboard.keyup(event)
-    }
+    keyup(event) { this.keyboard.keyup(event) }
 
     keydown(event) {
         const command = this.keyboard.keydown(event)
