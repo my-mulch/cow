@@ -3,12 +3,14 @@ export default class Microphone {
     constructor(options) {
         this.target = options.target
         this.export = options.export
+        this.enabled = options.enabled
 
         this.samples = []
         this.reader = null
         this.context = null
         this.recording = null
 
+        this.init = this.init.bind(this)
         this.save = this.save.bind(this)
         this.send = this.send.bind(this)
         this.play = this.play.bind(this)
@@ -19,6 +21,10 @@ export default class Microphone {
         this.target.addEventListener('play', this.play)
         this.target.addEventListener('pause', this.pause)
 
+        if (this.enabled) this.init()
+    }
+
+    init() {
         navigator
             .mediaDevices
             .getUserMedia({ audio: true })
