@@ -1,4 +1,4 @@
-import GraphicsAttribute from './attribute'
+import bb from 'big-box'
 
 export default class GraphicsBox {
     constructor(options) {
@@ -12,13 +12,12 @@ export default class GraphicsBox {
         this.mtype = options.mtype || 'ARRAY_BUFFER'
         this.usage = options.usage || 'STATIC_DRAW'
 
-        this.attributes = Object
-            .entries(options.attributes || {
-                a_Position: [':', '0:3'],
-                a_Color: [':', '3:6'],
-            }).map(function ([name, region]) {
-                return new GraphicsAttribute({ name, region })
-            })
+        this.attributes = options.attributes || {
+            a_Position: [':', '0:3'],
+            a_Color: [':', '3:6'],
+        }
 
+        for (const [name, region] of Object.entries(this.attributes))
+            this.attributes[name] = this.contents.slice({ with: region })
     }
 }

@@ -1,9 +1,9 @@
 import bb from 'big-box'
 
-import GraphicsSource from './source'
+import GraphicsBoxes from './common/boxes'
+import GraphicsSource from './common/source'
 import GraphicsCamera from './camera'
 import GraphicsRuntime from './runtime'
-import GraphicsBox from './box'
 
 export default class GraphicsEngine {
     constructor(options) {
@@ -13,22 +13,7 @@ export default class GraphicsEngine {
         this.runtime = new GraphicsRuntime({
             context: this.target.getContext('webgl'),
             source: GraphicsSource,
-            boxes: [
-                new GraphicsBox({
-                    contents: [
-                        // x-axis
-                        [-1.0, 0, 0, 0, 0, 1],
-                        [1.0, 0, 0, 0, 0, 1],
-                        // y-axis
-                        [0, -1.0, 0, 0, 0, 1],
-                        [0, 1.0, 0, 0, 0, 1],
-                        // z-axis
-                        [0, 0, -1.0, 1, 0, 0],
-                        [0, 0, 1.0, 1, 0, 0],
-                    ],
-                    mode: 'LINES'
-                })
-            ]
+            boxes: GraphicsBoxes
         })
 
         this.camera = new GraphicsCamera({
@@ -40,5 +25,13 @@ export default class GraphicsEngine {
 
     keydown(command) { }
     mousemove(x, y) { }
-    draw() { this.runtime.draw() }
+
+    draw(options = {}) {
+        this.runtime.setModelMatrices({
+            u_ViewMatrix: this.camera.lookAt(options.lookAt),
+            u_ProjMatrix: this.camera.project(options.project)
+        })
+
+        this.runtime.draw()
+    }
 }

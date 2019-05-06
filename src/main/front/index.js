@@ -3,3 +3,5 @@ import app from './app'
 
 window.bb = bb
 window.app = app.init()
+
+app.graphics.draw()

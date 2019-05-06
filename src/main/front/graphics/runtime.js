@@ -1,5 +1,4 @@
 
-
 export default class GraphicsRuntime {
     constructor(options) {
         this.feed = this.feed.bind(this)
@@ -8,6 +7,7 @@ export default class GraphicsRuntime {
 
         this.source = options.source
         this.context = options.context
+        this.uniforms = options.uniforms
         this.boxes = options.boxes.map(this.feed)
 
         this.vertex = this.context.createShader(this.context.VERTEX_SHADER)
@@ -29,13 +29,19 @@ export default class GraphicsRuntime {
 
     draw() { this.boxes.forEach(this.render) }
 
-    render(box) {
-        this.context.bindBuffer(this.context[box.mtype], box)
+    setModelMatrices(matrices) {
+        for (const [name, matrix] of Object.entries(matrices))
+            this.context.uniformMatrix4fv(
+                this.context.getUniformLocation(this.program, name),
+                false,
+                matrix.data)
+    }
 
-        for (const [name, region] of box.attributes) {
+    render(box) {
+        for (const [name, region] of Object.entries(box.attributes)) {
             const pointer = this.context.getAttribLocation(this.program, name)
 
-            this.context.vertexAttribPointer(pointer,
+            this.context.vertexAttribPointer(
                 pointer,
                 region.shape[1],
                 this.context[box.dtype],
@@ -46,16 +52,17 @@ export default class GraphicsRuntime {
 
             this.context.enableVertexAttribArray(pointer)
         }
+
+        this.context.clear(this.context.COLOR_BUFFER_BIT)
+        this.context.clearColor(0.0, 0.0, 0.0, 1.0)
+        this.context.drawArrays(this.context[box.mode], 0, box.size)
     }
 
     feed(box) {
         box.buffer = this.context.createBuffer()
 
-        this.context.bufferData(
-            this.context[box.mtype],
-            box.contents.data,
-            this.context[box.usage]
-        )
+        this.context.bindBuffer(this.context[box.mtype], box.buffer)
+        this.context.bufferData(this.context[box.mtype], box.contents.data, this.context[box.usage])
 
         return box
     }

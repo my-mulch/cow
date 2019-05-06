@@ -3,6 +3,7 @@ export default class Camcorder {
     constructor(options) {
         this.target = options.target
         this.export = options.export
+        this.enabled = options.enabled
         this.dimensions = options.dimensions
 
         this.take = null
@@ -18,12 +19,16 @@ export default class Camcorder {
 
         this.buffer = document.createElement('canvas')
         this.buffer.hidden = true
-        
+
         this.tape = this.buffer.getContext('2d')
 
         this.target.addEventListener('play', this.play)
         this.target.addEventListener('pause', this.pause)
 
+        if (this.enabled) this.init()
+    }
+
+    init() {
         navigator
             .mediaDevices
             .getUserMedia({ video: true })

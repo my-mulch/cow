@@ -15,6 +15,7 @@ class ParmesanApplication {
         this.audio = document.querySelector('audio')
         this.canvas = document.querySelector('canvas')
 
+        this.init = this.init.bind(this)
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
         this.keyup = this.keyup.bind(this)
@@ -27,35 +28,40 @@ class ParmesanApplication {
             bindings: {}
         })
 
-        this.graphics = new GraphicsEngine({
-            data: this.data,
-            target: this.canvas
-        })
-
         this.filedrop = new FileDrop({
             target: this.canvas,
             export: this.ondata
         })
 
-        // this.microphone = new Microphone({
-        //     target: this.audio,
-        //     export: this.ondata
-        // })
+        this.microphone = new Microphone({
+            target: this.audio,
+            export: this.ondata,
+            enabled: false
+        })
 
-        // this.camcorder = new Camcorder({
-        //     target: this.video,
-        //     dimensions: [50, 50],
-        //     export: this.ondata
-        // })
+        this.camcorder = new Camcorder({
+            target: this.video,
+            dimensions: [50, 50],
+            export: this.ondata,
+            enabled: false
+        })
 
+        this.resize()
+    }
+
+    init() {
+        this.graphics = new GraphicsEngine({
+            data: this.data,
+            target: this.canvas
+        })
 
         window.addEventListener('resize', this.resize)
         window.addEventListener('keyup', this.keyup)
         window.addEventListener('keydown', this.keydown)
         window.addEventListener('mousemove', this.mousemove)
-    }
 
-    init() { this.resize(); return this }
+        return this
+    }
 
     keyup(event) { this.keyboard.keyup(event) }
 
@@ -77,8 +83,6 @@ class ParmesanApplication {
         this.video.height = window.innerHeight
 
         this.audio.style.width = `${window.innerWidth}px`
-
-        this.graphics.draw()
 
         return this
     }
