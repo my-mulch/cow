@@ -15,19 +15,11 @@ class ParmesanApplication {
         this.audio = document.querySelector('audio')
         this.canvas = document.querySelector('canvas')
 
-        this.init = this.init.bind(this)
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
-        this.keyup = this.keyup.bind(this)
-        this.keydown = this.keydown.bind(this)
-        this.mousemove = this.mousemove.bind(this)
-        this.mousedown = this.mousedown.bind(this)
 
         this.mouse = new Mouse({})
-
-        this.keyboard = new Keyboard({
-            bindings: {}
-        })
+        this.keyboard = new Keyboard({ bindings: {} })
 
         this.filedrop = new FileDrop({
             target: this.canvas,
@@ -47,39 +39,12 @@ class ParmesanApplication {
             enabled: true
         })
 
-        this.resize()
-    }
-
-    init() {
         this.graphics = new GraphicsEngine({
             data: this.data,
             target: this.canvas
         })
 
         window.addEventListener('resize', this.resize)
-        window.addEventListener('keyup', this.keyup)
-        window.addEventListener('keydown', this.keydown)
-        window.addEventListener('mousemove', this.mousemove)
-        window.addEventListener('mousedown', this.mousedown)
-
-        return this
-    }
-
-    keyup(event) { this.keyboard.keyup(event) }
-
-    keydown(event) {
-        const command = this.keyboard.keydown(event)
-        this.graphics.keydown(command)
-    }
-
-    mousemove(event) {
-        const position = this.mouse.mousemove(event)
-        this.graphics.mousemove(position.x, position.y)
-    }
-
-    mousedown(event) {
-        const position = this.mouse.mousedown(event)
-        this.graphics.mousedown(position.x, position.y)
     }
 
     resize() {
@@ -97,4 +62,4 @@ class ParmesanApplication {
     ondata(data) { this.data.push(data) }
 }
 
-export default new ParmesanApplication()
+export default new ParmesanApplication().resize()

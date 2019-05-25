@@ -10,20 +10,7 @@ export default class GraphicsRuntime {
         this.uniforms = options.uniforms
         this.boxes = options.boxes.map(this.feed)
 
-        this.vertex = this.context.createShader(this.context.VERTEX_SHADER)
-        this.fragment = this.context.createShader(this.context.FRAGMENT_SHADER)
 
-        this.context.shaderSource(this.vertex, this.source.vertex)
-        this.context.shaderSource(this.fragment, this.source.fragment)
-
-        this.context.compileShader(this.vertex)
-        this.context.compileShader(this.fragment)
-
-        this.program = this.context.createProgram()
-        this.context.attachShader(this.program, this.vertex)
-        this.context.attachShader(this.program, this.fragment)
-
-        this.context.linkProgram(this.program)
         this.context.useProgram(this.program)
     }
 
