@@ -37,8 +37,21 @@ export default class GraphicsEngine {
 
         this.program = GraphicsProgramManager.createProgram({
             context: this.context,
-            shaders: { vertex: this.vertexShader, fragment: this.fragmentShader }
+            shaders: {
+                vertex: this.vertexShader,
+                fragment: this.fragmentShader
+            }
         })
+
+        
+
+        const numAttrs = this.context.getProgramParameter(this.program, this.context.ACTIVE_ATTRIBUTES)
+        for (let i = 0; i < numAttrs; i++) {
+            const attribute = this.context.getActiveAttrib(this.program, i)
+            const index = this.context.getAttribLocation(this.program, attribute.name)
+            console.log(attribute, index)
+        }
+
 
     }
 
