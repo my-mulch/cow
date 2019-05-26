@@ -4,12 +4,11 @@ import Keyboard from './io/keyboard'
 import Camcorder from './io/camcorder'
 import Microphone from './io/microphone'
 
-import GraphicsEngine from './graphics/engine'
+import GraphicsEngine from './gl/engine'
 
 class ParmesanApplication {
     constructor() {
         this.data = []
-        this.body = document.body
 
         this.video = document.querySelector('video')
         this.audio = document.querySelector('audio')
@@ -19,7 +18,7 @@ class ParmesanApplication {
         this.ondata = this.ondata.bind(this)
 
         this.mouse = new Mouse({})
-        this.keyboard = new Keyboard({ bindings: {} })
+        this.keyboard = new Keyboard({})
 
         this.filedrop = new FileDrop({
             target: this.canvas,
@@ -40,7 +39,6 @@ class ParmesanApplication {
         })
 
         this.graphics = new GraphicsEngine({
-            data: this.data,
             target: this.canvas
         })
 

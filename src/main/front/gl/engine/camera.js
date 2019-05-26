@@ -6,7 +6,9 @@ export default class GraphicsCamera {
         this.up = options.up
         this.from = options.from
     }
+
     project() { return bb.eye({ shape: [4, 4] }) }
+
     lookAt() {
         const viewMatrix = bb.eye({ shape: [4, 4] })
         const transMatrix = bb.eye({ shape: [4, 4] })

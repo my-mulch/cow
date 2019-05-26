@@ -1,6 +1,5 @@
 
 export default class GraphicsProgramManager {
-
     static createShader({ context, type, source }) {
         const shader = context.createShader(type)
 
@@ -19,12 +18,21 @@ export default class GraphicsProgramManager {
         return shader
     }
 
-    static createProgram({ context, shaders }) {
+    static createProgram({ context, vertex, fragment }) {
         const program = context.createProgram()
 
-        context.attachShader(program, shaders.vertex)
-        context.attachShader(program, shaders.fragment)
-        
+        context.attachShader(program, this.createShader({
+            context,
+            type: context.VERTEX_SHADER,
+            source: vertex
+        }))
+
+        context.attachShader(program, this.createShader({
+            context,
+            type: context.FRAGMENT_SHADER,
+            source: fragment
+        }))
+
         context.linkProgram(program)
 
         const didLink = context.getProgramParameter(program, context.LINK_STATUS)
