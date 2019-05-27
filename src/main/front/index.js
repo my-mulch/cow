@@ -4,3 +4,7 @@ import app from './app'
 window.bb = bb
 window.app = app
 
+
+// app.graphics.plot()
+
+

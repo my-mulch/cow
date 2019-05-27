@@ -11,11 +11,10 @@ export default class GraphicsUniformManager {
         for (let i = 0; i < uniformCount; i++) {
             const uniformInfo = context.getActiveUniform(program, i)
             const uniformLocation = context.getUniformLocation(program, uniformInfo.name)
-            const uniformType = this.resolveUniformType({ context, type: uniformInfo.type })
-
+            
             uniforms[uniformInfo.name] = this.createUniform({
                 context,
-                type: uniformType,
+                type: uniformInfo.type,
                 location: uniformLocation
             })
         }
@@ -24,17 +23,13 @@ export default class GraphicsUniformManager {
     }
 
     static createUniform({ context, type, location }) {
-        return function (data) {
-            context[type].call(null, location, false, data)
-        }
-    }
-
-    static resolveUniformType({ context, type }) {
         if (type === context.FLOAT_MAT2)
-            return 'uniformMatrix2fv'
+            return function (array) { context.uniformMatrix2fv(location, false, array.data) }
+
         if (type === context.FLOAT_MAT3)
-            return 'uniformMatrix3fv'
+            return function (array) { context.uniformMatrix3fv(location, false, array.data) }
+
         if (type === context.FLOAT_MAT4)
-            return 'uniformMatrix4fv'
+            return function (array) { context.uniformMatrix4fv(location, false, array.data) }
     }
 }

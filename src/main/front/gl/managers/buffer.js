@@ -1,6 +1,6 @@
 
 export default class GraphicsBufferManager {
-    static createBuffer({ context, program, data, name, btype, rtype, ntype }) {
+    static createBuffer({ context, feed, name, btype, rtype, ntype }) {
         const buffer = context.createBuffer()
 
         const numberType = ntype || context.FLOAT
@@ -8,31 +8,17 @@ export default class GraphicsBufferManager {
         const bufferType = btype || context.ARRAY_BUFFER
 
         context.bindBuffer(bufferType, buffer)
-        context.bufferData(bufferType, data, renderType)
+        context.bufferData(bufferType, feed.data, renderType)
 
         return {
             buffer,
-            pointer: context.getAttribLocation(program, name),
-            size: data.shape[1],
+            name,
+            size: feed.shape[1],
+            count: feed.shape[0],
             type: numberType,
             normalize: false,
-            offset: data.offset * data.type.BYTES_PER_ELEMENT,
-            stride: data.strides[0] * data.type.BYTES_PER_ELEMENT
+            offset: feed.offset * feed.type.BYTES_PER_ELEMENT,
+            stride: feed.strides[0] * feed.type.BYTES_PER_ELEMENT
         }
-    }
-
-    static bindBuffer({ context, buffer }) {
-        context.bindBuffer(context.ARRAY_BUFFER, buffer.buffer)
-
-        context.enableVertexAttribArray(buffer.pointer)
-
-        context.vertexAttribPointer(
-            buffer.pointer,
-            buffer.size,
-            buffer.type,
-            buffer.normalize,
-            buffer.stride,
-            buffer.offset
-        )
     }
 }

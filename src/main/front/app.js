@@ -16,7 +16,9 @@ class ParmesanApplication {
 
         this.resize = this.resize.bind(this)
         this.ondata = this.ondata.bind(this)
+    }
 
+    init() {
         this.mouse = new Mouse({})
         this.keyboard = new Keyboard({})
 
@@ -28,14 +30,14 @@ class ParmesanApplication {
         this.microphone = new Microphone({
             target: this.audio,
             export: this.ondata,
-            enabled: true
+            enabled: false
         })
 
         this.camcorder = new Camcorder({
             target: this.video,
             dimensions: [50, 50],
             export: this.ondata,
-            enabled: true
+            enabled: false
         })
 
         this.graphics = new GraphicsEngine({
@@ -43,6 +45,8 @@ class ParmesanApplication {
         })
 
         window.addEventListener('resize', this.resize)
+
+        return this
     }
 
     resize() {
@@ -60,4 +64,4 @@ class ParmesanApplication {
     ondata(data) { this.data.push(data) }
 }
 
-export default new ParmesanApplication().resize()
+export default new ParmesanApplication().resize().init()

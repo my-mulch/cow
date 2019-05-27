@@ -24,7 +24,6 @@ export default class GraphicsAttributeManager {
     static createAttribute({ context, location }) {
         return function (data) {
             context.bindBuffer(context.ARRAY_BUFFER, data.buffer)
-
             context.enableVertexAttribArray(location)
 
             context.vertexAttribPointer(
