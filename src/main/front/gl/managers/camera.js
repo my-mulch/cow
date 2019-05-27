@@ -26,4 +26,8 @@ export default class GraphicsCameraManager {
 
         return transMatrix.dot({ with: viewMatrix })
     }
+
+    static project() {
+        return bb.eye({ shape: [4, 4] })
+    }
 }
