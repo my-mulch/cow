@@ -17,9 +17,9 @@ class ParmesanApplication {
             microphone: this.audio,
         })
 
-        this.graphics = new ParmesanGraphics({
-            target: this.canvas
-        })
+        // this.graphics = new ParmesanGraphics({
+        //     target: this.canvas
+        // })
     }
 
     resize() {

@@ -1,23 +1,18 @@
+import ParmesanBlob from './blob'
 
-export default class ParmesanImage {
+export default class ParmesanImage extends ParmesanBlob {
     constructor(blob) {
-        this.name = blob.name
-        this.size = blob.size
-        this.type = blob.type
+        super(blob)
 
-        this.extractPixels = this.extractPixels.bind(this)
+        createImageBitmap(blob).then(function (bitmap) {
+            const canvas = document.createElement('canvas')
+            const context = canvas.getContext('2d')
+            const region = [0, 0, bitmap.width, bitmap.height]
 
-        createImageBitmap(blob).then(this.extractPixels)
-    }
+            context.drawImage(bitmap, ...region)
+            this.data = context.getImageData(...region).data
 
-    extractPixels(bitmap) {
-        const canvas = document.createElement('canvas')
-        const context = canvas.getContext('2d')
-        const region = [0, 0, bitmap.width, bitmap.height]
-
-        context.drawImage(bitmap, ...region)
-        this.data = context.getImageData(...region).data
- 
-        canvas.remove()
+            canvas.remove()
+        }.bind(this))
     }
 }
