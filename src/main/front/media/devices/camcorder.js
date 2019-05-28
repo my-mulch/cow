@@ -3,13 +3,9 @@ export default class Camcorder {
     constructor(options) {
         this.target = options.target
         this.export = options.export
-        this.enabled = options.enabled
-        this.dimensions = options.dimensions
 
         this.take = null
         this.frames = []
-        this.region = [0, 0, ...this.dimensions]
-        this.size = this.dimensions[0] * this.dimensions[1]
 
         this.save = this.save.bind(this)
         this.play = this.play.bind(this)
@@ -24,15 +20,6 @@ export default class Camcorder {
 
         this.target.addEventListener('play', this.play)
         this.target.addEventListener('pause', this.pause)
-
-        if (this.enabled) this.init()
-    }
-
-    init() {
-        navigator
-            .mediaDevices
-            .getUserMedia({ video: true })
-            .then(this.connect)
     }
 
     record() {
