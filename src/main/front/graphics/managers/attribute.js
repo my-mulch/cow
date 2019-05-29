@@ -1,5 +1,5 @@
 
-export default class GraphicsAttributeManager {
+export default class ParmesanGraphicsAttributeManager {
     static createAttributes({ context, program }) {
         const attributes = {}
 
