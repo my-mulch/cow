@@ -1,3 +1,5 @@
+import config from '../../../resources'
+
 import ParmesanBlob from './blob'
 
 export default class ParmesanVideo extends ParmesanBlob {
@@ -6,7 +8,7 @@ export default class ParmesanVideo extends ParmesanBlob {
 
         let time = 0
         let frame = 0
-        const delta = 1
+        const delta = 1 / config.frameRate
 
         const video = document.createElement('video')
         const canvas = document.createElement('canvas')
@@ -15,9 +17,17 @@ export default class ParmesanVideo extends ParmesanBlob {
         video.src = URL.createObjectURL(blob)
 
         video.onloadeddata = function () {
-            this.frameCount = video.duration / delta
-            this.frameDimensions = [0, 0, video.videoWidth, video.videoHeight]
-            
+            this.frameChannels = 4
+            this.frameCount = Math.ceil(video.duration / delta)
+            this.frameDimensions = [0, 0, config.videoWidth, config.videoHeight]
+
+            this.data = new Uint8ClampedArray(
+                this.frameCount *
+                this.frameChannels *
+                this.frameDimensions[2] *
+                this.frameDimensions[3]
+            )
+
             video.currentTime = time
 
         }.bind(this)
@@ -26,13 +36,17 @@ export default class ParmesanVideo extends ParmesanBlob {
             context.drawImage(video, ...this.frameDimensions)
             const frameData = context.getImageData(...this.frameDimensions).data
 
+            this.data.set(frameData, frame * frameData.length)
+
             frame += 1
             time += delta
 
             if (time <= video.duration)
                 video.currentTime = time
-            else
-                video.remove(), canvas.remove(), console.log('done')
+            else {
+                video.remove()
+                canvas.remove()
+            }
 
         }.bind(this)
 
