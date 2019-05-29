@@ -51,7 +51,7 @@ export default class ParmesanGraphicsEngine {
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
             to: [[0, 0, 0]],
             up: [[0, 1, 0]],
-            from: [[0.1], [0.25], [0.01]],
+            from: [[0.2], [0.2], [0.2]],
         })
 
         this.uniforms.u_ViewMatrix(viewMatrix)
