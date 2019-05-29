@@ -33,27 +33,17 @@ export default class ParmesanGraphicsEngine {
         this.context.useProgram(this.program)
     }
 
+    feed({ array, attribute }) {
+        attribute.call(null, ParmesanGraphicsBufferManager.createBuffer({
+            context: this.context,
+            array,
+        }))
+    }
+
     plot({ vertices, colors, sizes }) {
-        const positionBuffer = ParmesanGraphicsBufferManager.createBuffer({
-            context: this.context,
-            array: vertices,
-        })
-
-        this.attributes.a_Position(positionBuffer)
-
-        const colorBuffer = ParmesanGraphicsBufferManager.createBuffer({
-            context: this.context,
-            array: colors,
-        })
-
-        this.attributes.a_Color(colorBuffer)
-
-        const sizeBuffer = ParmesanGraphicsBufferManager.createBuffer({
-            context: this.context,
-            array: sizes
-        })
-
-        this.attributes.a_PointSize(sizeBuffer)
+        this.feed({ array: vertices, attribute: this.attributes.a_Position })
+        this.feed({ array: colors, attribute: this.attributes.a_Color })
+        this.feed({ array: sizes, attribute: this.attributes.a_PointSize })
 
         // calculate the view matrix and projection matrix
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
@@ -68,7 +58,7 @@ export default class ParmesanGraphicsEngine {
         this.context.clear(this.context.COLOR_BUFFER_BIT)
 
         // Draw the triangles
-        this.context.drawArrays(this.context.POINTS, 0, positionBuffer.count)
+        this.context.drawArrays(this.context.POINTS, 0, vertices.shape[0])
     }
 
 }
