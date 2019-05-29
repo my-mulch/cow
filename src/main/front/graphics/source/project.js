@@ -1,12 +1,13 @@
 
 // Vertex shader program
 var VSHADER_SOURCE =
+    'attribute float a_PointSize;\n' +
     'attribute vec4 a_Position;\n' +
     'attribute vec4 a_Color;\n' +
     'uniform mat4 u_ViewMatrix;\n' +
     'varying vec4 v_Color;\n' +
     'void main() {\n' +
-    '  gl_PointSize = 1.0;\n' +
+    '  gl_PointSize = a_PointSize;\n' +
     '  gl_Position = u_ViewMatrix * a_Position;\n' +
     '  v_Color = a_Color;\n' +
     '}\n';

@@ -8,6 +8,7 @@ import ParmesanGraphicsSource from './source/project'
 
 export default class ParmesanGraphicsEngine {
     constructor(options) {
+        this.buffers = []
         this.target = options.target
         this.context = this.target.getContext('webgl')
 
@@ -33,37 +34,29 @@ export default class ParmesanGraphicsEngine {
         this.context.useProgram(this.program)
     }
 
-    plot({ vertices, colors }) {
-        const positionBuffer = ParmesanGraphicsBufferManager.createBuffer({
+    feed({ array, attribute }) {
+        this.buffers.unshift(ParmesanGraphicsBufferManager.createBuffer({
             context: this.context,
-            feed: vertices,
-            ntype: this.context.UNSIGNED_BYTE
-        })
+            array,
+        }))
 
-        this.attributes.a_Position(positionBuffer)
+        attribute.call(null, this.buffers[0])
+    }
 
-        const colorBuffer = ParmesanGraphicsBufferManager.createBuffer({
-            context: this.context,
-            feed: colors,
-            ntype: this.context.UNSIGNED_BYTE
-        })
+    plot({ vertices, colors, sizes }) {
+        this.feed({ array: vertices, attribute: this.attributes.a_Position })
+        this.feed({ array: colors, attribute: this.attributes.a_Color })
+        this.feed({ array: sizes, attribute: this.attributes.a_PointSize })
 
-        this.attributes.a_Color(colorBuffer)
-
-        // calculate the view matrix and projection matrix
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
             to: [[0, 0, 0]],
             up: [[0, 1, 0]],
-            from: [[0.3], [0.2], [0.1]],
+            from: [[0.1], [0.25], [0.01]],
         })
 
         this.uniforms.u_ViewMatrix(viewMatrix)
 
-        // Clear <canvas>
-        this.context.clear(this.context.COLOR_BUFFER_BIT)
-
-        // Draw the triangles
-        this.context.drawArrays(this.context.POINTS, 0, positionBuffer.count)
+        this.context.drawArrays(this.context.POINTS, 0, vertices.shape[0])
     }
 
 }
