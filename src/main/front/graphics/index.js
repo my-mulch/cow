@@ -33,28 +33,33 @@ export default class ParmesanGraphicsEngine {
         this.context.useProgram(this.program)
     }
 
-    plot({ vertices, colors }) {
+    plot({ vertices, colors, sizes }) {
         const positionBuffer = ParmesanGraphicsBufferManager.createBuffer({
             context: this.context,
-            feed: vertices,
-            ntype: this.context.UNSIGNED_BYTE
+            array: vertices,
         })
 
         this.attributes.a_Position(positionBuffer)
 
         const colorBuffer = ParmesanGraphicsBufferManager.createBuffer({
             context: this.context,
-            feed: colors,
-            ntype: this.context.UNSIGNED_BYTE
+            array: colors,
         })
 
         this.attributes.a_Color(colorBuffer)
+
+        const sizeBuffer = ParmesanGraphicsBufferManager.createBuffer({
+            context: this.context,
+            array: sizes
+        })
+
+        this.attributes.a_PointSize(sizeBuffer)
 
         // calculate the view matrix and projection matrix
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
             to: [[0, 0, 0]],
             up: [[0, 1, 0]],
-            from: [[0.3], [0.2], [0.1]],
+            from: [[0.1], [0.2], [-0.1]],
         })
 
         this.uniforms.u_ViewMatrix(viewMatrix)
