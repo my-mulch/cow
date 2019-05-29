@@ -33,53 +33,37 @@ export default class ParmesanGraphicsEngine {
         this.context.useProgram(this.program)
     }
 
-    plot() {
-        var verticesColors = new Float32Array([
-            0, 0, 0, 1, 0, 0
-        ])
-        const n = 1
+    plot({ vertices, colors }) {
+        const positionBuffer = ParmesanGraphicsBufferManager.createBuffer({
+            context: this.context,
+            feed: vertices,
+            ntype: this.context.UNSIGNED_BYTE
+        })
 
-        // Create a buffer object
-        var vertexColorbuffer = this.context.createBuffer();
+        this.attributes.a_Position(positionBuffer)
 
-        // Write the vertex coordinates and color to the buffer object
-        this.context.bindBuffer(this.context.ARRAY_BUFFER, vertexColorbuffer);
-        this.context.bufferData(this.context.ARRAY_BUFFER, verticesColors, this.context.STATIC_DRAW);
+        const colorBuffer = ParmesanGraphicsBufferManager.createBuffer({
+            context: this.context,
+            feed: colors,
+            ntype: this.context.UNSIGNED_BYTE
+        })
 
-        var FSIZE = verticesColors.BYTES_PER_ELEMENT;
-        // Assign the buffer object to a_Position and enable the assignment
-        var a_Position = this.context.getAttribLocation(this.program, 'a_Position');
-
-        this.context.vertexAttribPointer(a_Position, 3, this.context.FLOAT, false, FSIZE * 6, 0);
-        this.context.enableVertexAttribArray(a_Position);
-
-        // Assign the buffer object to a_Color and enable the assignment
-        var a_Color = this.context.getAttribLocation(this.program, 'a_Color');
-
-        this.context.vertexAttribPointer(a_Color, 3, this.context.FLOAT, false, FSIZE * 6, FSIZE * 3);
-        this.context.enableVertexAttribArray(a_Color);
-
-        // Unbind the buffer object
-        this.context.bindBuffer(this.context.ARRAY_BUFFER, null);
-
-
-        var u_ViewMatrix = this.context.getUniformLocation(this.program, 'u_ViewMatrix');
+        this.attributes.a_Color(colorBuffer)
 
         // calculate the view matrix and projection matrix
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
             to: [[0, 0, 0]],
             up: [[0, 1, 0]],
-            from: [[0.2], [0], [0.1]],
+            from: [[0.3], [0.2], [0.1]],
         })
 
-        // Pass the view and projection matrix to u_ViewMatrix, u_ProjMatrix
-        this.context.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.data);
+        this.uniforms.u_ViewMatrix(viewMatrix)
 
         // Clear <canvas>
-        this.context.clear(this.context.COLOR_BUFFER_BIT);
+        this.context.clear(this.context.COLOR_BUFFER_BIT)
 
         // Draw the triangles
-        this.context.drawArrays(this.context.POINTS, 0, n);
+        this.context.drawArrays(this.context.POINTS, 0, positionBuffer.count)
     }
 
 }

@@ -1,6 +1,6 @@
 import bb from 'big-box'
 
-export default class GraphicsCameraManager {
+export default class ParmesanGraphicsCameraManager {
     static lookAt({ to, from, up }) {
         to = bb.array({ with: to })
         up = bb.array({ with: up })
