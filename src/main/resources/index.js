@@ -4,7 +4,7 @@ export default {
     videoHeight: 100,
     videoWidth: 100,
     
-    imageHeight: 100,
-    imageWidth: 100,
+    imageHeight: 400,
+    imageWidth: 300,
     
 }

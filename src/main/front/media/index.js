@@ -3,14 +3,12 @@ import ParmesanVideo from './types/video'
 
 import ParmesanFileDrop from './devices/filedrop'
 
-export default class ParmesanMedia {
+export default class ParmesanMedia extends Array {
     constructor(targets) {
-        this.media = []
-
-        this.on = this.on.bind(this)
+        super()
 
         this.filedrop = new ParmesanFileDrop({
-            export: this.on,
+            export: this.on.bind(this),
             target: targets.filedrop,
         })
     }
@@ -18,10 +16,10 @@ export default class ParmesanMedia {
     on(data) {
         switch (data.type) {
             case 'image/jpeg':
-                return this.media.push(new ParmesanImage(data))
+                return this.push(new ParmesanImage(data))
 
             case 'video/quicktime':
-                return this.media.push(new ParmesanVideo(data))
+                return this.push(new ParmesanVideo(data))
         }
     }
 }

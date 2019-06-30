@@ -46,9 +46,9 @@ export default class ParmesanGraphicsEngine {
         this.feed({ array: sizes, attribute: this.attributes.a_PointSize })
 
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
-            to: [[0, 0, 0]],
-            up: [[0, 1, 0]],
-            from: [[10.5], [2.4], [2.4]],
+            to: [[0], [0], [0]],
+            up: [[0], [1], [0]],
+            from: [[4], [2], [-1.5]],
         })
 
         const projMatrix = ParmesanGraphicsCameraManager.project({
