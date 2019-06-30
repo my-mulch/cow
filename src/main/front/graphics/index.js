@@ -8,7 +8,6 @@ import ParmesanGraphicsSource from './source/project'
 
 export default class ParmesanGraphicsEngine {
     constructor(options) {
-        this.buffers = []
         this.target = options.target
         this.context = this.target.getContext('webgl')
 
@@ -35,12 +34,10 @@ export default class ParmesanGraphicsEngine {
     }
 
     feed({ array, attribute }) {
-        this.buffers.unshift(ParmesanGraphicsBufferManager.createBuffer({
+        attribute.call(null, ParmesanGraphicsBufferManager.createBuffer({
             context: this.context,
-            array,
+            array: array,
         }))
-
-        attribute.call(null, this.buffers[0])
     }
 
     plot({ vertices, colors, sizes }) {
@@ -51,10 +48,18 @@ export default class ParmesanGraphicsEngine {
         const viewMatrix = ParmesanGraphicsCameraManager.lookAt({
             to: [[0, 0, 0]],
             up: [[0, 1, 0]],
-            from: [[0.2], [0.2], [0.2]],
+            from: [[10.5], [2.4], [2.4]],
+        })
+
+        const projMatrix = ParmesanGraphicsCameraManager.project({
+            angle: 30,
+            aspect: this.target.width / this.target.height,
+            near: 0.1,
+            far: 100
         })
 
         this.uniforms.u_ViewMatrix(viewMatrix)
+        this.uniforms.u_ProjMatrix(projMatrix)
 
         this.context.drawArrays(this.context.POINTS, 0, vertices.shape[0])
     }
