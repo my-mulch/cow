@@ -1,19 +1,15 @@
 import bb from 'big-box'
 
 export default class ParmesanGraphicsCameraManager {
-    static lookAt({ to, from, up }) {
-        to = bb.array({ with: to })
-        up = bb.array({ with: up })
-        from = bb.array({ with: from })
-
+    static lookAt({ graphics: { to, up, from } }) {
         const viewMatrix = bb.eye({ shape: [4, 4] })
         const transMatrix = bb.eye({ shape: [4, 4] })
 
         const f = from.subtract({ with: to })
-        const sinOfViewingAngle = up.cross({ with: f })
+        const s = up.cross({ with: f })
 
         const uf = f.divide({ with: f.norm() })
-        const us = sinOfViewingAngle.divide({ with: sinOfViewingAngle.norm() })
+        const us = s.divide({ with: s.norm() })
         const uu = uf.cross({ with: us })
 
         viewMatrix.slice({ with: [':3', 0] }).set({ with: us })
@@ -27,7 +23,7 @@ export default class ParmesanGraphicsCameraManager {
         return transMatrix.dot({ with: viewMatrix })
     }
 
-    static project({ angle, aspect, near, far }) {
+    static project({ graphics: { aspect, angle, near, far } }) {
         const viewingAngle = Math.PI * angle / 180 / 2
         const reciprocalDepth = 1 / (far - near)
 

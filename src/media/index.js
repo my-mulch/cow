@@ -1,15 +1,14 @@
 import ParmesanImage from './types/image'
 import ParmesanVideo from './types/video'
 
-import ParmesanFileDrop from './devices/filedrop'
+import ParmesanFileDrop from './sources/filedrop'
 
 export default class ParmesanMedia extends Array {
-    constructor(targets) {
+    constructor() {
         super()
 
         this.filedrop = new ParmesanFileDrop({
-            export: this.on.bind(this),
-            target: targets.filedrop,
+            export: this.on.bind(this)
         })
     }
 

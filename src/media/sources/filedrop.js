@@ -1,14 +1,14 @@
 
 export default class ParmesanFileDrop {
     constructor(options) {
-        this.target = options.target
+        this.target = document.querySelector('canvas')
         this.export = options.export
 
         this.read = this.read.bind(this)
         this.ignore = this.ignore.bind(this)
 
-        this.target.addEventListener("drop", this.read, false)
-        this.target.addEventListener("dragover", this.ignore, false)
+        this.target.addEventListener('drop', this.read, false)
+        this.target.addEventListener('dragover', this.ignore, false)
     }
 
     ignore(event) {

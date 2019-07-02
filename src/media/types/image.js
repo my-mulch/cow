@@ -1,4 +1,4 @@
-import config from '../../../resources'
+import ParmesanConfiguration from '../../config'
 
 import ParmesanBlob from './blob'
 
@@ -7,9 +7,15 @@ export default class ParmesanImage extends ParmesanBlob {
         super(blob)
 
         createImageBitmap(blob).then(function (bitmap) {
+            const { imageWidth, imageHeight } = ParmesanConfiguration.media
+
             const canvas = document.createElement('canvas')
             const context = canvas.getContext('2d')
-            const region = [0, 0, config.imageWidth, config.imageHeight]
+            const region = [
+                0, 0,
+                imageWidth,
+                imageHeight
+            ]
 
             context.drawImage(bitmap, ...region)
             this.data = context.getImageData(...region).data

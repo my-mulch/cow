@@ -1,4 +1,4 @@
-import config from '../../../resources'
+import ParmesanConfiguration from '../../config'
 
 import ParmesanBlob from './blob'
 
@@ -6,9 +6,11 @@ export default class ParmesanVideo extends ParmesanBlob {
     constructor(blob) {
         super(blob)
 
+        const { frameRate, videoWidth, videoHeight } = ParmesanConfiguration.media
+
         let time = 0
         let frame = 0
-        const delta = 1 / config.frameRate
+        const delta = 1 / frameRate
 
         const video = document.createElement('video')
         const canvas = document.createElement('canvas')
@@ -19,7 +21,11 @@ export default class ParmesanVideo extends ParmesanBlob {
         video.onloadeddata = function () {
             this.frameChannels = 4
             this.frameCount = Math.ceil(video.duration / delta)
-            this.frameDimensions = [0, 0, config.videoWidth, config.videoHeight]
+            this.frameDimensions = [
+                0, 0,
+                videoWidth,
+                videoHeight
+            ]
 
             this.data = new Uint8ClampedArray(
                 this.frameCount *
