@@ -10,5 +10,5 @@ window.colors = vertices
 app.graphics.plot({
     vertices,
     colors,
-    sizes: bb.ones({ shape: [20000, 1] }).multiply({ with: 3 })
+    sizes: bb.ones({ shape: [20000, 1] }).multiply({ with: 1 })
 })
