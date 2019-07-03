@@ -20,7 +20,7 @@ export default {
         aspect: 1,
         near: 0.1,
         far: 100,
-        zoomDelta: 0.01,
+        zoomDelta: 0.1,
         activeVertices: 0,
 
         bindings: {
