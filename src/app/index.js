@@ -2,55 +2,61 @@ import ParmesanMediaEngine from '../media'
 import ParmesanGraphicsEngine from '../graphics'
 import ParmesanConfiguration from '../config'
 
+import ParmesanMouse from '../io/mouse'
+import ParmesanKeyboard from '../io/keyboard'
+
 class ParmesanApplication {
     constructor() {
+        this.resize = this.resize.bind(this)
+        
         this.keyup = this.keyup.bind(this)
         this.keydown = this.keydown.bind(this)
-        this.resize = this.resize.bind(this)
-
-        this.state = {
-            graphics: {
-                to: ParmesanConfiguration.graphics.to,
-                up: ParmesanConfiguration.graphics.up,
-                from: ParmesanConfiguration.graphics.from,
-
-                far: ParmesanConfiguration.graphics.far,
-                near: ParmesanConfiguration.graphics.near,
-                angle: ParmesanConfiguration.graphics.angle,
-                aspect: ParmesanConfiguration.graphics.aspect,
-                zoomDelta: ParmesanConfiguration.graphics.zoomDelta,
-            },
-
-            mouse: { x: 0, y: 0, pressed: false },
-
-            keyboard: {
-                pressed: new Set(),
-                bindings: ParmesanConfiguration.graphics.bindings
-            }
-        }
+        
+        this.mouseup = this.mouseup.bind(this)
+        this.mousedown = this.mousedown.bind(this)
+        this.mousemove = this.mousemove.bind(this)
 
         this.resize() /** Must resize before the graphics engine inits */
 
-        this.media = new ParmesanMediaEngine({})
-        this.graphics = new ParmesanGraphicsEngine({ state: this.state })
+        this.mouse = new ParmesanMouse()
+        this.keyboard = new ParmesanKeyboard()
+
+        this.media = new ParmesanMediaEngine()
+        this.graphics = new ParmesanGraphicsEngine()
 
         window.addEventListener('resize', this.resize)
         window.addEventListener('keyup', this.keyup)
         window.addEventListener('keydown', this.keydown)
+        window.addEventListener('mouseup', this.mouseup)
+        window.addEventListener('mousedown', this.mousedown)
+        window.addEventListener('mousemove', this.mousemove)
     }
 
-    keyup() { this.state.keyboard.pressed.clear() }
+    mouseup() { this.mouse.isPressed = false }
+
+    mousedown(event) {
+        this.mouse.isPressed = true
+
+        this.mouse.position.x = event.clientX
+        this.mouse.position.y = event.clientY
+    }
+
+    mousemove(event) {
+        this.mouse.position.x = event.clientX
+        this.mouse.position.y = event.clientY
+    }
+
+    keyup() { this.keyboard.keys.clear() }
 
     keydown(event) {
-        this.state.keyboard.pressed.add(event.key)
+        this.keyboard.keys.add(event.key)
 
-        const strokes = Array.from(this.state.keyboard.pressed).sort().join('|')
-
-        const binding = this.state.keyboard.bindings[strokes]
+        const strokes = Array.from(this.keyboard.keys).sort().join('|')
+        const binding = this.keyboard.bindings[strokes]
 
         if (binding) {
             event.preventDefault()
-            
+
             const command = this.graphics[binding.name]
             command(...binding.args)
         }
@@ -62,7 +68,10 @@ class ParmesanApplication {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
 
-        this.state.graphics.aspect = canvas.width / canvas.height
+        ParmesanConfiguration
+            .graphics
+            .projection
+            .ASPECT_RATIO = canvas.width / canvas.height
     }
 }
 

@@ -1,14 +1,13 @@
-import ParmesanGraphicsBufferManager from './managers/buffer'
-import ParmesanGraphicsCameraManager from './managers/camera'
-import ParmesanGraphicsProgramManager from './managers/program'
-import ParmesanGraphicsUniformManager from './managers/uniform'
-import ParmesanGraphicsAttributeManager from './managers/attribute'
+import ParmesanBufferManager from './managers/buffer'
+import ParmesanCameraManager from './managers/camera'
+import ParmesanProgramManager from './managers/program'
+import ParmesanUniformManager from './managers/uniform'
+import ParmesanAttributeManager from './managers/attribute'
 
-import ParmesanGraphicsSource from './source/project'
+import ParmesanConfiguration from '../config'
 
 export default class ParmesanGraphicsEngine {
-    constructor(options) {
-        this.state = options.state
+    constructor() {
         this.target = document.querySelector('canvas')
         this.context = this.target.getContext('webgl')
 
@@ -18,20 +17,20 @@ export default class ParmesanGraphicsEngine {
         this.buffer = this.buffer.bind(this)
 
         /** Create program */
-        this.program = ParmesanGraphicsProgramManager.createProgram({
+        this.program = ParmesanProgramManager.createProgram({
             context: this.context,
-            vertex: ParmesanGraphicsSource.vertex,
-            fragment: ParmesanGraphicsSource.fragment
+            vertex: ParmesanConfiguration.graphics.source.VERTEX,
+            fragment: ParmesanConfiguration.graphics.source.FRAGMENT
         })
 
         /** Create attributes */
-        this.attributes = ParmesanGraphicsAttributeManager.createAttributes({
+        this.attributes = ParmesanAttributeManager.createAttributes({
             context: this.context,
             program: this.program
         })
 
         /** Create uniforms */
-        this.uniforms = ParmesanGraphicsUniformManager.createUniforms({
+        this.uniforms = ParmesanUniformManager.createUniforms({
             context: this.context,
             program: this.program
         })
@@ -41,30 +40,41 @@ export default class ParmesanGraphicsEngine {
 
     draw() {
         this.context.clear(this.context.COLOR_BUFFER_BIT)
-        this.context.drawArrays(this.context.POINTS, 0, this.state.graphics.activeVertices)
+
+        this.context.drawArrays(
+            this.context.POINTS,
+            0,
+            ParmesanConfiguration.graphics.render.ACTIVE_VERTICES)
     }
 
     buffer({ array }) {
-        return ParmesanGraphicsBufferManager.createBuffer({
-            context: this.context,
-            array: array,
-        })
+        return ParmesanBufferManager.createBuffer({ context: this.context, array })
     }
 
-    zoom(out) {
-        const action = out ? 'add' : 'subtract'
+    zoom(zoomOut) {
+        const { location, render, projection } = ParmesanConfiguration.graphics
 
-        const delta = this.state.graphics
-            .from[action]({ with: this.state.graphics.to })
-            .multiply({ with: this.state.graphics.zoomDelta })
+        /** 
+         * We select the instance method 'add' or 'subtract' from the FROM location point
+         * depending whether we'd like to zoom in or out
+         */
 
-        this.state.graphics.from[action]({
-            with: delta,
-            result: this.state.graphics.from
+        const action = location.FROM[zoomOut ? 'add' : 'subtract'].bind(location.FROM)
+
+        /** 
+         * We invoke the instance method 'add' or 'subtract' of the FROM location point
+         * twice. The inner call is to create a vector that points in the direction
+         * of zoom but is scaled by a delta factor. Once we have this vector, we can
+         * apply it to our original FROM point to complete the zoom
+         */
+
+        action({
+            with: action({ with: location.TO }).multiply({ with: render.ZOOM_DELTA }),
+            result: location.FROM
         })
 
-        const viewMatrix = ParmesanGraphicsCameraManager.lookAt(this.state)
-        const projMatrix = ParmesanGraphicsCameraManager.project(this.state)
+        const viewMatrix = ParmesanCameraManager.lookAt(location)
+        const projMatrix = ParmesanCameraManager.project(projection)
 
         this.uniforms.u_ViewMatrix(viewMatrix)
         this.uniforms.u_ProjMatrix(projMatrix)
@@ -74,8 +84,10 @@ export default class ParmesanGraphicsEngine {
 
 
     plot({ vertices, colors, sizes }) {
-        const viewMatrix = ParmesanGraphicsCameraManager.lookAt(this.state)
-        const projMatrix = ParmesanGraphicsCameraManager.project(this.state)
+        const { location, projection } = ParmesanConfiguration.graphics
+
+        const viewMatrix = ParmesanCameraManager.lookAt(location)
+        const projMatrix = ParmesanCameraManager.project(projection)
 
         this.attributes.a_Color(this.buffer({ array: colors }))
         this.attributes.a_PointSize(this.buffer({ array: sizes }))
@@ -84,7 +96,7 @@ export default class ParmesanGraphicsEngine {
         this.uniforms.u_ViewMatrix(viewMatrix)
         this.uniforms.u_ProjMatrix(projMatrix)
 
-        this.state.graphics.activeVertices = vertices.shape[0]
+        ParmesanConfiguration.graphics.render.ACTIVE_VERTICES = vertices.shape[0]
 
         this.draw()
     }

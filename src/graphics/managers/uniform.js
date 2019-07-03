@@ -1,5 +1,5 @@
 
-export default class ParmesanGraphicsUniformManager {
+export default class ParmesanUniformManager {
     static createUniforms({ context, program }) {
         const uniforms = {}
 

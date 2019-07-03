@@ -6,11 +6,9 @@ export default class ParmesanVideo extends ParmesanBlob {
     constructor(blob) {
         super(blob)
 
-        const { frameRate, videoWidth, videoHeight } = ParmesanConfiguration.media
-
         let time = 0
         let frame = 0
-        const delta = 1 / frameRate
+        const delta = 1 / ParmesanConfiguration.media.FRAME_RATE
 
         const video = document.createElement('video')
         const canvas = document.createElement('canvas')
@@ -23,8 +21,8 @@ export default class ParmesanVideo extends ParmesanBlob {
             this.frameCount = Math.ceil(video.duration / delta)
             this.frameDimensions = [
                 0, 0,
-                videoWidth,
-                videoHeight
+                ParmesanConfiguration.media.VIDEO_WIDTH,
+                ParmesanConfiguration.media.VIDEO_HEIGHT
             ]
 
             this.data = new Uint8ClampedArray(

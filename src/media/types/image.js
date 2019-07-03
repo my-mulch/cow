@@ -7,14 +7,12 @@ export default class ParmesanImage extends ParmesanBlob {
         super(blob)
 
         createImageBitmap(blob).then(function (bitmap) {
-            const { imageWidth, imageHeight } = ParmesanConfiguration.media
-
             const canvas = document.createElement('canvas')
             const context = canvas.getContext('2d')
             const region = [
                 0, 0,
-                imageWidth,
-                imageHeight
+                ParmesanConfiguration.media.IMAGE_WIDTH,
+                ParmesanConfiguration.media.IMAGE_HEIGHT
             ]
 
             context.drawImage(bitmap, ...region)

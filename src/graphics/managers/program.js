@@ -1,5 +1,5 @@
 
-export default class ParmesanGraphicsProgramManager {
+export default class ParmesanProgramManager {
     static createShader({ context, type, source }) {
         const shader = context.createShader(type)
 

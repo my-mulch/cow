@@ -1,5 +1,5 @@
 
-export default class ParmesanGraphicsBufferManager {
+export default class ParmesanBufferManager {
     static createBuffer({ context, array }) {
         const buffer = context.createBuffer()
 

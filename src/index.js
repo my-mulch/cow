@@ -4,8 +4,8 @@ import app from './app'
 window.bb = bb
 window.app = app
 
-window.vertices = bb.randint({ low: 0, high: 256, shape: [100000, 3], type: Uint8ClampedArray })
+window.vertices = bb.randint({ low: 0, high: 256, shape: [150000, 3], type: Uint8ClampedArray })
 window.colors = vertices
-window.sizes = bb.ones({ shape: [100000, 1] }).multiply({ with: 3 })
+window.sizes = bb.ones({ shape: [150000, 1] }).multiply({ with: 1 })
 
 app.graphics.plot({ vertices, colors, sizes })
