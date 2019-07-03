@@ -15,6 +15,11 @@ export default {
         BINDINGS: {
             'o': { name: 'zoom', args: [true] },
             'i': { name: 'zoom', args: [false] },
+
+            'ArrowUp': { name: 'pan', args: [0] },
+            'ArrowDown': { name: 'pan', args: [1] },
+            'ArrowLeft': { name: 'pan', args: [2] },
+            'ArrowRight': { name: 'pan', args: [3] },
         },
 
         source: {
@@ -40,9 +45,9 @@ export default {
         },
 
         location: {
-            TO: bb.array({ with: [[0], [0], [0]] }),
+            TO: bb.array({ with: [[1], [1], [1]] }),
             UP: bb.array({ with: [[0], [1], [0]] }),
-            FROM: bb.array({ with: [[4], [2.75], [-2]] }),
+            FROM: bb.array({ with: [[-3], [-2], [1]] }),
         },
 
         projection: {
@@ -53,7 +58,15 @@ export default {
         },
 
         render: {
+            directions: {
+                UP: 0,
+                DOWN: 1,
+                LEFT: 2,
+                RIGHT: 3
+            },
+
             ZOOM_DELTA: 0.1,
+            PAN_DELTA: Math.PI / 64,
             ACTIVE_VERTICES: 0,
         },
     }

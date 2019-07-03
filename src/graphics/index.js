@@ -11,6 +11,7 @@ export default class ParmesanGraphicsEngine {
         this.target = document.querySelector('canvas')
         this.context = this.target.getContext('webgl')
 
+        this.pan = this.pan.bind(this)
         this.draw = this.draw.bind(this)
         this.zoom = this.zoom.bind(this)
         this.plot = this.plot.bind(this)
@@ -47,8 +48,76 @@ export default class ParmesanGraphicsEngine {
             ParmesanConfiguration.graphics.render.ACTIVE_VERTICES)
     }
 
-    buffer({ array }) {
-        return ParmesanBufferManager.createBuffer({ context: this.context, array })
+    buffer({ array }) { return ParmesanBufferManager.createBuffer({ context: this.context, array }) }
+
+    pan(direction) {
+        const { location, render, projection } = ParmesanConfiguration.graphics
+
+        switch (direction) {
+            case render.directions.UP:
+                bb.array({
+                    with: [
+                        [Math.cos(render.PAN_DELTA), 0, Math.sin(render.PAN_DELTA)],
+                        [0, 1, 0],
+                        [-Math.sin(render.PAN_DELTA), 0, Math.cos(render.PAN_DELTA)]
+                    ]
+                }).dot({
+                    with: location.TO.subtract({ with: location.FROM }),
+                    result: location.FROM
+                })
+
+                break
+
+            case render.directions.DOWN:
+                bb.array({
+                    with: [
+                        [Math.cos(-render.PAN_DELTA), 0, Math.sin(-render.PAN_DELTA)],
+                        [0, 1, 0],
+                        [-Math.sin(-render.PAN_DELTA), 0, Math.cos(-render.PAN_DELTA)]
+                    ]
+                }).dot({
+                    with: location.TO.subtract({ with: location.FROM }),
+                    result: location.FROM
+                })
+
+                break
+
+            case render.directions.LEFT:
+                bb.array({
+                    with: [
+                        [1, 0, 0],
+                        [0, Math.cos(render.PAN_DELTA), -Math.sin(render.PAN_DELTA)],
+                        [0, Math.sin(render.PAN_DELTA), Math.cos(render.PAN_DELTA)]
+                    ]
+                }).dot({
+                    with: location.TO.subtract({ with: location.FROM }),
+                    result: location.FROM
+                })
+
+                break
+
+            case render.directions.RIGHT:
+                bb.array({
+                    with: [
+                        [1, 0, 0],
+                        [0, Math.cos(-render.PAN_DELTA), -Math.sin(-render.PAN_DELTA)],
+                        [0, Math.sin(-render.PAN_DELTA), Math.cos(-render.PAN_DELTA)]
+                    ]
+                }).dot({
+                    with: location.TO.subtract({ with: location.FROM }),
+                    result: location.FROM
+                })
+
+                break
+        }
+
+        const viewMatrix = ParmesanCameraManager.lookAt(location)
+        const projMatrix = ParmesanCameraManager.project(projection)
+
+        this.uniforms.u_ViewMatrix(viewMatrix)
+        this.uniforms.u_ProjMatrix(projMatrix)
+
+        this.draw()
     }
 
     zoom(zoomOut) {
