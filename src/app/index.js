@@ -1,4 +1,3 @@
-import ParmesanMediaEngine from '../media'
 import ParmesanGraphicsEngine from '../graphics'
 import ParmesanConfiguration from '../config'
 
@@ -20,8 +19,6 @@ class ParmesanApplication {
 
         this.mouse = new ParmesanMouse()
         this.keyboard = new ParmesanKeyboard()
-
-        this.media = new ParmesanMediaEngine()
         this.graphics = new ParmesanGraphicsEngine()
 
         window.addEventListener('resize', this.resize)

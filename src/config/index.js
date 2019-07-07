@@ -1,16 +1,6 @@
 import bb from 'big-box'
 
 export default {
-    media: {
-        FRAME_RATE: 30,
-
-        VIDEO_HEIGHT: 100,
-        VIDEO_WIDTH: 100,
-
-        IMAGE_HEIGHT: 400,
-        IMAGE_WIDTH: 300,
-    },
-
     graphics: {
         BINDINGS: {
             'o': { name: 'zoom', args: [true] },
@@ -45,9 +35,9 @@ export default {
         },
 
         location: {
-            TO: bb.array({ with: [[1], [1], [1]] }),
+            TO: bb.array({ with: [[0], [0], [0]] }),
             UP: bb.array({ with: [[0], [1], [0]] }),
-            FROM: bb.array({ with: [[-3], [-2], [1]] }),
+            FROM: bb.array({ with: [[2.2], [2.2], [2.2]] }),
         },
 
         projection: {
