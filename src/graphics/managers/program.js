@@ -1,16 +1,35 @@
+import config from '../../config'
 
-export default class ParmesanProgramManager {
-    static createShader({ context, type, source }) {
-        const shader = context.createShader(type)
+export default class ProgramManager {
+    constructor(options) {
+        this.config = config
+        this.context = options.context
 
-        context.shaderSource(shader, source)
-        context.compileShader(shader)
+        this.vertexShader = this.createShader({
+            type: this.context.VERTEX_SHADER,
+            source: config.VERTEX_SOURCE
+        })
 
-        const didCompile = context.getShaderParameter(shader, context.COMPILE_STATUS)
+        this.fragmentShader = this.createShader({
+            type: this.context.FRAGMENT_SHADER,
+            source: config.FRAGMENT_SOURCE
+        })
+
+        this.program = this.createProgram()
+
+    }
+
+    createShader({ type, source }) {
+        const shader = this.context.createShader(type)
+
+        this.context.shaderSource(shader, source)
+        this.context.compileShader(shader)
+
+        const didCompile = this.context.getShaderParameter(shader, this.context.COMPILE_STATUS)
 
         if (!didCompile) {
-            console.error(`Error with compile: ${context.getShaderInfoLog(shader)}`)
-            context.deleteShader(shader)
+            console.error(`Error with compile: ${this.context.getShaderInfoLog(shader)}`)
+            this.context.deleteShader(shader)
 
             return null
         }
@@ -18,28 +37,19 @@ export default class ParmesanProgramManager {
         return shader
     }
 
-    static createProgram({ context, vertex, fragment }) {
-        const program = context.createProgram()
+    createProgram() {
+        const program = this.context.createProgram()
 
-        context.attachShader(program, this.createShader({
-            context,
-            type: context.VERTEX_SHADER,
-            source: vertex
-        }))
+        this.context.attachShader(program, this.vertexShader)
+        this.context.attachShader(program, this.fragmentShader)
 
-        context.attachShader(program, this.createShader({
-            context,
-            type: context.FRAGMENT_SHADER,
-            source: fragment
-        }))
+        this.context.linkProgram(program)
 
-        context.linkProgram(program)
-
-        const didLink = context.getProgramParameter(program, context.LINK_STATUS)
+        const didLink = this.context.getProgramParameter(program, this.context.LINK_STATUS)
 
         if (!didLink) {
-            console.error(`Error with link: ${context.getProgramInfoLog(program)}`)
-            context.deleteProgram(program)
+            console.error(`Error with link: ${this.context.getProgramInfoLog(program)}`)
+            this.context.deleteProgram(program)
 
             return null
         }
