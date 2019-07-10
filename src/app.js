@@ -10,14 +10,22 @@ class Application {
         this.config = config
 
         this.hud = document.createElement('canvas')
-        this.hud.context = this.hud.getContext('2d')
-        this.hud.style.zIndex = 1
-        this.hud.style.position = 'absolute'
+        this.hud.style.zIndex = this.config.HUD_Z_INDEX
+        this.hud.style.position = this.config.HUD_POSITION_STYLE
 
         this.canvas = document.createElement('canvas')
-        this.canvas.context = this.canvas.getContext('webgl')
-        this.canvas.style.zIndex = 0
-        this.canvas.style.position = 'absolute'
+        this.canvas.style.zIndex = this.config.CANVAS_Z_INDEX
+        this.canvas.style.position = this.config.CANVAS_POSITION_STYLE
+
+        this.resize() /** Must resize before grabbing context */
+
+        this.canvas.context = this.canvas.getContext(this.config.CANVAS_CONTEXT)
+        this.hud.context = this.hud.getContext(this.config.HUD_CONTEXT)
+
+        this.hud.context.font = this.config.HUD_FONT
+        this.hud.context.fillStyle = this.config.HUD_COLOR
+        this.hud.context.fillText(`loc | r: ${Math.round(this.config.FROM_VECTOR.data[0] * 255)} g: ${Math.round(this.config.FROM_VECTOR.data[1] * 255)}, b: ${Math.round(this.config.FROM_VECTOR.data[2] * 255)}`, 10, 70)
+
 
         document.body.prepend(this.hud)
         document.body.prepend(this.canvas)
@@ -28,8 +36,6 @@ class Application {
         this.mouseup = this.mouseup.bind(this)
         this.mousedown = this.mousedown.bind(this)
         this.mousemove = this.mousemove.bind(this)
-
-        this.resize() /** Must resize before the graphics engine inits */
 
         this.mouse = new Mouse({ location: { x: 0, y: 0 } })
         this.keyboard = new Keyboard({ bindings: this.config.BINDINGS })
@@ -48,13 +54,25 @@ class Application {
     mousemove(event) { this.mouse.mousemove(event) }
 
     keyup() { this.keyboard.keyup() }
-    keydown(event) { this.keyboard.keydown(event) }
+    keydown(event) {
+        this.keyboard.keydown(event)
+
+        const strokes = Array.from(this.keyboard.keys).sort().join('|')
+        const binding = this.keyboard.bindings[strokes]
+
+        if (binding) {
+            event.preventDefault()
+
+            const command = this.graphics[binding.name]
+            command(...binding.args)
+        }
+    }
 
     resize() {
         this.canvas.width = window.innerWidth
         this.canvas.height = window.innerHeight
 
-        this.hud.width = window.innerWidth * 0.2
+        this.hud.width = window.innerWidth * 0.5
         this.hud.height = window.innerHeight * 0.2
 
         this.config.ASPECT_RATIO = this.canvas.width / this.canvas.height

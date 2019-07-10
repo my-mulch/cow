@@ -14,107 +14,56 @@ export default class GraphicsEngine {
         this.config = config
 
         this.pan = this.pan.bind(this)
-        this.draw = this.draw.bind(this)
         this.zoom = this.zoom.bind(this)
         this.plot = this.plot.bind(this)
-        this.buffer = this.buffer.bind(this)
+        this.render = this.render.bind(this)
 
-        this.programManager = new ProgramManager({ context: this.context })
-        
+        this.cameraManager = new CameraManager({})
+        this.bufferManager = new BufferManager({ context: this.canvas.context })
+        this.programManager = new ProgramManager({ context: this.canvas.context })
+        this.uniformManager = new UniformManager({ context: this.canvas.context, program: this.programManager.program })
+        this.attributeManager = new AttributeManager({ context: this.canvas.context, program: this.programManager.program })
 
-        /** Create program */
-        this.program = ProgramManager.createProgram({
-            context: this.context,
-            vertex: this.config.VERTEX_SOURCE,
-            fragment: this.config.FRAGMENT_SOURCE
-        })
-
-        /** Create attributes */
-        this.attributes = AttributeManager.createAttributes({
-            context: this.context,
-            program: this.program
-        })
-
-        /** Create uniforms */
-        this.uniforms = UniformManager.createUniforms({
-            context: this.context,
-            program: this.program
-        })
-
-        this.context.useProgram(this.program)
+        this.canvas.context.useProgram(this.programManager.program)
     }
 
     plot({ vertices, colors, sizes }) {
-        this.attributes.a_Color(BufferManager.createBuffer({
-            context: this.context, array: colors
-        }))
-
-        this.attributes.a_PointSize(BufferManager.createBuffer({
-            context: this.context, array: sizes
-        }))
-
-        this.attributes.a_Position(BufferManager.createBuffer({
-            context: this.context, array: vertices
-        }))
+        this.attributeManager.attributes.a_Color(this.bufferManager.createBuffer({ array: colors }))
+        this.attributeManager.attributes.a_PointSize(this.bufferManager.createBuffer({ array: sizes }))
+        this.attributeManager.attributes.a_Position(this.bufferManager.createBuffer({ array: vertices }))
 
         this.config.ACTIVE_VERTICES = vertices.shape[0]
 
-        this.draw()
+        this.render()
     }
 
-    draw() {
-        const viewMatrix = CameraManager.lookAt(this.config)
-        const projMatrix = CameraManager.project(this.config)
+    render() {
+        const viewMatrix = this.cameraManager.lookAt()
+        const projMatrix = this.cameraManager.project()
 
-        this.uniforms.u_ViewMatrix(viewMatrix)
-        this.uniforms.u_ProjMatrix(projMatrix)
+        this.uniformManager.uniforms.u_ViewMatrix(viewMatrix)
+        this.uniformManager.uniforms.u_ProjMatrix(projMatrix)
 
-        this.context.clear(this.context.COLOR_BUFFER_BIT)
-        this.context.drawArrays(this.context.POINTS, 0, this.config.ACTIVE_VERTICES)
+        this.canvas.context.clear(this.canvas.context.COLOR_BUFFER_BIT)
+        this.canvas.context.drawArrays(this.canvas.context.POINTS, 0, this.config.ACTIVE_VERTICES)
     }
 
     pan(direction) {
-        const { location, render } = Configuration.graphics
+        this.cameraManager.pan(direction)
 
-        const s = Math.sin(render.PAN_DELTA)
-        const c = Math.cos(render.PAN_DELTA)
+        this.hud.context.clearRect(0, 0, this.hud.width, this.hud.height)
+        this.hud.context.fillText(`loc | r: ${Math.round(this.config.FROM_VECTOR.data[0] * 255)} g: ${Math.round(this.config.FROM_VECTOR.data[1] * 255)}, b: ${Math.round(this.config.FROM_VECTOR.data[2] * 255)}`, 10, 70)
 
-        const viewMatrix = CameraManager.lookAt(location)
-        const viewMatrixInv = viewMatrix.inv()
 
-        const upRot = bb.array({ with: [[1, 0, 0, 0], [0, c, -s, 0], [0, s, c, 0], [0, 0, 0, 1]] })
-        const downRot = bb.array({ with: [[1, 0, 0, 0], [0, c, s, 0], [0, -s, c, 0], [0, 0, 0, 1]] })
-        const leftRot = bb.array({ with: [[c, 0, s, 0], [0, 1, 0, 0], [-s, 0, c, 0], [0, 0, 0, 1]] })
-        const rightRot = bb.array({ with: [[c, 0, -s, 0], [0, 1, 0, 0], [s, 0, c, 0], [0, 0, 0, 1]] })
-
-        function rotate(orientation) {
-            viewMatrixInv.T()
-                .dot({ with: orientation })
-                .dot({ with: viewMatrix.T() })
-                .dot({ with: location.TO, result: location.TO })
-        }
-
-        switch (direction) {
-            case render.directions.UP: rotate(upRot); break
-            case render.directions.DOWN: rotate(downRot); break
-            case render.directions.LEFT: rotate(leftRot); break
-            case render.directions.RIGHT: rotate(rightRot); break
-        }
-
-        this.draw()
+        this.render()
     }
-
     zoom(zoomOut) {
-        const { location, render } = Configuration.graphics
+        this.cameraManager.zoom(zoomOut)
 
-        const delta = location.FROM
-            .subtract({ with: location.TO })
-            .multiply({ with: render.ZOOM_DELTA })
+        this.hud.context.clearRect(0, 0, this.hud.width, this.hud.height)
+        this.hud.context.fillText(`loc | r: ${Math.round(this.config.FROM_VECTOR.data[0] * 255)} g: ${Math.round(this.config.FROM_VECTOR.data[1] * 255)}, b: ${Math.round(this.config.FROM_VECTOR.data[2] * 255)}`, 10, 70)
 
-        location.TO[zoomOut ? 'add' : 'subtract']({ with: delta, result: location.TO })
-        location.FROM[zoomOut ? 'add' : 'subtract']({ with: delta, result: location.FROM })
-
-        this.draw()
+        this.render()
     }
 
 }

@@ -1,32 +1,33 @@
 
-export default class ParmesanAttributeManager {
-    static createAttributes({ context, program }) {
+export default class AttributeManager {
+    constructor(options) {
+        this.program = options.program
+        this.context = options.context
+
+        this.attributes = this.createAttributes()
+    }
+
+    createAttributes() {
         const attributes = {}
 
-        const attributeCount = context.getProgramParameter(
-            program,
-            context.ACTIVE_ATTRIBUTES
-        )
+        const attributeCount = this.context.getProgramParameter(this.program, this.context.ACTIVE_ATTRIBUTES)
 
         for (var i = 0; i < attributeCount; i++) {
-            const attributeInfo = context.getActiveAttrib(program, i)
-            const attributeLocation = context.getAttribLocation(program, attributeInfo.name)
+            const attributeInfo = this.context.getActiveAttrib(this.program, i)
+            const attributeLocation = this.context.getAttribLocation(this.program, attributeInfo.name)
 
-            attributes[attributeInfo.name] = this.createAttribute({
-                context,
-                location: attributeLocation,
-            })
+            attributes[attributeInfo.name] = this.createAttribute({ location: attributeLocation })
         }
 
         return attributes
     }
 
-    static createAttribute({ context, location }) {
-        return function (data) {
-            context.bindBuffer(context.ARRAY_BUFFER, data.buffer)
-            context.enableVertexAttribArray(location)
+    createAttribute({ location }) {
+        return (function (data) {
+            this.context.bindBuffer(this.context.ARRAY_BUFFER, data.buffer)
+            this.context.enableVertexAttribArray(location)
 
-            context.vertexAttribPointer(
+            this.context.vertexAttribPointer(
                 location,
                 data.size,
                 data.type,
@@ -34,9 +35,8 @@ export default class ParmesanAttributeManager {
                 data.stride,
                 data.offset
             )
-        }
+        }).bind(this)
     }
-
 }
 
 

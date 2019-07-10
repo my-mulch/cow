@@ -16,7 +16,6 @@ export default class ProgramManager {
         })
 
         this.program = this.createProgram()
-
     }
 
     createShader({ type, source }) {

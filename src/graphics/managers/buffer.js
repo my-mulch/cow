@@ -1,14 +1,21 @@
 
-export default class ParmesanBufferManager {
-    static createBuffer({ context, array }) {
-        const buffer = context.createBuffer()
+export default class BufferManager {
+    constructor(options) {
+        this.context = options.context
 
-        const numberType = this.mapType({ context, array })
-        const renderType = context.STATIC_DRAW
-        const bufferType = context.ARRAY_BUFFER
+        this.mapType = this.mapType.bind(this)
+        this.createBuffer = this.createBuffer.bind(this)
+    }
 
-        context.bindBuffer(bufferType, buffer)
-        context.bufferData(bufferType, array.data, renderType)
+    createBuffer({ array }) {
+        const buffer = this.context.createBuffer()
+
+        const numberType = this.mapType({ array })
+        const renderType = this.context.STATIC_DRAW
+        const bufferType = this.context.ARRAY_BUFFER
+
+        this.context.bindBuffer(bufferType, buffer)
+        this.context.bufferData(bufferType, array.data, renderType)
 
         return {
             buffer,
@@ -21,15 +28,15 @@ export default class ParmesanBufferManager {
         }
     }
 
-    static mapType({ context, array }) {
-        if (array.type === Int8Array) { return context.BYTE }
-        if (array.type === Uint8Array) { return context.UNSIGNED_BYTE }
-        if (array.type === Uint8ClampedArray) { return context.UNSIGNED_BYTE }
-        if (array.type === Int16Array) { return context.SHORT }
-        if (array.type === Uint16Array) { return context.UNSIGNED_SHORT }
-        if (array.type === Int32Array) { return context.INT }
-        if (array.type === Uint32Array) { return context.UNSIGNED_INT }
-        if (array.type === Float32Array) { return context.FLOAT }
+    mapType({ array }) {
+        if (array.type === Int8Array) { return this.context.BYTE }
+        if (array.type === Uint8Array) { return this.context.UNSIGNED_BYTE }
+        if (array.type === Uint8ClampedArray) { return this.context.UNSIGNED_BYTE }
+        if (array.type === Int16Array) { return this.context.SHORT }
+        if (array.type === Uint16Array) { return this.context.UNSIGNED_SHORT }
+        if (array.type === Int32Array) { return this.context.INT }
+        if (array.type === Uint32Array) { return this.context.UNSIGNED_INT }
+        if (array.type === Float32Array) { return this.context.FLOAT }
 
         return null
     }
