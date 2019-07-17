@@ -1,18 +1,22 @@
 import bb from 'big-box'
 
 export default {
-    HUD_CONTEXT: '2d',
-    CANVAS_CONTEXT: 'webgl',
+    GRAPHICS_ENGINE_2D: '2d',
+    GRAPHICS_ENGINE_3D: '3d',
+
+    CONTEXT_2D: '2d',
+    CONTEXT_WEB_GL: 'webgl',
 
     HUD_FONT: '18px serif',
     HUD_COLOR: 'rgba(255, 255, 255, 1)',
     HUD_TEXT_LOCATION: [10, 50],
-
     HUD_Z_INDEX: 1,
-    CANVAS_Z_INDEX: 0,
-
     HUD_POSITION_STYLE: 'absolute',
+
+    CANVAS_Z_INDEX: 0,
     CANVAS_POSITION_STYLE: 'absolute',
+    CANVAS_STROKE_COLOR: 'white',
+    CANVAS_FILL_COLOR: 'rgba(255, 165, 0, 1)',
 
     BINDINGS: {
         'o': { name: 'zoom', args: [true] },
