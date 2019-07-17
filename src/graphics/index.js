@@ -57,6 +57,7 @@ export default class GraphicsEngine {
 
         this.render()
     }
+    
     zoom(zoomOut) {
         this.cameraManager.zoom(zoomOut)
 
