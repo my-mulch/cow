@@ -1,5 +1,6 @@
-import GraphicsManager from './graphics'
-import PeripheralsManager from './peripherals'
+import Graphics from './graphics'
+import Mouse from './peripherals/mouse'
+import Keyboard from './peripherals/keyboard'
 
 import config from './config'
 
@@ -14,14 +15,9 @@ class ParmesanApplication {
         this.mousedown = this.mousedown.bind(this)
         this.mousemove = this.mousemove.bind(this)
 
-        this.peripherals = new PeripheralsManager({
-            mouse: { location: { x: 0, y: 0 } },
-            keyboard: { bindings: this.config.BINDINGS },
-        })
-
-        this.graphics = new GraphicsManager({
-            engine: this.config.GRAPHICS_ENGINE_2D
-        })
+        this.mouse = new Mouse({ location: { x: 0, y: 0 } })
+        this.keyboard = new Keyboard({ bindings: this.config.BINDINGS })
+        this.graphics = new Graphics({})
 
         window.addEventListener('resize', this.resize)
         window.addEventListener('keyup', this.keyup)
@@ -31,18 +27,18 @@ class ParmesanApplication {
         window.addEventListener('mousemove', this.mousemove)
     }
 
-    mouseup() { this.peripherals.mouse.mouseup() }
-    mousedown(event) { this.peripherals.mouse.mousedown(event) }
-    mousemove(event) { this.peripherals.mouse.mousemove(event) }
+    mouseup() { this.mouse.mouseup() }
+    mousedown(event) { this.mouse.mousedown(event) }
+    mousemove(event) { this.mouse.mousemove(event) }
 
-    keyup() { this.peripherals.keyboard.keyup() }
+    keyup() { this.keyboard.keyup() }
     keydown(event) {
-        const binding = this.peripherals.keyboard.keydown(event)
+        const binding = this.keyboard.keydown(event)
 
         if (binding) {
             event.preventDefault()
-            
-            const command = this.graphics.engine[binding.name]
+
+            const command = this.graphics[binding.name]
             command(...binding.args)
         }
     }

@@ -1,5 +1,5 @@
 import bb from 'big-box'
-import config from '../../../config'
+import config from '../../config'
 
 export default class CameraManager {
     constructor() {

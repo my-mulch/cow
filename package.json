@@ -4,7 +4,7 @@
   "description": "A repository for all things visualizable",
   "main": "src/",
   "scripts": {
-    "start": "webpack && open docs/index.html",
+    "start": "webpack --devtool source-map && open docs/index.html",
     "build": "webpack"
   },
   "repository": {
@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/trumanpurnell/parmesan#readme",
   "dependencies": {
-    "big-box": "^1.3.3",
+    "big-box": "1.3.4",
     "myio": "^2.0.0"
   },
   "devDependencies": {
-    "webpack": "^4.36.1",
+    "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
   }
 }
