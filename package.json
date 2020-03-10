@@ -1,34 +1,17 @@
 {
-  "name": "parmesan",
-  "version": "2.1.0",
-  "description": "A repository for all things visualizable",
-  "main": "src/",
-  "scripts": {
-    "start": "webpack --devtool source-map && open docs/index.html",
-    "build": "webpack"
-  },
+  "name": "cow",
+  "version": "1.0.0",
+  "description": "A visualization library built upon the rest of the mulch",
+  "main": "index.mjs",
+  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trumanpurnell/parmesan.git"
+    "url": "git+https://github.com/my-mulch/cow.git"
   },
-  "keywords": [
-    "math",
-    "matrices",
-    "money",
-    "hunnies"
-  ],
   "author": "Truman Purnell",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trumanpurnell/parmesan/issues"
+    "url": "https://github.com/my-mulch/cow.git/issues"
   },
-  "homepage": "https://github.com/trumanpurnell/parmesan#readme",
-  "dependencies": {
-    "big-box": "1.3.4",
-    "myio": "^2.0.0"
-  },
-  "devDependencies": {
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
-  }
+  "homepage": "https://github.com/my-mulch/cow.git#readme"
 }
